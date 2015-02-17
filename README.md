@@ -18,7 +18,7 @@ $ npm install jasminetea -g
     -h, --help         output usage information
     -V, --version      output the version number
 
-    -r recursive       Execute specs in recursive directory
+    -r recursive       Execute specs in recursive spec_dir
     -w watch           Watch spec changes
     
     -v verbose         Output spec names
