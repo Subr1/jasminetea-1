@@ -18,7 +18,7 @@ jasminetea=
     watch= require 'gulp-watch'
     jasmine= require 'gulp-jasmine'
 
-    specDir= path.dirname commander.args[0]
+    specDir= path.resolve commander.args[0]
     specFiles= [
       "#{specDir}/*[sS]pec.js"
       "#{specDir}/*[sS]pec.coffee"
@@ -28,7 +28,6 @@ jasminetea=
         "#{specDir}/**/*[sS]pec.js"
         "#{specDir}/**/*[sS]pec.coffee"
       ]
-    specFiles[key]= path.resolve value for key,value of specFiles
 
     process.nextTick -> gulp.start 'jasminetea'
 
