@@ -1,7 +1,7 @@
 {
   "name": "jasminetea",
   "main": "jasminetea.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CLI of gulp-jasmine",
   "bin": {
     "jasminetea": "./bin/jasminetea"
