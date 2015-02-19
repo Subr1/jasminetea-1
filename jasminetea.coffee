@@ -6,6 +6,7 @@ jasminetea=
       .usage 'spec_dir [options...]'
       .option '-r recursive','Execute specs in recursive directory'
       .option '-w watch','Watch spec changes'
+      .option '-p plumber','Watch spawn mode(slowly)'
 
       .option '-v verbose','Output spec names'
       .option '-s stacktrace','Output stack trace'
@@ -16,14 +17,17 @@ jasminetea=
     return jasminetea.exec commander if '-exec' in process.argv
     args= process.argv[1..]
     args.push '-exec'
-    jasminetea.spawn args
+
+    jasminetea.spawn args if commander.plumber
+    jasminetea.exec commander if commander.plumber is undefined
 
     if commander.watch
       specFiles= jasminetea.resolve commander
 
       watch= require 'gulp-watch'
       watch specFiles,->
-        jasminetea.spawn args
+        jasminetea.spawn args if commander.plumber
+        jasminetea.exec commander if commander.plumber is undefined
 
   spawn:(args)->
     spawn= require('child_process').spawn
@@ -31,17 +35,11 @@ jasminetea=
 
   exec:(commander)->
     gulp= require 'gulp'
-    jasmine= require 'gulp-jasmine'
-
-    specFiles= jasminetea.resolve commander
-
-    process.nextTick -> gulp.start 'jasminetea'
-    gulp.task 'jasminetea',->
-      gulp.src specFiles
-        .pipe jasmine
-          verbose: commander.verbose
-          includeStackTrace: commander.stacktrace
-          timeout: commander.timeout
+    gulp.src jasminetea.resolve commander
+      .pipe require('gulp-jasmine')
+        verbose: commander.verbose
+        includeStackTrace: commander.stacktrace
+        timeout: commander.timeout
 
   resolve:(commander)->
     path= require 'path'
