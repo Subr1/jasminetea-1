@@ -5,7 +5,7 @@ jasminetea=
       .version require('./package.json').version
       .usage 'spec_dir [options...]'
       .option '-r recursive','Execute specs in recursive directory'
-      .option '-w watch','Watch spec changes'
+      .option '-w watch <globs>','Watch globs changes (can use "," separator)',null
       .option '-p plumber','Watch spawn mode(slowly)'
 
       .option '-v verbose','Output spec names'
@@ -21,11 +21,11 @@ jasminetea=
     jasminetea.spawn args if commander.plumber
     jasminetea.exec commander if commander.plumber is undefined
 
-    if commander.watch
+    if commander.watch?
       specFiles= jasminetea.resolve commander
 
       watch= require 'gulp-watch'
-      watch specFiles,->
+      watch commander.watch.split(','),->
         jasminetea.spawn args if commander.plumber
         jasminetea.exec commander if commander.plumber is undefined
 
