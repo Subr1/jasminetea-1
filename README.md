@@ -20,11 +20,21 @@ $ npm install jasminetea -g
 
     -r recursive       Execute specs in recursive directory
     -w watch <globs>   Watch globs changes (can use "," separator)
-    -p plumber         Watch spawn mode(cost slowly)
     
     -v verbose         Output spec names
     -s stacktrace      Output stack trace
     -t timeout <msec>  Success time-limit <500 msec>
+```
+
+## Example
+```bash
+jasminetea test -r -w "test/**/*.coffee,lib/**/*.coffee"`
+Running 0 specs.
+
+
+0 specs, 0 failures
+Finished in 0 seconds
+Wathing files by test/**/*.coffee or lib/**/*.coffee ...
 ```
 
 ## Feture
