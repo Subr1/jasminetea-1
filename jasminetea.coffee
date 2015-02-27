@@ -29,7 +29,7 @@ jasminetea=
   watch: (cli)->
     i= 0
     chalk= require 'chalk'
-    chalkColors= ['red','green','yellow','magenta','cyan','gray']
+    chalkColors= ['green','yellow','magenta','cyan','gray']
 
     path= require 'path'
     globs= (path.resolve process.cwd(),glob for glob in cli.watch.split(','))
