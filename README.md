@@ -1,10 +1,17 @@
 # jasminetea
 is CLI of [gulp-jasmine](https://github.com/sindresorhus/gulp-jasmine)
 
+1. without -g install
+2. without jasmine.json
+3. self-contained CLI
+4. for CoffeeScript
+
 ## Installation
 ```bash
-$ npm install jasminetea -g
+$ npm install jasminetea
 ```
+
+[Can be worked in package.json scripts.][1] e.g. (`npm start > "jasminetea test -r"`)
 
 ## CLI
 `jasminetea spec_dir [options...]`
@@ -42,3 +49,5 @@ Wathing files by test/**/*.coffee or lib/**/*.coffee ...
 
 ## License
 MIT by 59naga
+
+[1]: http://www.jayway.com/2014/03/28/running-scripts-with-npm/
