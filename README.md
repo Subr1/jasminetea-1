@@ -1,5 +1,6 @@
-# ![jasminetea](.png) jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
-is CLI of [gulp-jasmine](https://github.com/sindresorhus/gulp-jasmine) for [CoffeeScript][2]
+# ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
+
+> is CLI of [gulp-jasmine][1] for [CoffeeScript][2]
 
 1. without -g install
 2. without jasmine.json
@@ -11,7 +12,7 @@ is CLI of [gulp-jasmine](https://github.com/sindresorhus/gulp-jasmine) for [Coff
 $ npm install jasminetea
 ```
 
-[Can be worked in package.json scripts.][1] e.g. (`$ npm start` > "jasminetea test -r")
+[Can be worked in package.json scripts.][3] e.g. (`$ npm start` > "jasminetea test -r")
 
 ## CLI
 `jasminetea spec_dir [options...]`
@@ -49,7 +50,7 @@ jasminetea test -r -w "test/**/*.coffee,lib/**/*.coffee"`
 
 ### More Example
 
-Use [coffeelint][3]
+Use [coffeelint][4]
 
 ```bash
 jasminetea . -l \"*.coffee\"
@@ -72,8 +73,11 @@ jasminetea . -l \"*.coffee\"
 # Linted from *.coffee
 ```
 
-## License
+License
+=========================
 MIT by 59naga
+
+[.svg]: https://cdn.rawgit.com/59naga/jasminetea/master/.svg
 
 [npm-image]: https://badge.fury.io/js/jasminetea.svg
 [npm]: https://npmjs.org/package/jasminetea
@@ -82,6 +86,7 @@ MIT by 59naga
 [coveralls-image]: https://coveralls.io/repos/59naga/jasminetea/badge.svg?branch=master
 [coveralls]: https://coveralls.io/r/59naga/jasminetea?branch=master
 
-[1]: http://www.jayway.com/2014/03/28/running-scripts-with-npm/
+[1]: https://github.com/sindresorhus/gulp-jasmine
 [2]: http://coffeescript.org/
-[3]: http://coffeelint.org/
+[3]: http://www.jayway.com/2014/03/28/running-scripts-with-npm/
+[4]: http://coffeelint.org/
