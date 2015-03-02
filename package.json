@@ -2,7 +2,7 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.pomace.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI of gulp-jasmine for CoffeeScript",
 
   "scripts": {
