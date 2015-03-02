@@ -1,6 +1,6 @@
 v0.1.3 / Mar 02 2015
 =========================
- * Up `node-module-all` v0.1.3 [bdd2edb][bdd2edb]
+ * Up `node-module-all` to v0.0.5 [bdd2edb][bdd2edb]
  * Fix `-g` test [6e3bf04][6e3bf04]
  * Change `jasminetea` for codegolf [f3db200][f3db200]
 
