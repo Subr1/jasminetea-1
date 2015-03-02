@@ -1,4 +1,4 @@
-# jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
+# ![jasminetea](.png) jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 is CLI of [gulp-jasmine](https://github.com/sindresorhus/gulp-jasmine) for [CoffeeScript][2]
 
 1. without -g install
