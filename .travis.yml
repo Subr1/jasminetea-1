@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- iojs
+- '0.10'
+script: npm test
+after_success:
+  - coveralls < ./coverage/lcov.info
+
+env:
+  global:
+    secure: HmsnQqfaOjZ6HJfursQUvqVRlUN2H1ICwDZXJH6rqSgZi2olA6NT5CCitUG1V+4ksMBIpgT/ELR38OQN82BfWzFIQxLph5BcNYtOcKv+TU49m94hkfB4PXXbM1PhfJlHvuCMqEMxaIxcHCAfUfaeaB+jPSAcMwkY6vkifuyVTrc=
+
+deploy:
+  provider: npm
+  email: i59naga@icloud.com
+  api_key:
+    secure: jsGg/E+2O9xidgeOkBdMyzSMXgkjzfRQCDqWTyNm/YKoat/T42scv5GQIqFkfwRog3Yid7rLo5gKx3S3jdhG23yJ06z1Fyzcp2kjWglgpm/E2Jfe5kHQzwvBxh9NOPs26JMhOiLCYgCDtmppU4frhJiBxtvnaod7G4MWyM6xdhQ=

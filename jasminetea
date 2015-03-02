@@ -3,6 +3,6 @@
 var path,cwd,pkgDir;
 path= require('path');
 pwd= path.dirname(require('fs').realpathSync(__filename));
-pkgDir= path.join(pwd,'../');
+pkgDir= path.join(pwd,'/');
 
 require(pkgDir).cli();

@@ -1,23 +1,33 @@
 {
   "name": "jasminetea",
+  "bin" : "jasminetea",
   "main": "jasminetea.js",
-  "version": "0.0.7",
-  "description": "CLI of gulp-jasmine",
-  "bin": {
-    "jasminetea": "./bin/jasminetea"
-  },
+  "version": "0.1.0",
+  "description": "CLI of gulp-jasmine for CoffeeScript",
+
   "scripts": {
-    "help": "node ./bin/jasminetea",
-    "start": "node ./bin/jasminetea . -v -w \"*.coffee\""
+    "test": "istanbul cover ./jasminetea -- . -vt 10000 && npm link && node jasminetea . -vt 10000",
+    "pretest": "rm -rf coverage && npm uninstall jasminetea -g",
+
+    "help": "node jasminetea",
+    "start": "node jasminetea . -vw \"*.coffee,lib/**/*.coffee\" -t 10000 -l \"*.coffee\""
   },
+
   "dependencies": {
+    "chalk": "^1.0.0",
     "coffee-script": "^1.9.0",
+    "coffeelint": "^1.9.2",
     "commander": "^2.6.0",
     "gulp": "^3.8.11",
     "gulp-jasmine": "^2.0.0",
+    "gulp-src-files": "0.0.15",
     "gulp-watch": "^4.1.1",
-    "chalk": "^1.0.0"
+    "node-module-all": "^0.0.4"
   },
+  "devDependencies": {
+    "istanbul": "^0.3.6"
+  },
+  
   "repository": {
     "type": "git",
     "url": "https://github.com/59naga/jasminetea.git"
@@ -27,7 +37,7 @@
     "gulp-jasmine",
     "cli"
   ],
-  "author": "59naga",
+  "author": "59naga <i59naga@icloud.com> (http://berabou.me/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/59naga/jasminetea/issues"

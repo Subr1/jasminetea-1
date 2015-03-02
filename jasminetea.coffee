@@ -1,6 +1,5 @@
 jasminetea=
   cli:->
-    cli= require 'commander'
     cli
       .version require('./package.json').version
       .usage 'spec_dir [options...]'
@@ -10,39 +9,64 @@ jasminetea=
       .option '-v --verbose','Output spec names'
       .option '-t --timeout <msec>','Success time-limit <500 msec>',500
       .option '-s --stacktrace','Output stack trace'
+
+      .option '-l --lint <globs>','Use coffeelint after test',(globs)->
+        cli.lintFiles= []
+        cli.lintFiles.push path.relative process.cwd(),file for file in gulpSrcFiles globs.split ','
+        globs
       .parse process.argv
     cli.help() if cli.args.length is 0
 
+    globs= (path.resolve process.cwd(),glob for glob in @resolve cli.args[0],cli.recursive)
+    files= (path.relative process.cwd(),glob for glob in globs)
+    @log "Found #{gulpSrcFiles(globs).length} files by",files.join(' or '),'...'
+
     @run cli
 
-  run: (cli,firstRun=true)->
-    gulp= require 'gulp'
+  run: (cli,firstRun=true)->   
     gulp.src @resolve cli.args[0],cli.recursive
-      .pipe require('gulp-jasmine')
+      .pipe jasmine
         verbose: cli.verbose
         timeout: cli.timeout
         includeStackTrace: cli.stacktrace
       .on 'data',-> null
-      .on 'error',=> @watch cli if cli.watch && firstRun is yes
-      .on 'end'  ,=> @watch cli if cli.watch && firstRun is yes
+      .on 'error',=>
+        @watch cli if cli.watch && firstRun is yes
+      .on 'end',=>
+        @watch cli if cli.watch && firstRun is yes
+
+        @lint cli if cli.lint?
 
   watch: (cli)->
-    i= 0
-    chalk= require 'chalk'
-    chalkColors= ['green','yellow','magenta','cyan','gray']
+    files= cli.watch.split ','
+    globs= (path.resolve process.cwd(),glob for glob in files)
 
-    path= require 'path'
-    globs= (path.resolve process.cwd(),glob for glob in cli.watch.split(','))
-    console.log chalk[chalkColors[i++]]('Wathing files by',globs.join(' or '),'...')
-
-    watch= require 'gulp-watch'
+    @log 'Wathing files by',files.join(' or '),'...'
     watch globs,=>
-      i= 0 if i>=chalkColors.length
-      console.log chalk[chalkColors[i++]]('File was changed by',globs.join(' or '))
+      @logColorChange()
+      @log 'File was changed by',files.join(' or ')
       @run cli,false
 
+  lint: (cli)->
+    args= [require.resolve 'coffeelint/bin/coffeelint']
+    args.push file for file in cli.lintFiles
+
+    @log ''
+    @log 'Next, linting ...'
+    spawned= child_process.spawn 'node',args,stdio:'inherit',cwd:process.cwd()
+    spawned.on 'close',=>
+      @log 'Linted from',cli.lint.split(',').join(' or ')
+
+  logColors: ['green','magenta','cyan']
+  log: ->
+    @log.i= 0 if @logColors[@log.i] is undefined
+    console.log chalk[@logColors[@log.i]] arguments...
+  logColorChange: ->
+    @log.i++
+    @logColors[@log.i]
+
   resolve:(specDir,recursive=false)->
-    specDir= require('path').resolve process.cwd(),specDir
+    specDir= path.resolve process.cwd(),specDir
     specFiles= [
       "#{specDir}/*[sS]pec.js"
       "#{specDir}/*[sS]pec.coffee"
@@ -53,5 +77,12 @@ jasminetea=
         "#{specDir}/**/*[sS]pec.coffee"
       ]
     specFiles
+
+{cli,gulp,jasmine,chalk,watch,path,child_process,gulpSrcFiles}= require('node-module-all')
+  rename:
+    commander: 'cli'
+    'gulp-src-files': 'gulpSrcFiles'
+  replace: (changedName)-> changedName.replace /^gulp-/,''
+  builtinLibs: true
 
 module.exports= jasminetea

@@ -1,0 +1,1 @@
+describe __filename,-> it '',-> throw new Error 'catch me'
