@@ -6,9 +6,12 @@
   "description": "Quick-start jasmine-CLI for CoffeeScript",
 
   "scripts": {
-    "pretest": "npm uninstall jasminetea -g && rm -rf coverage",
-    "test": "istanbul cover ./jasminetea -- . -vt 10000 && npm link && NODE_PATH=`npm root -g` jasminetea . -vt 10000",
+    "pretest": "npm uninstall jasminetea -g",
+    "test": "./jasminetea . -vt 10000 && npm link && NODE_PATH=`npm root -g` jasminetea . -vt 10000",
     "posttest": "npm uninstall jasminetea -g",
+
+    "coverage": "ibrik cover onefile.coffee && istanbul report html",
+    "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage",
 
     "help": "node jasminetea",
     "start": "node jasminetea . -vw \"*.coffee,lib/**/*.coffee\" -t 10000 -l \"*.coffee\""
@@ -27,7 +30,8 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.6"
+    "istanbul": "^0.3.6",
+    "ibrik": "^2.0.0"
   },
   
   "repository": {
