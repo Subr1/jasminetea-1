@@ -1,6 +1,5 @@
 try
-  require 'jasminetea'
-  bin= 'jasminetea'
+  bin= 'node '+require.resolve 'jasminetea/jasminetea'
 catch notLink
   bin= 'node ./jasminetea'
 buildScript= (args...)->

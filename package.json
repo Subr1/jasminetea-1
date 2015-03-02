@@ -5,8 +5,10 @@
   "version": "0.1.1",
   "description": "CLI of gulp-jasmine for CoffeeScript",
   "scripts": {
-    "test": "istanbul cover ./jasminetea -- . -vt 10000 && npm link && node jasminetea . -vt 10000",
-    "pretest": "rm -rf coverage && npm uninstall jasminetea -g",
+    "pretest": "npm uninstall jasminetea -g && rm -rf coverage",
+    "test": "istanbul cover ./jasminetea -- . -vt 10000 && npm link && NODE_PATH=`npm root -g` jasminetea . -vt 10000",
+    "posttest": "npm uninstall jasminetea -g",
+
     "help": "node jasminetea",
     "start": "node jasminetea . -vw \"*.coffee,lib/**/*.coffee\" -t 10000 -l \"*.coffee\""
   },
