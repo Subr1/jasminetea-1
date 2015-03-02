@@ -1,18 +1,15 @@
 {
   "name": "jasminetea",
-  "bin" : "jasminetea",
+  "bin": "jasminetea",
   "main": "jasminetea.pomace.js",
   "version": "0.1.1",
   "description": "CLI of gulp-jasmine for CoffeeScript",
-
   "scripts": {
     "test": "istanbul cover ./jasminetea -- . -vt 10000 && npm link && node jasminetea . -vt 10000",
     "pretest": "rm -rf coverage && npm uninstall jasminetea -g",
-
     "help": "node jasminetea",
     "start": "node jasminetea . -vw \"*.coffee,lib/**/*.coffee\" -t 10000 -l \"*.coffee\""
   },
-
   "dependencies": {
     "chalk": "^1.0.0",
     "coffee-script": "^1.9.0",
@@ -25,9 +22,9 @@
     "node-module-all": "^0.0.4"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "istanbul": "^0.3.6"
   },
-  
   "repository": {
     "type": "git",
     "url": "https://github.com/59naga/jasminetea.git"
