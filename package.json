@@ -10,7 +10,7 @@
     "test": "./jasminetea . -vt 10000 && npm link && NODE_PATH=`npm root -g` jasminetea . -vt 10000",
     "posttest": "npm uninstall jasminetea -g",
 
-    "coverage": "ibrik cover onefile.coffee && istanbul report html",
+    "coverage": "ibrik cover jasminetea.coffee && istanbul report html",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage",
 
     "help": "node jasminetea",
