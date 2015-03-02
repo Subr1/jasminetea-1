@@ -1,4 +1,4 @@
-v0.1.3 / Mar 02 2015
+v0.1.4 / Mar 02 2015
 =========================
  * Up `node-module-all` to v0.0.5 [bdd2edb][bdd2edb]
  * Fix `-g` test [6e3bf04][6e3bf04]

@@ -2,7 +2,7 @@
   "name": "jasminetea",
   "bin":  "jasminetea",
   "main": "jasminetea.pomace.js",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Quick-start jasmine-CLI for CoffeeScript",
 
   "scripts": {
@@ -23,7 +23,7 @@
     "gulp-jasmine": "^2.0.0",
     "gulp-src-files": "0.0.15",
     "gulp-watch": "^4.1.1",
-    "node-module-all": "^0.0.4"
+    "node-module-all": "^0.0.5"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
