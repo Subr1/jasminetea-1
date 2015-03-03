@@ -20,9 +20,9 @@
     "commander": "^2.6.0",
     "gulp": "^3.8.11",
     "gulp-jasmine": "^2.0.0",
-    "gulp-src-files": "0.0.15",
+    "gulp-src-files": "0.0.16",
     "gulp-watch": "^4.1.1",
-    "node-module-all": "^0.0.5"
+    "node-module-all": "0.0.6"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
