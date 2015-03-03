@@ -1,25 +1,28 @@
 jasminetea=
   cli:->
     cli
-      .version require('./package.json').version
+      .version require('./package').version
       .usage 'spec_dir [options...]'
       .option '-r --recursive','Execute specs in recursive directory'
       .option '-w --watch <globs>','Watch file changes by <globs> (can use "," separator)',null
-
+      .option '-c --cover','Use ibrik, Code coverage calculation',(cover)-> if '-C' in process.argv then no else cover
+      
       .option '-v --verbose','Output spec names'
       .option '-t --timeout <msec>','Success time-limit <500 msec>',500
       .option '-s --stacktrace','Output stack trace'
 
-      .option '-l --lint <globs>','Use coffeelint after test',(globs)->
+      .option '-l --lint <globs>','Use coffeelint, Code linting after success',(globs)->
         cli.lintFiles= []
         cli.lintFiles.push path.relative process.cwd(),file for file in gulpSrcFiles globs.split ','
         globs
       .parse process.argv
     cli.help() if cli.args.length is 0
 
+    return @cover(cli) if cli.cover is yes
+
     globs= (path.resolve process.cwd(),glob for glob in @resolve cli.args[0],cli.recursive)
-    files= (path.relative process.cwd(),glob for glob in globs)
-    @log "Found #{gulpSrcFiles(globs).length} files by",files.join(' or '),'...'
+    @files= (path.relative process.cwd(),glob for glob in globs)
+    @log "Found #{gulpSrcFiles(globs).length} files by",@files.join(' or '),'...'
 
     @run cli
 
@@ -33,9 +36,38 @@ jasminetea=
       .on 'error',=>
         @watch cli if cli.watch && firstRun is yes
       .on 'end',=>
-        @watch cli if cli.watch && firstRun is yes
+        lint= @noop
+        lint= @lint if cli.lint?
+        lint.call(this,cli).on 'close',=>
+          @watch cli if cli.watch && firstRun is yes
 
-        @lint cli if cli.lint?
+  noop: ()->
+    noop= new events.EventEmitter
+    process.nextTick -> noop.emit 'close'
+    noop
+
+  cover: (cli)->
+    try
+      # Fix conflict coffee-script/registeer 1.8.0
+      conflicted= require.resolve 'ibrik/node_modules/coffee-script'
+      rimraf.sync path.resolve conflicted,'../../../'
+
+    catch noConflict
+      # Fixed
+
+    args= []
+    args.push require.resolve 'ibrik/bin/ibrik'
+    args.push 'cover'
+    args.push require.resolve './jasminetea'
+    args.push '--'
+    args= args.concat process.argv[2...]
+    args.push '-C'
+    args.push '&&'
+    args.push require.resolve 'istanbul/lib/cli.js'
+    args.push 'report'
+    args.push 'html'
+
+    child_process.spawn 'node',args,stdio:'inherit',cwd:process.cwd()
 
   watch: (cli)->
     files= cli.watch.split ','
@@ -56,6 +88,7 @@ jasminetea=
     spawned= child_process.spawn 'node',args,stdio:'inherit',cwd:process.cwd()
     spawned.on 'close',=>
       @log 'Linted from',cli.lint.split(',').join(' or ')
+    spawned
 
   logColors: ['green','magenta','cyan']
   log: ->
@@ -78,7 +111,7 @@ jasminetea=
       ]
     specFiles
 
-{cli,gulp,jasmine,chalk,watch,path,child_process,gulpSrcFiles}= require('node-module-all')
+{cli,gulp,jasmine,chalk,watch,path,child_process,gulpSrcFiles,events,rimraf}= require('node-module-all')
   rename:
     commander: 'cli'
     'gulp-src-files': 'gulpSrcFiles'

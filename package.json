@@ -2,14 +2,19 @@
   "name": "jasminetea",
   "bin":  "jasminetea",
   "main": "jasminetea.pomace.js",
-  "version": "0.1.5",
-  "description": "Quick-start jasmine-CLI for CoffeeScript",
+  "version": "0.1.7",
 
+  "description": "Quick-start jasmine-CLI for CoffeeScript",
   "scripts": {
     "start": "node jasminetea . -vw \"*.coffee,lib/**/*.coffee\" -t 10000 -l \"*.coffee\"",
 
-    "pretest": "rm -rf node_modules/ibrik/node_modules/coffee-script && cd test && npm i && npm dedupe",
-    "test": "ibrik cover jasminetea -- . -vt 10000 && istanbul report html",
+    "version": "node jasminetea -V",
+    "help": "node jasminetea",
+    "cover": "node jasminetea . -c",
+    "args": "node jasminetea . -vct 10000 -w \"*.coffee,lib/**/*.coffee\" -l \"*.coffee\"",
+
+    "pretest": "cd test && npm i && npm dedupe",
+    "test": "node jasminetea . -vct 10000",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
   },
 
@@ -22,14 +27,15 @@
     "gulp-jasmine": "^2.0.0",
     "gulp-src-files": "0.0.16",
     "gulp-watch": "^4.1.1",
-    "node-module-all": "0.0.6"
+    "ibrik": "^2.0.0",
+    "istanbul": "^0.3.6",
+    "node-module-all": "0.0.6",
+    "rimraf": "^2.2.8"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
-    "istanbul": "^0.3.6",
-    "ibrik": "^2.0.0"
+    "coveralls": "^2.11.2"
   },
-  
+
   "repository": {
     "type": "git",
     "url": "https://github.com/59naga/jasminetea.git"
