@@ -1,8 +1,8 @@
 v0.1.9 / Mar 05 2015
 =========================
- * [`unknown`][unknown] :bug: Fix Not reported throw error
+ * [`f7cefa2`][f7cefa2] :bug: Fix Not reported throw error
 
-[unknown]: https://
+[f7cefa2]: https://github.com/59naga/jasminetea/commit/f7cefa2be1bf27f27b8feec815f5ed8e3e66dc46
 
 v0.1.8 / Mar 04 2015
 =========================

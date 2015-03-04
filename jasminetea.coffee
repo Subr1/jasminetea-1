@@ -45,7 +45,7 @@ jasminetea=
         includeStackTrace: cli.stacktrace
       .on 'data',-> null
       .on 'error',(error)=>
-        console.error error.stack?.toString() ? error
+        console.error error?.stack?.toString() ? error?.message ? error
         @watch cli if cli.watch && firstRun is yes
       .on 'end',=>
         lint= @noop
