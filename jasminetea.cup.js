@@ -5,6 +5,6 @@ if(typeof require('module')._extensions['.coffee']==='undefined'){
 }
 jasminetea= require('./jasminetea.coffee');
 
-// noop
+// d_| dripped
 
 module.exports= jasminetea;

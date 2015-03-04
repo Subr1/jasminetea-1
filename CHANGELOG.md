@@ -1,14 +1,26 @@
+v0.1.10 / Mar 06 2015
+=========================
+ * [`unknown`][unknown] :lipstick: Without dependency `gulp*` after with `[chokidar][1]`,`[wanderer][2]` and `[jasmine-node][3]`
+ * [`unknown`][unknown] :lipstick: Change `jasminetea` default `test -r`
+ * [`unknown`][unknown] :bug: Fix `--watch` conflict `--cover` and `--lint`
+
+[unknown]: https://github.com/59naga/jasminetea/commit/f7cefa2be1bf27f27b8feec815f5ed8e3e66dc46
+
+[1]: https://github.com/paulmillr/chokidar
+[2]: https://github.com/59naga/wanderer
+[3]: https://github.com/mhevery/jasmine-node
+
 v0.1.9 / Mar 05 2015
 =========================
- * [`unknown`][unknown] :bug: Fix Not reported throw error
+ * [`f7cefa2`][f7cefa2] :bug: Fix Not reported throw error
 
-[unknown]: https://
+[f7cefa2]: https://github.com/59naga/jasminetea/commit/f7cefa2be1bf27f27b8feec815f5ed8e3e66dc46
 
 v0.1.8 / Mar 04 2015
 =========================
- * [`50cc0df`][50cc0df] Change `-w` without required value. (e.g. <globs> -> [globs])
+ * [`50cc0df`][50cc0df] Change `--watch` without required value. (e.g. <globs> -> [globs])
     Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
- * [`50cc0df`][50cc0df] Change `-l` without required value. (e.g. <globs> -> [globs])
+ * [`50cc0df`][50cc0df] Change `--lint` without required value. (e.g. <globs> -> [globs])
     Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
 
 [50cc0df]: https://github.com/59naga/jasminetea/commit/50cc0df352a9773c796bcfeba6e8d27fa5cabf00
@@ -16,7 +28,7 @@ v0.1.8 / Mar 04 2015
 
 v0.1.7 / Mar 03 2015
 =========================
- * [`74a969a`][74a969a] Add `-c` --cover Code coverage calculation option by [ibrik][1]
+ * [`74a969a`][74a969a] Add `--cover` --cover Code coverage calculation option by [ibrik][1]
  * [`6a13e95`][6a13e95] Dependencies update
 
 [74a969a]: https://github.com/59naga/jasminetea/commit/74a969a3b5cdf7d7e67aab200b4add65638a7791

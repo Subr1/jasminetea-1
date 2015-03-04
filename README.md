@@ -1,18 +1,19 @@
 # ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> is CLI of [gulp-jasmine][1] for [CoffeeScript][2]
+> CLI Collection, Getting quick-started of jasmine[d-1].
 
-1. without -g install
-2. without jasmine.json
-3. self-contained CLI
-4. for CoffeeScript
+1. Without configuration file
+2. Can be running spec. by [jasmine-node][d-1]
+3. Can be calculate code caverage. by [iblik][d-2]
+4. Can be checking code quality. by [coffeelint][d-3]
+5. for [CoffeeScript][d-4]
 
 ## Installation
 ```bash
 $ npm install jasminetea
 ```
 
-[Can be worked in package.json scripts.][3] e.g. (`$ npm start` > "jasminetea test -r")
+[Can be worked in package.json scripts.][1] e.g. (`$ npm start` > "jasminetea test -r")
 
 ## CLI
 ```bash
@@ -50,29 +51,7 @@ jasminetea test -r -w
 
 ### More Example
 
-#### Use `-l` [coffeelint][4]
-
-```bash
-jasminetea . -l
-# 
-# Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
-# ..........
-# 
-# 10 specs, 0 failures
-# Finished in 0 seconds
-# 
-# Next, linting by lib/*.coffee or *.coffee ...
-#   ✗ jasminetea.coffee
-#      ✗ #7: Line exceeds maximum allowed length. Length is 94, max is 80.
-#      ✗ #14: Line exceeds maximum allowed length. Length is 117, max is 80.
-#      ✗ #31: Line exceeds maximum allowed length. Length is 82, max is 80.
-#   ✗ jasminetea.spec.coffee
-#      ✗ #107: Line exceeds maximum allowed length. Length is 100, max is 80.
-# 
-# ✗ Lint! » 4 errors and 0 warnings in 2 files
-```
-
-#### Use `-c` [iblik][5]
+#### Use `-c` [iblik][d-2]
 
 ```bash
 jasminetea . -c
@@ -95,6 +74,31 @@ jasminetea . -c
 # ================================================================================
 ```
 
+#### Use `-l` [coffeelint][d-3]
+
+```bash
+jasminetea . -l
+# 
+# Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
+# ..........
+# 
+# 10 specs, 0 failures
+# Finished in 0 seconds
+# 
+# Next, linting by lib/*.coffee or *.coffee ...
+#   ✗ jasminetea.coffee
+#      ✗ #7: Line exceeds maximum allowed length. Length is 94, max is 80.
+#      ✗ #14: Line exceeds maximum allowed length. Length is 117, max is 80.
+#      ✗ #31: Line exceeds maximum allowed length. Length is 82, max is 80.
+#   ✗ jasminetea.spec.coffee
+#      ✗ #107: Line exceeds maximum allowed length. Length is 100, max is 80.
+# 
+# ✗ Lint! » 4 errors and 0 warnings in 2 files
+```
+
+# TODO
+* Refactoring (really dirty...)
+
 License
 =========================
 MIT by 59naga
@@ -108,8 +112,9 @@ MIT by 59naga
 [coveralls-image]: https://coveralls.io/repos/59naga/jasminetea/badge.svg?branch=master
 [coveralls]: https://coveralls.io/r/59naga/jasminetea?branch=master
 
-[1]: https://github.com/sindresorhus/gulp-jasmine
-[2]: http://coffeescript.org/
-[3]: http://www.jayway.com/2014/03/28/running-scripts-with-npm/
-[4]: http://coffeelint.org/
-[5]: https://github.com/Constellation/ibrik
+[d-1]: https://github.com/mhevery/jasmine-node
+[d-2]: https://github.com/Constellation/ibrik
+[d-3]: http://coffeelint.org/
+[d-4]: http://coffeescript.org/
+
+[1]: http://www.jayway.com/2014/03/28/running-scripts-with-npm/

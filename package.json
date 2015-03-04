@@ -1,40 +1,36 @@
 {
   "name": "jasminetea",
-  "bin":  "jasminetea",
-  "main": "jasminetea.pomace.js",
-  "version": "0.1.9",
+  "bin" : "jasminetea",
+  "main": "jasminetea.cup.js",
+  "version": "0.1.10",
+  "description": "CLI Collection, Getting quick-started of jasmine.",
 
-  "description": "Quick-start jasmine-CLI for CoffeeScript",
   "scripts": {
-    "start": "node jasminetea . -vl -t 10000 -w",
+    "start": "node jasminetea test --watch --timeout 5000",
+    "help": "node jasminetea",
 
-    "help":  "node jasminetea",
-    "watch": "node jasminetea test -rw",
-    "lint":  "node jasminetea . -l -t 10000",
-    "cover": "node jasminetea . -c -t 10000",
-    
-    "test":  "node jasminetea . -vct 10000",
+    "test": "node jasminetea test --verbose --cover --lint --timeout 5000",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
   },
 
   "dependencies": {
     "chalk": "^1.0.0",
-    "coffee-script": "^1.9.0",
+    "chokidar": "^1.0.0-rc4",
+    "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
     "commander": "^2.6.0",
-    "gulp": "^3.8.11",
-    "gulp-jasmine": "^2.0.0",
-    "gulp-src-files": "0.0.16",
-    "gulp-watch": "^4.1.1",
+    "wanderer": "0.0.2",
     "ibrik": "^2.0.0",
     "istanbul": "^0.3.6",
-    "node-module-all": "0.0.6",
+    "jasmine": "^2.2.1",
+    "jasmine-terminal-reporter": "^0.9.1",
+    "node-module-all": "0.0.8",
     "rimraf": "^2.2.8"
   },
   "devDependencies": {
     "coveralls": "^2.11.2"
   },
-
+  
   "repository": {
     "type": "git",
     "url": "https://github.com/59naga/jasminetea.git"
