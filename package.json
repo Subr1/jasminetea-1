@@ -2,19 +2,18 @@
   "name": "jasminetea",
   "bin":  "jasminetea",
   "main": "jasminetea.pomace.js",
-  "version": "0.1.7",
+  "version": "0.1.8",
 
   "description": "Quick-start jasmine-CLI for CoffeeScript",
   "scripts": {
-    "start": "node jasminetea . -vw \"*.coffee,lib/**/*.coffee\" -t 10000 -l \"*.coffee\"",
+    "start": "node jasminetea . -vl -t 10000 -w",
 
-    "version": "node jasminetea -V",
-    "help": "node jasminetea",
-    "cover": "node jasminetea . -c",
-    "args": "node jasminetea . -vct 10000 -w \"*.coffee,lib/**/*.coffee\" -l \"*.coffee\"",
-
-    "pretest": "cd test && npm i && npm dedupe",
-    "test": "node jasminetea . -vct 10000",
+    "help":  "node jasminetea",
+    "watch": "node jasminetea test -rw",
+    "lint":  "node jasminetea . -l -t 10000",
+    "cover": "node jasminetea . -c -t 10000",
+    
+    "test":  "node jasminetea . -vct 10000",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
   },
 

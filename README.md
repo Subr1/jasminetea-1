@@ -16,34 +16,36 @@ $ npm install jasminetea
 
 ## CLI
 ```bash
-# Usage: jasminetea spec_dir [options...]
+#  Usage: jasminetea specDir [options...]
+#
+#  Options:
+#
+#    -h, --help           output usage information
+#    -V, --version        output the version number
 
-# Options:
+#    -r --recursive       Execute specs in recursive directory
+#    -w --watch [globs]   Watch file changes. Refer \[globs\] (can use "," separator)
+#    -c --cover           Use ibrik, Code coverage calculation
 
-# -h, --help           output usage information
-# -V, --version        output the version number
+#    -v --verbose         Output spec names
+#    -t --timeout <msec>  Success time-limit <500>
+#    -s --stacktrace      Output stack trace
 
-# -r --recursive       Execute specs in recursive directory
-# -w --watch <globs>   Watch file changes by <globs> (can use "," # separator)
-# -c --cover           Use ibrik, Code coverage calculation
-
-# -v --verbose         Output spec names
-# -t --timeout <msec>  Success time-limit <500 msec>
-# -s --stacktrace      Output stack trace
-
-# -l --lint <globs>    Use coffeelint, Code linting after success
+#    -l --lint [globs]    Use coffeelint, Code linting after success. Refer \[globs\] (can use "," separator)
 ```
+
+`--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
 
 ## Example
 ```bash
-jasminetea test -r -w "test/**/*.coffee,lib/**/*.coffee"`
-# Found 0 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+jasminetea test -r -w
+# Found 0 files by test/**/*[sS]pec.js or test/**/*[sS]pec.coffee ...
 # Running 0 specs.
 # 
 # 
 # 0 specs, 0 failures
 # Finished in 0 seconds
-# Wathing files by test/**/*.coffee or lib/**/*.coffee ...
+# Wathing files by *.coffee or lib/**/*.coffee or test/**/*.coffee ...
 ```
 
 ### More Example
@@ -51,49 +53,45 @@ jasminetea test -r -w "test/**/*.coffee,lib/**/*.coffee"`
 #### Use `-l` [coffeelint][4]
 
 ```bash
-jasminetea . -l \"*.coffee\"
-
-# Found 0 files by *[sS]pec.js or *[sS]pec.coffee ...
-# Running 0 specs.
-#
-#
-# 0 specs, 0 failures
+node jasminetea . -l
+# 
+# Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
+# ..........
+# 
+# 10 specs, 0 failures
 # Finished in 0 seconds
-# Next, linting ...
+# 
+# Next, linting by lib/*.coffee or *.coffee ...
 #   ✗ jasminetea.coffee
-#      ✗ #7: Line exceeds maximum allowed length. Length is 95, max is 80.
-#      ✗ #15: Line exceeds maximum allowed length. Length is 100, max is 80.
-#      ✗ #20: Line exceeds maximum allowed length. Length is 91, max is 80.
-#      ✗ #26: Line ends with trailing whitespace.
-#      ✗ #80: Line exceeds maximum allowed length. Length is 90, max is 80.
-#
-# ✗ Lint! » 5 errors and 0 warnings in 1 file
-#
-# Linted from *.coffee
+#      ✗ #7: Line exceeds maximum allowed length. Length is 94, max is 80.
+#      ✗ #14: Line exceeds maximum allowed length. Length is 117, max is 80.
+#      ✗ #31: Line exceeds maximum allowed length. Length is 82, max is 80.
+#   ✗ jasminetea.spec.coffee
+#      ✗ #107: Line exceeds maximum allowed length. Length is 100, max is 80.
+# 
+# ✗ Lint! » 4 errors and 0 warnings in 2 files
 ```
 
 #### Use `-c` [iblik][5]
 
 ```bash
 jasminetea . -c
-
+#
 # Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
-# FFFFFFFF.
+# ..........
 # 
-# Failures:
-# 
-# 9 specs, 8 failures
+# 10 specs, 0 failures
 # Finished in 0 seconds
 # =============================================================================
-# Writing coverage object [/Users/59naga/Downloads/jasminetea/coverage/coverage.json]
-# Writing coverage reports at [/Users/59naga/Downloads/jasminetea/coverage]
+# Writing coverage object [./coverage/coverage.json]
+# Writing coverage reports at [./coverage]
 # =============================================================================
 # 
 # =============================== Coverage summary ===============================
-# Statements   : 63.64% ( 147/231 )
-# Branches     : 42.59% ( 23/54 )
-# Functions    : 74.07% ( 40/54 )
-# Lines        : 66.67% ( 80/120 )
+# Statements   : 73.98% ( 182/246 )
+# Branches     : 50% ( 39/78 )
+# Functions    : 81.82% ( 45/55 )
+# Lines        : 81.16% ( 112/138 )
 # ================================================================================
 ```
 

@@ -1,10 +1,18 @@
-v0.1.7 / Mar 03 2015
+v0.1.8 / Mar 04 2015
 =========================
- * [`unknown`][unknown] Add `-c` --cover Code coverage calculation option by [ibrik][1]
- * [`unknown`][unknown] UP gulp-src-files@0.0.16,node-module-all@0.0.6
+ * [`unknown`][unknown] Change `-w` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
+ * [`unknown`][unknown] Change `-l` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
 
 [unknown]: https://
-[unknown]: https://
+
+
+v0.1.7 / Mar 03 2015
+=========================
+ * [`74a969a`][74a969a] Add `-c` --cover Code coverage calculation option by [ibrik][1]
+ * [`6a13e95`][6a13e95] Dependencies update
+
+[74a969a]: https://github.com/59naga/jasminetea/commit/74a969a3b5cdf7d7e67aab200b4add65638a7791
+[6a13e95]: https://github.com/59naga/jasminetea/commit/6a13e95593bf3ca960bed7ecb5a0f43ebe8124e0
 
 v0.1.6 / Mar 02 2015
 =========================
