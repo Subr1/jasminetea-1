@@ -1,9 +1,9 @@
 v0.1.8 / Mar 04 2015
 =========================
- * [`unknown`][unknown] Change `-w` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
- * [`unknown`][unknown] Change `-l` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
+ * [`50cc0df`][50cc0df] Change `-w` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
+ * [`50cc0df`][50cc0df] Change `-l` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
 
-[unknown]: https://
+[50cc0df]: https://github.com/59naga/jasminetea/commit/50cc0df352a9773c796bcfeba6e8d27fa5cabf00
 
 
 v0.1.7 / Mar 03 2015

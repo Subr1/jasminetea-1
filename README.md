@@ -53,7 +53,7 @@ jasminetea test -r -w
 #### Use `-l` [coffeelint][4]
 
 ```bash
-node jasminetea . -l
+jasminetea . -l
 # 
 # Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
 # ..........
