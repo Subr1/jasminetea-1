@@ -44,7 +44,8 @@ jasminetea=
         timeout: cli.timeout
         includeStackTrace: cli.stacktrace
       .on 'data',-> null
-      .on 'error',=>
+      .on 'error',(error)=>
+        console.error error.stack?.toString() ? error
         @watch cli if cli.watch && firstRun is yes
       .on 'end',=>
         lint= @noop

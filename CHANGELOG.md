@@ -1,7 +1,15 @@
+v0.1.9 / Mar 05 2015
+=========================
+ * [`unknown`][unknown] :bug: Fix Not reported throw error
+
+[unknown]: https://
+
 v0.1.8 / Mar 04 2015
 =========================
- * [`50cc0df`][50cc0df] Change `-w` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
- * [`50cc0df`][50cc0df] Change `-l` without required value. (e.g. <globs> -> [globs]) Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
+ * [`50cc0df`][50cc0df] Change `-w` without required value. (e.g. <globs> -> [globs])
+    Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
+ * [`50cc0df`][50cc0df] Change `-l` without required value. (e.g. <globs> -> [globs])
+    Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
 
 [50cc0df]: https://github.com/59naga/jasminetea/commit/50cc0df352a9773c796bcfeba6e8d27fa5cabf00
 
