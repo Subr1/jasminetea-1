@@ -1,6 +1,6 @@
 # ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> CLI Collection, Getting quick-started of jasmine[d-1].
+> CLI Collection, Getting quick-started of [jasmine][d-1].
 
 1. Without configuration file
 2. Can be running spec. by [jasmine-node][d-1]
