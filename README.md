@@ -1,6 +1,6 @@
 # ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> CLI Collection, Getting quick-started of [jasmine][d-1].
+> CLI Collection, Quick start [jasmine][d-1] for [CoffeeScript][d-4].
 
 1. Without configuration file
 2. Can be running spec. by [jasmine-node][d-1]
@@ -15,6 +15,12 @@ $ npm install jasminetea
 
 [Can be worked in package.json scripts.][1] e.g. (`$ npm start` > "jasminetea test -r")
 
+or
+```
+$ npm install jasminetea --global
+```
+Enable `jasminetea specDir` commands. then can immediately run.
+
 ## CLI
 ```bash
 #  Usage: jasminetea specDir [options...]
@@ -25,7 +31,7 @@ $ npm install jasminetea
 #    -V, --version        output the version number
 
 #    -r --recursive       Execute specs in recursive directory
-#    -w --watch [globs]   Watch file changes. Refer \[globs\] (can use "," separator)
+#    -w --watch [globs]   Watch file changes. Refer [globs] (can use "," separator)
 #    -c --cover           Use ibrik, Code coverage calculation
 
 #    -v --verbose         Output spec names
@@ -46,7 +52,7 @@ jasminetea test -r -w
 # 
 # 0 specs, 0 failures
 # Finished in 0 seconds
-# Wathing files by *.coffee or lib/**/*.coffee or test/**/*.coffee ...
+# Watching files by *.coffee or lib/**/*.coffee or test/**/*.coffee ...
 ```
 
 ### More Example
