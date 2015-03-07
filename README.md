@@ -46,11 +46,11 @@ Enable `jasminetea specDir` commands. then can immediately run.
 #    -d --debug               Output raw commands $ for -c,-l,-e,-p
 ```
 
-`--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
+`--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,*.coffee"`
 
 ## Example
 ```bash
-node jasminetea hoge -r -w
+jasminetea hoge -r -w
 # 7_P Spec Notfound. by **/*[sS]pec.js or **/*[sS]pec.coffee
 # 
 # 
