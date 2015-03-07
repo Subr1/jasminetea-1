@@ -1,19 +1,20 @@
 # ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> CLI Collection, Quick start [jasmine][d-1] for [CoffeeScript][d-4].
+> CLI Collection, Quick start [jasmine][d-1] for [CoffeeScript][d-5].
 
 1. Without configuration file
 2. Can be running spec. by [jasmine-node][d-1]
 3. Can be calculate code caverage. by [iblik][d-2]
 4. Can be checking code quality. by [coffeelint][d-3]
-5. for [CoffeeScript][d-4]
+4. Can be running spec for e2e. by [protractor][d-4]
+5. for [CoffeeScript][d-5]
 
 ## Installation
 ```bash
 $ npm install jasminetea
 ```
 
-[Can be worked in package.json scripts.][1] e.g. (`$ npm start` > "jasminetea test -r")
+[Can be worked in package.json scripts.][1] e.g. (`$ npm start` > scripts:start(package.json) > "jasminetea test -r")
 
 or
 ```
@@ -25,34 +26,37 @@ Enable `jasminetea specDir` commands. then can immediately run.
 ```bash
 #  Usage: jasminetea specDir [options...]
 #
+#  ~ 7_P
+#
 #  Options:
 #
-#    -h, --help           output usage information
-#    -V, --version        output the version number
-
-#    -r --recursive       Execute specs in recursive directory
-#    -w --watch [globs]   Watch file changes. Refer [globs] (can use "," separator)
-#    -c --cover           Use ibrik, Code coverage calculation
-
-#    -v --verbose         Output spec names
-#    -t --timeout <msec>  Success time-limit <500>
-#    -s --stacktrace      Output stack trace
-
-#    -l --lint [globs]    Use coffeelint, Code linting after success. Refer \[globs\] (can use "," separator)
+#    -h, --help               output usage information
+#    -V, --version            output the version number
+#
+#    -r --recursive           Execute specs in recursive directory
+#    -v --verbose             Output spec names
+#    -s --stacktrace          Output stack trace
+#    -t --timeout <msec>      Success time-limit <500>msec
+#    -w --watch [globs]       Watch file changes. Refer [globs] (can use "," separator)
+#
+#    -c --cover               Use ibrik, Code coverage calculation
+#    -l --lint [globs]        Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)
+#    -p --protractor [==arg]  Use protractor, Change to the E2E test mode
+#
+#    -d --debug               Output raw commands $ for -c,-l,-e,-p
 ```
 
 `--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"`
 
 ## Example
 ```bash
-jasminetea test -r -w
-# Found 0 files by test/**/*[sS]pec.js or test/**/*[sS]pec.coffee ...
-# Running 0 specs.
+node jasminetea hoge -r -w
+# ~ 7_P Spec Notfound. by **/*[sS]pec.js or **/*[sS]pec.coffee
 # 
 # 
 # 0 specs, 0 failures
 # Finished in 0 seconds
-# Watching files by *.coffee or lib/**/*.coffee or test/**/*.coffee ...
+# ~ 7_P Watching files by *.coffee or lib/**/*.coffee or hoge/**/*.coffee ...
 ```
 
 ### More Example
@@ -60,23 +64,32 @@ jasminetea test -r -w
 #### Use `-c` [iblik][d-2]
 
 ```bash
-jasminetea . -c
-#
-# Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
-# ..........
+jasminetea test -c
+
+# ~ 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+# Running 4 specs.
 # 
-# 10 specs, 0 failures
+# Server
+#   /Users/59naga/Downloads/jasminetea/test/fixtures
+#       Default current files: passed
+#       Use -rwcvtsl Fullstack.: passed
+# Client
+#   /Users/59naga/Downloads/jasminetea/test/fixtures
+#       Default current files: passed
+#       Use -rwcvtsl Fullstack.: passed
+# 
+# 4 specs, 0 failures
 # Finished in 0 seconds
 # =============================================================================
-# Writing coverage object [./coverage/coverage.json]
-# Writing coverage reports at [./coverage]
+# Writing coverage object [/Users/59naga/Downloads/jasminetea/coverage/coverage.json]
+# Writing coverage reports at [/Users/59naga/Downloads/jasminetea/coverage]
 # =============================================================================
 # 
 # =============================== Coverage summary ===============================
-# Statements   : 73.98% ( 182/246 )
-# Branches     : 50% ( 39/78 )
-# Functions    : 81.82% ( 45/55 )
-# Lines        : 81.16% ( 112/138 )
+# Statements   : 36.13% ( 112/310 )
+# Branches     : 24.64% ( 34/138 )
+# Functions    : 36.54% ( 19/52 )
+# Lines        : 40.63% ( 65/160 )
 # ================================================================================
 ```
 
@@ -84,22 +97,35 @@ jasminetea . -c
 
 ```bash
 jasminetea . -l
+# ~ 7_P Spec Notfound. by *[sS]pec.js or *[sS]pec.coffee
 # 
-# Found 1 files by *[sS]pec.js or *[sS]pec.coffee ...
-# ..........
 # 
-# 10 specs, 0 failures
+# 0 specs, 0 failures
 # Finished in 0 seconds
 # 
-# Next, linting by lib/*.coffee or *.coffee ...
+# ~ 7_P Lint by lib/*.coffee or *.coffee ...
 #   ✗ jasminetea.coffee
-#      ✗ #7: Line exceeds maximum allowed length. Length is 94, max is 80.
-#      ✗ #14: Line exceeds maximum allowed length. Length is 117, max is 80.
-#      ✗ #31: Line exceeds maximum allowed length. Length is 82, max is 80.
-#   ✗ jasminetea.spec.coffee
-#      ✗ #107: Line exceeds maximum allowed length. Length is 100, max is 80.
+#      ✗ #5: Line exceeds maximum allowed length. Length is 89, max is 80.
+#      ✗ #13: Line exceeds maximum allowed length. Length is 94, max is 80.
+#      ✗ #15: Line exceeds maximum allowed length. Length is 113, max is 80.
+#      ...
 # 
-# ✗ Lint! » 4 errors and 0 warnings in 2 files
+# ✗ Lint! » 15 errors and 0 warnings in 1 file
+```
+
+#### Use `-p` [protractor][d-4]
+
+```bash
+forever start $(npm bin)/coffee myServer.coffee && jasminetea test -p "==baseURL http://localhost:59798/"
+# ~ 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+# Running 2 specs.
+# 
+#   /Users/59naga/Downloads/jasminetea/test/fixtures
+#       Default current files: passed
+#       Use -rwcvtsl Fullstack.: passed
+# 
+# 2 specs, 0 failures
+# Finished in 0 seconds
 ```
 
 # TODO
@@ -121,6 +147,7 @@ MIT by 59naga
 [d-1]: https://github.com/mhevery/jasmine-node
 [d-2]: https://github.com/Constellation/ibrik
 [d-3]: http://coffeelint.org/
-[d-4]: http://coffeescript.org/
+[d-4]: http://angular.github.io/protractor/
+[d-5]: http://coffeescript.org/
 
 [1]: http://www.jayway.com/2014/03/28/running-scripts-with-npm/

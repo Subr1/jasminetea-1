@@ -2,15 +2,24 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.cup.js",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "CLI Collection, Getting quick-started of jasmine.",
 
   "scripts": {
-    "start": "node jasminetea test --watch --timeout 5000",
+    "start": "node jasminetea test/fixtures --protractor \"==baseUrl http://localhost:59798/\" --timeout 10000 --cover --lint --watch",
     "help": "node jasminetea",
 
-    "test": "node jasminetea test --verbose --cover --lint --timeout 5000",
+    "pretest": "forever start $(npm bin)/coffee test/http-server.coffee",
+    "test": "node jasminetea test --verbose --cover --timeout 10000",
+    "posttest": "forever stopall",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
+  },
+  "devScripts": {
+    "protractor": "JASMINETEA_MODE=CLIENT protractor --baseUrl http://localhost:59798/ --specs test/fixtures/01.spec.coffee",
+    
+    "npm_token": "echo -n \"username:password\" | base64",
+    "npm_releasing": "travis encrypt deploy.api_key",
+    "coveralls_token": "travis encrypt COVERALLS_REPO_TOKEN=you_repo_token"
   },
 
   "dependencies": {
@@ -19,16 +28,18 @@
     "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
     "commander": "^2.6.0",
-    "wanderer": "0.0.2",
     "ibrik": "^2.0.0",
     "istanbul": "^0.3.6",
     "jasmine": "^2.2.1",
     "jasmine-terminal-reporter": "^0.9.1",
     "node-module-all": "0.0.8",
-    "rimraf": "^2.2.8"
+    "protractor": "^1.8.0",
+    "rimraf": "^2.2.8",
+    "wanderer": "0.0.2"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2"
+    "coveralls": "^2.11.2",
+    "forever": "^0.14.1"
   },
   
   "repository": {

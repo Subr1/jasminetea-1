@@ -1,10 +1,13 @@
+v0.1.11 / Mar 07 2015
+ * [`unknown`][unknown] :lipstick: Without dependency `gulp*` after with `[chokidar][1]`,`[wanderer][2]` and `[jasmine-node][3]`
+
 v0.1.10 / Mar 06 2015
 =========================
- * [`unknown`][unknown] :lipstick: Without dependency `gulp*` after with `[chokidar][1]`,`[wanderer][2]` and `[jasmine-node][3]`
- * [`unknown`][unknown] :lipstick: Change `jasminetea` default `test -r`
- * [`unknown`][unknown] :bug: Fix `--watch` conflict `--cover` and `--lint`
+ * [`0fa3599`][0fa3599] :lipstick: Without dependency `gulp*` after with `[chokidar][1]`,`[wanderer][2]` and `[jasmine-node][3]`
+ * [`0fa3599`][0fa3599] :lipstick: Change `jasminetea` default `test -r`
+ * [`0fa3599`][0fa3599] :bug: Fix `--watch` conflict `--cover` and `--lint`
 
-[unknown]: https://github.com/59naga/jasminetea/commit/f7cefa2be1bf27f27b8feec815f5ed8e3e66dc46
+[0fa3599]: https://github.com/59naga/jasminetea/commit/0fa3599a53e88a18c1fcaebcb9b44ed5ded92026
 
 [1]: https://github.com/paulmillr/chokidar
 [2]: https://github.com/59naga/wanderer
