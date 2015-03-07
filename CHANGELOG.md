@@ -1,5 +1,8 @@
 v0.1.12 / Mar 07 2015
- * [`unknown`][unknown] :lipstick: Without dependency `gulp*` after with `[chokidar][1]`,`[wanderer][2]` and `[jasmine-node][3]`
+=========================
+ * [`8e5ae63`][8e5ae63] :sushi: Add `-p` `--protractor` the e2e option
+
+[8e5ae63]: https://github.com/59naga/jasminetea/commit/8e5ae63640ddc5614ace5e12e2e4d9e38a8f6ceb
 
 v0.1.10 / Mar 06 2015
 =========================
