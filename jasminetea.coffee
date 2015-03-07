@@ -2,7 +2,7 @@ jasminetea=
   cli:->
     cli
       .version require('./package').version
-      .description chalk.magenta('~')+chalk.cyan(' 7')+chalk.green('_')+chalk.yellow('P')
+      .description chalk.magenta('7')+chalk.yellow('_')+chalk.green('P')
       .usage 'specDir [options...]'
       .option '-r --recursive','Execute specs in recursive directory'
 
@@ -307,7 +307,7 @@ jasminetea=
     [...,changeColor]= args
     args= args[...-1] if changeColor is yes
 
-    console.log '~ 7_P',@getColor(changeColor) args...
+    console.log '7_P',@getColor(changeColor) args...
   getColor: (changeColor=no)->
     @log.i= 0 if @logColors[@log.i] is undefined
     color= chalk[@logColors[@log.i]]

@@ -1,4 +1,4 @@
-v0.1.11 / Mar 07 2015
+v0.1.12 / Mar 07 2015
  * [`unknown`][unknown] :lipstick: Without dependency `gulp*` after with `[chokidar][1]`,`[wanderer][2]` and `[jasmine-node][3]`
 
 v0.1.10 / Mar 06 2015

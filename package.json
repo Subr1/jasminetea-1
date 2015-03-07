@@ -2,7 +2,7 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.cup.js",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "CLI Collection, Getting quick-started of jasmine.",
 
   "scripts": {

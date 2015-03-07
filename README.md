@@ -26,7 +26,7 @@ Enable `jasminetea specDir` commands. then can immediately run.
 ```bash
 #  Usage: jasminetea specDir [options...]
 #
-#  ~ 7_P
+#  7_P
 #
 #  Options:
 #
@@ -51,12 +51,12 @@ Enable `jasminetea specDir` commands. then can immediately run.
 ## Example
 ```bash
 node jasminetea hoge -r -w
-# ~ 7_P Spec Notfound. by **/*[sS]pec.js or **/*[sS]pec.coffee
+# 7_P Spec Notfound. by **/*[sS]pec.js or **/*[sS]pec.coffee
 # 
 # 
 # 0 specs, 0 failures
 # Finished in 0 seconds
-# ~ 7_P Watching files by *.coffee or lib/**/*.coffee or hoge/**/*.coffee ...
+# 7_P Watching files by *.coffee or lib/**/*.coffee or hoge/**/*.coffee ...
 ```
 
 ### More Example
@@ -66,7 +66,7 @@ node jasminetea hoge -r -w
 ```bash
 jasminetea test -c
 
-# ~ 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+# 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
 # Running 4 specs.
 # 
 # Server
@@ -97,13 +97,13 @@ jasminetea test -c
 
 ```bash
 jasminetea . -l
-# ~ 7_P Spec Notfound. by *[sS]pec.js or *[sS]pec.coffee
+# 7_P Spec Notfound. by *[sS]pec.js or *[sS]pec.coffee
 # 
 # 
 # 0 specs, 0 failures
 # Finished in 0 seconds
 # 
-# ~ 7_P Lint by lib/*.coffee or *.coffee ...
+# 7_P Lint by lib/*.coffee or *.coffee ...
 #   ✗ jasminetea.coffee
 #      ✗ #5: Line exceeds maximum allowed length. Length is 89, max is 80.
 #      ✗ #13: Line exceeds maximum allowed length. Length is 94, max is 80.
@@ -117,7 +117,7 @@ jasminetea . -l
 
 ```bash
 forever start $(npm bin)/coffee myServer.coffee && jasminetea test -p "==baseURL http://localhost:59798/"
-# ~ 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+# 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
 # Running 2 specs.
 # 
 #   /Users/59naga/Downloads/jasminetea/test/fixtures
