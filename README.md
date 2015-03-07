@@ -23,27 +23,24 @@ $ npm install jasminetea --global
 Enable `jasminetea specDir` commands. then can immediately run.
 
 ## CLI
-```bash
-#  Usage: jasminetea specDir [options...]
+# ```bash
+#   Usage: jasminetea specDir [options...]
+# 
+#   7_P
+# 
+#   Options:
+# 
+#     -r --recursive        Execute specs in recursive directory
+#     -v --verbose          Output spec names
+#     -s --stacktrace       Output stack trace
+#     -t --timeout <msec>   Success time-limit <1000>msec
 #
-#  7_P
+#     -w --watch [globs]    Watch file changes. Refer [globs] (can use "," separator)
+#     -c --cover            Use ibrik, Code coverage calculation
+#     -l --lint [globs]     Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)
 #
-#  Options:
-#
-#    -h, --help               output usage information
-#    -V, --version            output the version number
-#
-#    -r --recursive           Execute specs in recursive directory
-#    -v --verbose             Output spec names
-#    -s --stacktrace          Output stack trace
-#    -t --timeout <msec>      Success time-limit <500>msec
-#    -w --watch [globs]       Watch file changes. Refer [globs] (can use "," separator)
-#
-#    -c --cover               Use ibrik, Code coverage calculation
-#    -l --lint [globs]        Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)
-#    -p --protractor [==arg]  Use protractor, Change to the E2E test mode
-#
-#    -d --debug               Output raw commands $ for -c,-l,-e,-p
+#     -e --e2e [==arg ...]  Use protractor, Change to the E2E test mode
+#     -d --debug            Output raw commands $ for -c,-l,-e
 ```
 
 `--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,*.coffee"`
@@ -113,10 +110,10 @@ jasminetea . -l
 # ✗ Lint! » 15 errors and 0 warnings in 1 file
 ```
 
-#### Use `-p` [protractor][d-4]
+#### Use `-e` [protractor][d-4]
 
 ```bash
-forever start $(npm bin)/coffee myServer.coffee && jasminetea test -p "==baseURL http://localhost:59798/"
+forever start $(npm bin)/coffee myServer.coffee && jasminetea test -e "==baseURL http://localhost:59798/"
 # 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
 # Running 2 specs.
 # 

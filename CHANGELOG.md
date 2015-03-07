@@ -1,6 +1,8 @@
-v0.1.12 / Mar 07 2015
+v0.1.13 / Mar 07 2015
 =========================
- * [`8e5ae63`][8e5ae63] :sushi: Add `-p` `--protractor` the e2e option
+ * [`8e5ae63`][8e5ae63] :sushi: Add `-e` `--e2e` the protractor option
+ * [`unknown`][unknown] :exclamation: Deprecated `-p` `--protractor` option
+ * [`unknown`][unknown] :clock7: Change default: Success time-limit _500_ to _1000_ msec(for e2e)
 
 [8e5ae63]: https://github.com/59naga/jasminetea/commit/8e5ae63640ddc5614ace5e12e2e4d9e38a8f6ceb
 

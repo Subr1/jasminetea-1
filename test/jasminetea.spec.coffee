@@ -15,7 +15,7 @@ isomorphicSpec= (target)->
       args.push 'node'
       args.push bin
       args.push specDir
-      args.push '--protractor' if target is 'CLIENT'
+      args.push '--e2e' if target is 'CLIENT'
 
       run(args).once 'done',(stdout)->
         expect(stdout).toMatch 'Found'
@@ -35,7 +35,7 @@ isomorphicSpec= (target)->
       args.push '10000'
       args.push '--stacktrace'
       args.push '--lint'
-      args.push '--protractor' if target is 'CLIENT'
+      args.push '--e2e' if target is 'CLIENT'
 
       runner= run args
       runner.stdout.on 'data',(buffer)->
@@ -59,10 +59,8 @@ isomorphicSpec= (target)->
         ]
 
         if target is 'SERVER'
-          # messages.unshift 'Protractor mode'
           messages.unshift 'Running 2 specs'
         if target is 'CLIENT'
-          messages.unshift 'Protractor mode'
           messages.unshift 'Running 1 instances'
 
         expect(stdout).toMatch message for message in messages

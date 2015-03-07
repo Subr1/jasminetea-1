@@ -8,14 +8,14 @@ jasminetea=
 
       .option '-v --verbose','Output spec names'
       .option '-s --stacktrace','Output stack trace'
-      .option '-t --timeout <msec>','Success time-limit <500>msec',500
+      .option '-t --timeout <msec>','Success time-limit <1000>msec',1000
 
       .option '-w --watch [globs]','Watch file changes. Refer [globs] (can use "," separator)'
       .option '-c --cover','Use ibrik, Code coverage calculation'
       .option '-l --lint [globs]','Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)'
     
-      .option '-p --protractor [==arg]','Use protractor, Change to the E2E test mode'
-      .option '-d --debug','Output raw commands $ for -c,-l,-e,-p'
+      .option '-e --e2e [==arg ...]','Use protractor, Change to the E2E test mode'
+      .option '-d --debug','Output raw commands $ for -c,-l,-e'
 
       .parse process.argv
     cli.help() if cli.args[0] is undefined
@@ -33,7 +33,7 @@ jasminetea=
     cli.cover= no if '-C' in process.argv
 
     process.env.JASMINETEA_MODE= 'SERVER'
-    process.env.JASMINETEA_MODE= 'CLIENT' if cli.protractor?
+    process.env.JASMINETEA_MODE= 'CLIENT' if cli.e2e?
 
     test= @run
     test= @cover if cli.cover is yes
@@ -55,7 +55,7 @@ jasminetea=
   run: (cli)->
     files= wanderer.seekSync @specs
 
-    @log chalk.bold "Protractor mode" if cli.protractor?
+    @log chalk.bold "Protractor mode" if cli.e2e?
 
     target= (chalk.underline(glob) for glob in @specs).join(' or ')
     @log "Found #{files.length} files by",target,'...' if files.length
@@ -64,8 +64,8 @@ jasminetea=
       #process.exit 1
 
     runner= null
-    runner= @runJasmine cli if cli.protractor is undefined
-    runner= @runProtractor cli if cli.protractor?
+    runner= @runJasmine cli if cli.e2e is undefined
+    runner= @runProtractor cli if cli.e2e?
     runner
 
   runJasmine: (cli)->
@@ -120,7 +120,7 @@ jasminetea=
     args.push 'node'
     args.push require.resolve 'protractor/bin/protractor'
     args.push require.resolve './jasminetea.coffee' # module.exprots.config
-    args.push cli.protractor.replace(new RegExp('==','g'),'--').split(/¥s/) if typeof cli.protractor is 'string'
+    args.push cli.e2e.replace(new RegExp('==','g'),'--').split(/¥s/) if typeof cli.e2e is 'string'
     args.push '--specs'
     args.push wanderer.seekSync(@specs).join ','
     

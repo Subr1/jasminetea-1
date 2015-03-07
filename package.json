@@ -2,11 +2,10 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.cup.js",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "CLI Collection, Getting quick-started of jasmine.",
 
   "scripts": {
-    "start": "node jasminetea test/fixtures --protractor \"==baseUrl http://localhost:59798/\" --timeout 10000 --cover --lint --watch",
     "help": "node jasminetea",
 
     "pretest": "forever start $(npm bin)/coffee test/http-server.coffee && sleep 2",
@@ -14,12 +13,13 @@
     "posttest": "forever stopall",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
   },
-  "devScripts": {
-    "protractor": "JASMINETEA_MODE=CLIENT protractor --baseUrl http://localhost:59798/ --specs test/fixtures/01.spec.coffee",
-    
+  "scriptsForTravis": {
+    "coveralls_token": "travis encrypt COVERALLS_REPO_TOKEN=you_repo_token",
+
     "npm_token": "echo -n \"username:password\" | base64",
     "npm_releasing": "travis encrypt deploy.api_key",
-    "coveralls_token": "travis encrypt COVERALLS_REPO_TOKEN=you_repo_token"
+
+    "saucelabs_token": "open https://docs.saucelabs.com/ci-integrations/travis-ci/"
   },
 
   "dependencies": {
