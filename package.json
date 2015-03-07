@@ -9,7 +9,7 @@
     "start": "node jasminetea test/fixtures --protractor \"==baseUrl http://localhost:59798/\" --timeout 10000 --cover --lint --watch",
     "help": "node jasminetea",
 
-    "pretest": "forever start $(npm bin)/coffee test/http-server.coffee",
+    "pretest": "forever start $(npm bin)/coffee test/http-server.coffee && sleep 2",
     "test": "node jasminetea test --verbose --cover --timeout 10000",
     "posttest": "forever stopall",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
