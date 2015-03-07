@@ -23,7 +23,7 @@ $ npm install jasminetea --global
 Enable `jasminetea specDir` commands. then can immediately run.
 
 ## CLI
-# ```bash
+```bash
 #   Usage: jasminetea specDir [options...]
 # 
 #   7_P
