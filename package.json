@@ -10,7 +10,7 @@
     "help": "node jasminetea",
 
     "pretest": "forever start $(npm bin)/coffee test/http-server.coffee && sleep 2",
-    "test": "node jasminetea test --verbose --cover --timeout 10000",
+    "test": "node jasminetea test --verbose --cover --timeout 30000",
     "posttest": "forever stopall",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
   },
