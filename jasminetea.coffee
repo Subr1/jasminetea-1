@@ -52,7 +52,6 @@ jasminetea=
           report.call(this,cli).once 'close',=>
             @log 'Calculating...' if '-C' in process.argv
 
-            @log 'がんばりましょう' if failed
             process.exit 1 if failed
             process.exit 0
 

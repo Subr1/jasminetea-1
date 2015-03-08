@@ -1,22 +1,24 @@
-v0.1.18 / Mar 08 2015
+v0.1.20 / Mar 08 2015
 =========================
  * [`e3a5225`][e3a5225] :bug: Fix `--e2e` protractor cli multiple param parsing
  * [`e3a5225`][e3a5225] :bug: Fix `--debug` webdriver stdio inheriting
  * [`932af17`][932af17] :coffee: Rehotfix: conflict by iblik>coffee-script/rergister v1.8.0
  * [`159940a`][159940a] :coffee: Without *[sS]pec.js
- * [`unknown`][unknown] :green_heart: add `--report` Reporting code coverage to coveralls.io
- * [`unknown`][unknown] :bug: Fix `--e2e` printing spec results
- * [`unknown`][unknown] :bug: Hotfix process.exit(__0__) due to failed spec
+ * [`6a34e1e`][6a34e1e] :green_heart: add `--report` Reporting code coverage to coveralls.io
+ * [`5e77347`][5e77347] :bug: Fix `--e2e` printing spec results
+ * [`5e77347`][5e77347] :bug: Hotfix process.exit(__0__) due to failed spec
 
 [e3a5225]: https://github.com/59naga/jasminetea/commit/e3a52257e82525eb23388fc58b4b1bd9602e3b29
 [932af17]: https://github.com/59naga/jasminetea/commit/932af1739302eadbb46009177d3bf7f49483e823
 [159940a]: https://github.com/59naga/jasminetea/commit/159940a69ad0bc23c4c1d854119b48cf2815d9d6
+[6a34e1e]: https://github.com/59naga/jasminetea/commit/6a34e1ec8f50937933f2f9ab9ad44a304fa02c7c
+[5e77347]: https://github.com/59naga/jasminetea/commit/5e77347558ec0769ea7b1fd22ec4dcbe921308c9
 
 v0.1.13 / Mar 07 2015
 =========================
  * [`8e5ae63`][8e5ae63] :sushi: Add `-e` `--e2e` the protractor option
- * [`unknown`][unknown] :exclamation: Deprecated `-p` `--protractor` option
- * [`unknown`][unknown] :clock7: Change default: Success time-limit _500_ to _1000_ msec(for e2e)
+ * [`8e5ae63`][8e5ae63] :exclamation: Deprecated `-p` `--protractor` option
+ * [`8e5ae63`][8e5ae63] :clock7: Change default: Success time-limit _500_ to _1000_ msec(for e2e)
 
 [8e5ae63]: https://github.com/59naga/jasminetea/commit/8e5ae63640ddc5614ace5e12e2e4d9e38a8f6ceb
 
