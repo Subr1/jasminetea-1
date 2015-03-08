@@ -2,13 +2,13 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.cup.js",
-  "version": "0.1.13",
-  "description": "CLI Collection, Getting quick-started of jasmine.",
+  "version": "0.1.15",
+  "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
     "help": "node jasminetea",
 
-    "pretest": "forever start $(npm bin)/coffee test/http-server.coffee && sleep 2",
+    "pretest": "forever start $(npm bin)/static test/fixtures",
     "test": "node jasminetea test --verbose --cover --timeout 30000",
     "posttest": "forever stopall",
     "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
@@ -39,7 +39,8 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
-    "forever": "^0.14.1"
+    "forever": "^0.14.1",
+    "node-static": "^0.7.6"
   },
   
   "repository": {

@@ -1,3 +1,10 @@
+v0.1.15 / Mar 08 2015
+=========================
+ * [`unknown`][unknown] :bug: Fix `-e` protractor cli multiple param parsing
+ * [`unknown`][unknown] :bug: Fix `-d` webdriver stdio inheriting
+
+[unknown]: https://
+
 v0.1.13 / Mar 07 2015
 =========================
  * [`8e5ae63`][8e5ae63] :sushi: Add `-e` `--e2e` the protractor option

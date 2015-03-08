@@ -14,8 +14,8 @@ jasminetea=
       .option '-c --cover','Use ibrik, Code coverage calculation'
       .option '-l --lint [globs]','Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)'
     
-      .option '-e --e2e [==arg ...]','Use protractor, Change to the E2E test mode'
-      .option '-d --debug','Output raw commands $ for -c,-l,-e'
+      .option '-e --e2e [==param ...]','Use protractor, Change to the E2E test mode'
+      .option '-d --debug','Output raw commands and stdout $ for -c,-l,-e'
 
       .parse process.argv
     cli.help() if cli.args[0] is undefined
@@ -55,7 +55,7 @@ jasminetea=
   run: (cli)->
     files= wanderer.seekSync @specs
 
-    @log chalk.bold "Protractor mode" if cli.e2e?
+    @log chalk.bold "E2E test mode" if cli.e2e?
 
     target= (chalk.underline(glob) for glob in @specs).join(' or ')
     @log "Found #{files.length} files by",target,'...' if files.length
@@ -120,7 +120,8 @@ jasminetea=
     args.push 'node'
     args.push require.resolve 'protractor/bin/protractor'
     args.push require.resolve './jasminetea.coffee' # module.exprots.config
-    args.push cli.e2e.replace(new RegExp('==','g'),'--').split(/¥s/) if typeof cli.e2e is 'string'
+    if typeof cli.e2e is 'string'
+      args.push argv for argv in cli.e2e.replace(new RegExp('==','g'),'--').split /\s/
     args.push '--specs'
     args.push wanderer.seekSync(@specs).join ','
     
@@ -174,8 +175,10 @@ jasminetea=
     [script,args...]= args
     selenium= childProcess.spawn script,args,env:process.env
     selenium.stderr.on 'data',(buffer)->
+      process.stdout.write buffer.toString() if cli.debug?
       manager.emit 'data','stderr',buffer
     selenium.stdout.on 'data',(buffer)->
+      process.stderr.write buffer.toString() if cli.debug?
       manager.emit 'data','stdout',buffer
     manager.on 'data',(type,buffer)->
       return if not buffer.toString().match /(Started SocketListener|Selenium Standalone has exited)/g
@@ -205,7 +208,7 @@ jasminetea=
     try
       # Fix conflict coffee-script/registeer 1.8.0
       conflicted= require.resolve 'ibrik/node_modules/coffee-script'
-      rimraf.sync path.resolve conflicted,'../../../'
+      rimraf.sync path.join require.resolve 'ibrik/node_modules','coffee-script'
 
     catch noConflict
       # Fixed

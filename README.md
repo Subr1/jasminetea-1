@@ -112,8 +112,10 @@ jasminetea . -l
 
 #### Use `-e` [protractor][d-4]
 
+`npm install forever node-static` after:
+
 ```bash
-forever start $(npm bin)/coffee myServer.coffee && jasminetea test -e "==baseURL http://localhost:59798/"
+forever start $(npm bin)/static test && jasminetea test -e '==baseUrl http://127.0.0.1:8080/'
 # 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
 # Running 2 specs.
 # 
