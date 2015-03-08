@@ -1,9 +1,10 @@
-v0.1.17 / Mar 08 2015
+v0.1.18 / Mar 08 2015
 =========================
  * [`e3a5225`][e3a5225] :bug: Fix `-e` protractor cli multiple param parsing
  * [`e3a5225`][e3a5225] :bug: Fix `-d` webdriver stdio inheriting
  * [`932af17`][932af17] :coffee: Rehotfix: conflict by iblik>coffee-script/rergister v1.8.0
  * [`159940a`][159940a] :coffee: Without *[sS]pec.js
+ * [`unknown`][unknown] :green_heart: add `--report` Reporting code coverage to coveralls.io
 
 [e3a5225]: https://github.com/59naga/jasminetea/commit/e3a52257e82525eb23388fc58b4b1bd9602e3b29
 [932af17]: https://github.com/59naga/jasminetea/commit/932af1739302eadbb46009177d3bf7f49483e823

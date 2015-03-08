@@ -2,16 +2,15 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.cup.js",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
     "help": "node jasminetea",
 
     "pretest": "forever start $(npm bin)/static test/fixtures",
-    "test": "node jasminetea test --verbose --cover --timeout 30000",
-    "posttest": "forever stopall",
-    "coveralls": "coveralls < ./coverage/lcov.info && rm -rf coverage"
+    "test": "node jasminetea test --timeout 30000 --verbose --cover --report --debug",
+    "posttest": "forever stopall"
   },
   "scriptsForTravis": {
     "coveralls_token": "travis encrypt COVERALLS_REPO_TOKEN=you_repo_token",
@@ -28,6 +27,7 @@
     "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
     "commander": "^2.6.0",
+    "coveralls": "^2.11.2",
     "ibrik": "^2.0.0",
     "istanbul": "^0.3.6",
     "jasmine": "^2.2.1",
@@ -38,7 +38,6 @@
     "wanderer": "0.0.2"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
     "forever": "^0.14.1",
     "node-static": "^0.7.6"
   },

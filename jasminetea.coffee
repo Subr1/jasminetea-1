@@ -5,16 +5,17 @@ jasminetea=
       .description chalk.magenta('7')+chalk.yellow('_')+chalk.green('P')
       .usage 'specDir [options...]'
       .option '-r --recursive','Execute specs in recursive directory'
-
       .option '-v --verbose','Output spec names'
       .option '-s --stacktrace','Output stack trace'
       .option '-t --timeout <msec>','Success time-limit <1000>msec',1000
 
       .option '-w --watch [globs]','Watch file changes. Refer [globs] (can use "," separator)'
+
       .option '-c --cover','Use ibrik, Code coverage calculation'
+      .option '--report','Use coveralls, Reporting code coverage to coveralls.io'
       .option '-l --lint [globs]','Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)'
-    
       .option '-e --e2e [==param ...]','Use protractor, Change to the E2E test mode'
+
       .option '-d --debug','Output raw commands and stdout $ for -c,-l,-e'
 
       .parse process.argv
@@ -45,8 +46,12 @@ jasminetea=
 
         kill= @noop
         kill= @webdriverKill if seleniumManager isnt 0
-        kill(seleniumManager,@config.seleniumKillAddress).once 'close',->
-          process.exit 0
+        kill(seleniumManager,@config.seleniumKillAddress).once 'close',=>
+          report= @noop
+          report= @report if cli.cover is yes and cli.report?
+          report.call(this,cli).once 'close',=>
+            @log 'Calculating...' if '-C' in process.argv
+            process.exit 0
 
   ###
     Core options
@@ -104,9 +109,9 @@ jasminetea=
       manager.once 'start',=>
         protractor= @protractor cli
         protractor.stdout.on 'data',(buffer)->
-          process.stdout.write buffer.toString()
+          process.stdout.write buffer.toString() if cli.debug?
         protractor.stderr.on 'data',(buffer)->
-          process.stderr.write buffer.toString()
+          process.stderr.write buffer.toString() if cli.debug?
         protractor.on 'error',(stack)->
           console.error error?.stack?.toString() ? error?.message ? error
           runner.emit 'close',manager
@@ -213,6 +218,7 @@ jasminetea=
       # Fixed
 
     args= []
+    args.push 'node'
     args.push require.resolve 'ibrik/bin/ibrik'
     args.push 'cover'
     args.push require.resolve './jasminetea'
@@ -225,7 +231,24 @@ jasminetea=
     args.push 'html'
     @log '$',args.join ' ' if cli.debug?
 
-    childProcess.spawn 'node',args,{stdio:'inherit',cwd:process.cwd()}
+    [script,args...]= args
+    childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd()}
+
+  report: (cli)->
+    args= []
+    args.push 'cat'
+    args.push './coverage/lcov.info'
+    args.push '|'
+    args.push require.resolve 'coveralls/bin/coveralls.js'
+    args.push '&&'
+    args.push 'rm'
+    args.push '-rf'
+    args.push './coverage'
+    @log '$',args.join ' ' if cli.debug?
+
+    childProcess.exec args.join(' '),(error)=>
+      throw error if error?
+      @log 'Posted a coverage report.'
 
   watch: (cli)->
     manager= new events.EventEmitter

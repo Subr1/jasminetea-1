@@ -24,23 +24,29 @@ Enable `jasminetea specDir` commands. then can immediately run.
 
 ## CLI
 ```bash
-#   Usage: jasminetea specDir [options...]
-# 
-#   7_P
-# 
-#   Options:
-# 
-#    -r --recursive          Execute specs in recursive directory.
-#    -v --verbose            Output spec names.
-#    -s --stacktrace         Output stack trace.
-#    -t --timeout <msec>     Success time-limit <1000>msec.
+# Usage: jasminetea specDir [options...]
 #
-#    -w --watch [globs]      Watch file changes. Refer [globs] (can use "," separator)
-#    -c --cover              Use ibrik, Code coverage calculation
-#    -l --lint [globs]       Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)
-#    -e --e2e [==param ...]  Use protractor, Change to the E2E test mode.
-#
-#    -d --debug              Output raw commands($) and stdout. for -c,-l,-e
+# 7_P
+# 
+# Options:
+# 
+#   -h, --help              output usage information
+#   -V, --version           output the version number
+# 
+#   -r --recursive          Execute specs in recursive directory
+#   -v --verbose            Output spec names
+#   -s --stacktrace         Output stack trace
+#   -t --timeout <msec>     Success time-limit <1000>msec
+# 
+#   -w --watch [globs]      Watch file changes. Refer [globs] (can use "," separator)
+# 
+#   -c --cover              Use ibrik, Code coverage calculation
+#   --report                Use coveralls, Reporting code coverage to coveralls.io
+#   -l --lint [globs]       Use coffeelint, Code linting. Refer [globs] (can use "," separator)
+#   -e --e2e [==param ...]  Use protractor, Change to the E2E test mode
+# 
+#   -d --debug              Output raw commands and stdout $ for -c,-l,-e
+# 
 ```
 
 `--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,*.coffee"`
@@ -89,6 +95,9 @@ jasminetea test -c
 # Lines        : 40.63% ( 65/160 )
 # ================================================================================
 ```
+
+Can use `--report`, Post a coverage report to [coveralls.io][d-2-1]
+Be required `.coveralls.yml` or [`process.env.COVERALLS_REPO_*`][d-2-2]
 
 #### Use `-l` [coffeelint][d-3]
 
@@ -145,6 +154,8 @@ MIT by 59naga
 
 [d-1]: https://github.com/mhevery/jasmine-node
 [d-2]: https://github.com/Constellation/ibrik
+[d-2-1]: https://github.com/cainus/node-coveralls#istanbul
+[d-2-2]: http://docs.travis-ci.com/user/environment-variables/
 [d-3]: http://coffeelint.org/
 [d-4]: http://angular.github.io/protractor/
 [d-5]: http://coffeescript.org/
