@@ -207,8 +207,7 @@ jasminetea=
   cover: (cli)->
     try
       # Fix conflict coffee-script/registeer 1.8.0
-      conflicted= require.resolve 'ibrik/node_modules/coffee-script'
-      rimraf.sync path.join require.resolve 'ibrik/node_modules','coffee-script'
+      rimraf.sync path.dirname require.resolve 'ibrik/node_modules/coffee-script/register'
 
     catch noConflict
       # Fixed
