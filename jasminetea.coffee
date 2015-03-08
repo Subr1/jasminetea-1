@@ -284,7 +284,6 @@ jasminetea=
     specDir= path.join specDir,'**' if recursive?
 
     globs= []
-    globs.push path.join specDir,'*[sS]pec.js'
     globs.push path.join specDir,'*[sS]pec.coffee'
     globs
 
