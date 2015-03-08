@@ -2,14 +2,14 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea.cup.js",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
     "help": "node jasminetea",
 
     "pretest": "forever start $(npm bin)/static test/fixtures",
-    "test": "node jasminetea test --timeout 30000 --verbose --cover --report --debug",
+    "test": "node jasminetea test --timeout 30000 --verbose --cover --debug",
     "posttest": "forever stopall"
   },
   "scriptsForTravis": {

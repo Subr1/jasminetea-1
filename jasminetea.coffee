@@ -38,7 +38,7 @@ jasminetea=
 
     test= @run
     test= @cover if cli.cover is yes
-    test.call(this,cli).once 'close',(seleniumManager=0)=>
+    test.call(this,cli).once 'close',(failed=no,seleniumManager=0)=>
       lint= @noop
       lint= @lint if cli.lint? and not ('-C' in process.argv)
       lint.call(this,cli).once 'close',=>
@@ -51,6 +51,9 @@ jasminetea=
           report= @report if cli.cover is yes and cli.report?
           report.call(this,cli).once 'close',=>
             @log 'Calculating...' if '-C' in process.argv
+
+            @log 'がんばりましょう' if failed
+            process.exit 1 if failed
             process.exit 0
 
   ###
@@ -95,28 +98,34 @@ jasminetea=
         catch error
           console.error error?.stack?.toString() ? error?.message ? error
 
+    failed= no
     jasmine.addReporter
+      specDone: (result)->
+        failed= yes if result.status is 'failed'
+
       jasmineDone: ->
-        runner.emit 'close'
+        runner.emit 'close',failed
 
     runner
 
   runProtractor: (cli)->
     runner= new events.EventEmitter
 
+    failed= no
     @webdriverUpdate(cli).once 'close',=>
       manager= @webdriverStart cli
       manager.once 'start',=>
         protractor= @protractor cli
         protractor.stdout.on 'data',(buffer)->
-          process.stdout.write buffer.toString() if cli.debug?
+          failed= yes if buffer.toString().match /Process exited with error code 1\n$/g
+          process.stdout.write buffer.toString()
         protractor.stderr.on 'data',(buffer)->
-          process.stderr.write buffer.toString() if cli.debug?
+          process.stderr.write buffer.toString()
         protractor.on 'error',(stack)->
           console.error error?.stack?.toString() ? error?.message ? error
-          runner.emit 'close',manager
+          runner.emit 'close',failed,manager
         protractor.once 'close',->
-          runner.emit 'close',manager
+          runner.emit 'close',failed,manager
 
     runner
 

@@ -137,7 +137,7 @@ forever start $(npm bin)/static $(pwd)/test && jasminetea test -e '==baseUrl htt
 ```
 
 # TODO
-* Refactoring (really dirty...)
+* Catastrophic project itself.
 
 License
 =========================
