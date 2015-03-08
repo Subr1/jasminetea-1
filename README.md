@@ -30,17 +30,17 @@ Enable `jasminetea specDir` commands. then can immediately run.
 # 
 #   Options:
 # 
-#     -r --recursive        Execute specs in recursive directory
-#     -v --verbose          Output spec names
-#     -s --stacktrace       Output stack trace
-#     -t --timeout <msec>   Success time-limit <1000>msec
+#    -r --recursive          Execute specs in recursive directory.
+#    -v --verbose            Output spec names.
+#    -s --stacktrace         Output stack trace.
+#    -t --timeout <msec>     Success time-limit <1000>msec.
 #
-#     -w --watch [globs]    Watch file changes. Refer [globs] (can use "," separator)
-#     -c --cover            Use ibrik, Code coverage calculation
-#     -l --lint [globs]     Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)
+#    -w --watch [globs]      Watch file changes. Refer [globs] (can use "," separator)
+#    -c --cover              Use ibrik, Code coverage calculation
+#    -l --lint [globs]       Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)
+#    -e --e2e [==param ...]  Use protractor, Change to the E2E test mode.
 #
-#     -e --e2e [==arg ...]  Use protractor, Change to the E2E test mode
-#     -d --debug            Output raw commands $ for -c,-l,-e
+#    -d --debug              Output raw commands($) and stdout. for -c,-l,-e
 ```
 
 `--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,*.coffee"`
@@ -48,7 +48,7 @@ Enable `jasminetea specDir` commands. then can immediately run.
 ## Example
 ```bash
 jasminetea hoge -r -w
-# 7_P Spec Notfound. by **/*[sS]pec.js or **/*[sS]pec.coffee
+# 7_P Spec Notfound. by **/*[sS]pec.coffee
 # 
 # 
 # 0 specs, 0 failures
@@ -63,7 +63,7 @@ jasminetea hoge -r -w
 ```bash
 jasminetea test -c
 
-# 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+# 7_P Found 1 files by test/*[sS]pec.coffee ...
 # Running 4 specs.
 # 
 # Server
@@ -94,7 +94,7 @@ jasminetea test -c
 
 ```bash
 jasminetea . -l
-# 7_P Spec Notfound. by *[sS]pec.js or *[sS]pec.coffee
+# 7_P Spec Notfound. by *[sS]pec.coffee
 # 
 # 
 # 0 specs, 0 failures
@@ -116,7 +116,7 @@ jasminetea . -l
 
 ```bash
 forever start $(npm bin)/static test && jasminetea test -e '==baseUrl http://127.0.0.1:8080/'
-# 7_P Found 1 files by test/*[sS]pec.js or test/*[sS]pec.coffee ...
+# 7_P Found 1 files by test/*[sS]pec.coffee ...
 # Running 2 specs.
 # 
 #   /Users/59naga/Downloads/jasminetea/test/fixtures

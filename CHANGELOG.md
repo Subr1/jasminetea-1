@@ -1,9 +1,13 @@
-v0.1.15 / Mar 08 2015
+v0.1.17 / Mar 08 2015
 =========================
- * [`unknown`][unknown] :bug: Fix `-e` protractor cli multiple param parsing
- * [`unknown`][unknown] :bug: Fix `-d` webdriver stdio inheriting
+ * [`e3a5225`][e3a5225] :bug: Fix `-e` protractor cli multiple param parsing
+ * [`e3a5225`][e3a5225] :bug: Fix `-d` webdriver stdio inheriting
+ * [`932af17`][932af17] :coffee: Rehotfix: conflict by iblik>coffee-script/rergister v1.8.0
+ * [`159940a`][159940a] :coffee: Without *[sS]pec.js
 
-[unknown]: https://
+[e3a5225]: https://github.com/59naga/jasminetea/commit/e3a52257e82525eb23388fc58b4b1bd9602e3b29
+[932af17]: https://github.com/59naga/jasminetea/commit/932af1739302eadbb46009177d3bf7f49483e823
+[159940a]: https://github.com/59naga/jasminetea/commit/159940a69ad0bc23c4c1d854119b48cf2815d9d6
 
 v0.1.13 / Mar 07 2015
 =========================
