@@ -9,7 +9,7 @@
     "help": "node jasminetea",
 
     "pretest": "forever start $(npm bin)/static test/fixtures",
-    "test": "node jasminetea test --timeout 30000 --verbose --cover --debug",
+    "test": "node jasminetea test --timeout 30000 --verbose --cover --report --debug",
     "posttest": "forever stopall"
   },
   "scriptsForTravis": {
