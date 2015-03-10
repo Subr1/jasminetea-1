@@ -33,14 +33,14 @@ class Collection extends require './utility'
 
     runner
 
-  runProtractor: (cli)->
+  runProtractor: (specs,options)->
     runner= new EventEmitter
 
     code= 0
-    @webdriverUpdate(cli).once 'close',=>
-      manager= @webdriverStart cli
+    @webdriverUpdate(options).once 'close',=>
+      manager= @webdriverStart options
       manager.once 'start',=>
-        protractor= @protractor cli
+        protractor= @protractor specs,options
         protractor.stdout.on 'data',(buffer)->
           code= 1 if buffer.toString().match /Process exited with error code 1\n$/g
           process.stdout.write buffer.toString()
@@ -55,38 +55,38 @@ class Collection extends require './utility'
 
     runner
 
-  protractor: (cli)->
+  protractor: (specs,options)->
     args= []
     args.push 'node'
     args.push require.resolve 'protractor/bin/protractor'
     args.push require.resolve '../jasminetea' # module.exprots.config
-    if typeof cli.e2e is 'string'
-      args.push argv for argv in cli.e2e.replace(new RegExp('==','g'),'--').split /\s/
+    if typeof options.e2e is 'string'
+      args.push argv for argv in options.e2e.replace(new RegExp('==','g'),'--').split /\s/
     args.push '--specs'
-    args.push wanderer.seekSync(@specs).join ','
+    args.push wanderer.seekSync(specs).join ','
     
-    # @log 'Arguments has been ignored',(chalk.underline(arg) for arg in cli.args[1...]).join ' '
-    @log '$',args.join ' ' if cli.debug?
+    # @log 'Arguments has been ignored',(chalk.underline(arg) for arg in options.args[1...]).join ' '
+    @log '$',args.join ' ' if options.debug?
 
-    process.env.JASMINETEA_VERBOSE= cli.verbose
-    process.env.JASMINETEA_TIMEOUT= cli.timeout
-    process.env.JASMINETEA_STACKTRACE= cli.stacktrace
+    process.env.JASMINETEA_VERBOSE= options.verbose
+    process.env.JASMINETEA_TIMEOUT= options.timeout
+    process.env.JASMINETEA_STACKTRACE= options.stacktrace
 
     [script,args...]= args
     childProcess.spawn script,args,env:process.env
 
-  webdriverUpdate: (cli)->
+  webdriverUpdate: (options)->
     args= []
     args.push 'node'
     args.push require.resolve 'protractor/bin/webdriver-manager'
     args.push 'update'
     args.push '--standalone'
-    @log '$',args.join ' ' if cli.debug?
+    @log '$',args.join ' ' if options.debug?
 
     [script,args...]= args
     childProcess.spawn script,args,stdio:'inherit'
 
-  webdriverStart: (cli)->
+  webdriverStart: (options)->
     manager= new EventEmitter
     if process.env.JASMINETEA_SELENIUM
       process.nextTick -> manager.emit 'start'
@@ -96,15 +96,15 @@ class Collection extends require './utility'
     args.push 'node'
     args.push require.resolve 'protractor/bin/webdriver-manager'
     args.push 'start'
-    @log '$',args.join ' ' if cli.debug?
+    @log '$',args.join ' ' if options.debug?
 
     [script,args...]= args
     selenium= childProcess.spawn script,args,env:process.env
     selenium.stderr.on 'data',(buffer)->
-      process.stdout.write buffer.toString() if cli.debug?
+      process.stdout.write buffer.toString() if options.debug?
       manager.emit 'data','stderr',buffer
     selenium.stdout.on 'data',(buffer)->
-      process.stderr.write buffer.toString() if cli.debug?
+      process.stderr.write buffer.toString() if options.debug?
       manager.emit 'data','stdout',buffer
     manager.on 'data',(type,buffer)->
       return if not buffer.toString().match /(Started SocketListener|Selenium Standalone has exited)/g
@@ -130,7 +130,7 @@ class Collection extends require './utility'
       @deleteRequireCache file.id for file in files.children
     delete require.cache[id]
 
-  cover: (cli)->
+  cover: (options)->
     rimraf= require 'rimraf'
     try
       # Fix conflict coffee-script/registeer 1.8.0
@@ -152,12 +152,12 @@ class Collection extends require './utility'
     args.push require.resolve 'istanbul/lib/cli.js'
     args.push 'report'
     args.push 'html'
-    @log '$',args.join ' ' if cli.debug?
+    @log '$',args.join ' ' if options.debug?
 
     [script,args...]= args
     childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
 
-  report: (cli)->
+  report: (options)->
     exists_token= fs.existsSync path.join process.cwd(),'.coveralls.yml'
     exists_token= process.env.COVERALLS_REPO_TOKEN? if not exists_token
     if not exists_token
@@ -169,19 +169,19 @@ class Collection extends require './utility'
     args.push path.join process.cwd(),'coverage','lcov.info'
     args.push '|'
     args.push require.resolve 'coveralls/bin/coveralls.js'
-    @log '$',args.join ' ' if cli.debug?
+    @log '$',args.join ' ' if options.debug?
 
     childProcess.exec args.join(' '),{cwd:process.cwd(),env:process.env},(error)=>
       throw error if error?
       @log 'Posted a coverage report.'
 
-  lint: (cli)->
+  lint: (options)->
     args= [require.resolve 'coffeelint/bin/coffeelint']
-    args.push path.relative process.cwd(),file for file in wanderer.seekSync cli.lint
-    @log '$',args.join ' ' if cli.debug?
+    args.push path.relative process.cwd(),file for file in wanderer.seekSync options.lint
+    @log '$',args.join ' ' if options.debug?
 
     console.log ''
-    @log 'Lint by',cli.lint.join(' or '),'...'
+    @log 'Lint by',options.lint.join(' or '),'...'
     childProcess.spawn 'node',args,{stdio:'inherit',cwd:process.cwd()}
 
 EventEmitter= require('events').EventEmitter

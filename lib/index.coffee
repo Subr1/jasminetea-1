@@ -46,14 +46,14 @@ class Jasminetea extends require './collection'
       .parse process.argv
     cli.help() if cli.args[0] is undefined
 
-    @specDir= cli.args[0]
-    @specs= @getSpecGlobs @specDir,cli.recursive
-    @scripts= @getScriptGlobs 'lib',@specDir,cli.recursive
+    specDir= cli.args[0]
+    specs= @getSpecGlobs specDir,cli.recursive
+    scripts= @getScriptGlobs 'lib',specDir,cli.recursive
 
-    cli.watch= @scripts if cli.watch is yes
+    cli.watch= scripts if cli.watch is yes
     cli.watch= cli.watch.split(',') if typeof cli.watch is 'string'
 
-    cli.lint= @scripts if cli.lint is yes
+    cli.lint= scripts if cli.lint is yes
     cli.lint= cli.lint.split(',') if typeof cli.lint is 'string'
 
     cli.cover= no if '-C' in process.argv
@@ -67,7 +67,7 @@ class Jasminetea extends require './collection'
 
     test= @run
     test= @cover if cli.cover is yes
-    test.call(this,cli).once 'close',(code,seleniumManager=0)=>
+    test.call(this,specs,cli).once 'close',(code,seleniumManager=0)=>
       lint= @noop
       lint= @lint if cli.lint? and not ('-C' in process.argv)
       lint.call(this,cli).once 'close',=>
@@ -88,20 +88,20 @@ class Jasminetea extends require './collection'
 
             process.exit ~~result[process.env.JASMINETEA_ID]
 
-  run: (cli)->
-    files= require('wanderer').seekSync @specs
+  run: (specs,options)->
+    files= require('wanderer').seekSync specs
 
-    @log chalk.bold "E2E test mode" if cli.e2e?
+    @log chalk.bold "E2E test mode" if options.e2e?
 
-    target= (chalk.underline(glob) for glob in @specs).join(' or ')
+    target= (chalk.underline(glob) for glob in specs).join(' or ')
     @log "Found #{files.length} files by",target,'...' if files.length
     if files.length is 0
-      @log "Spec Notfound. by",(chalk.underline(path.resolve spec) for spec in @specs).join(' or ')
-      process.exit 1 if cli.watch is undefined
+      @log "Spec Notfound. by",(chalk.underline(path.resolve spec) for spec in specs).join(' or ')
+      process.exit 1 if options.watch is undefined
 
     runner= null
-    runner= @runJasmine @specs,cli if cli.e2e is undefined
-    runner= @runProtractor cli if cli.e2e?
+    runner= @runJasmine specs,options if options.e2e is undefined
+    runner= @runProtractor specs,options if options.e2e?
     runner
 
   watch: (cli)->
