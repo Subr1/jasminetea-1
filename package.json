@@ -1,22 +1,19 @@
 {
   "name": "jasminetea",
   "bin" : "jasminetea",
-  "main": "jasminetea.cup.js",
-  "version": "0.1.20",
+  "main": "jasminetea",
+  "version": "0.1.21",
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
-    "help": "node jasminetea",
-
-    "pretest": "forever start $(npm bin)/static test/fixtures",
-    "test": "node jasminetea test --timeout 30000 --verbose --cover --report --debug",
-    "posttest": "forever stopall"
+    "test": "node jasminetea test --verbose --cover --report --lint --debug",
+    "posttest": "node jasminetea test --e2e --verbose --cover --report --lint --debug"
   },
   "scriptsForTravis": {
-    "coveralls_token": "travis encrypt COVERALLS_REPO_TOKEN=you_repo_token",
+    "npm_api_key": "echo -n \"username:password\" | base64",
+    "npm": "travis setup npm",
 
-    "npm_token": "echo -n \"username:password\" | base64",
-    "npm_releasing": "travis encrypt deploy.api_key",
+    "coveralls": "travis encrypt COVERALLS_REPO_TOKEN",
 
     "saucelabs_token": "open https://docs.saucelabs.com/ci-integrations/travis-ci/"
   },
@@ -32,13 +29,11 @@
     "istanbul": "^0.3.6",
     "jasmine": "^2.2.1",
     "jasmine-terminal-reporter": "^0.9.1",
-    "node-module-all": "0.0.8",
     "protractor": "^1.8.0",
     "rimraf": "^2.2.8",
     "wanderer": "0.0.2"
   },
   "devDependencies": {
-    "forever": "^0.14.1",
     "node-static": "^0.7.6"
   },
   

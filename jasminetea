@@ -1,3 +1,14 @@
 #!/usr/bin/env node
 
-require('./').cli();
+// Avoid conflicts with another version
+if(typeof require('module')._extensions['.coffee']==='undefined'){
+  require('coffee-script/register');
+}
+
+var jasminetea= new (require('./lib'));
+
+if(module.parent===null){
+  jasminetea.cli(process.argv.slice(2));
+}
+
+module.exports= jasminetea;

@@ -1,3 +1,7 @@
+v0.1.21 / Mar 10 2015
+=========================
+ * [`unknown`][unknown] :bug: reFix process.exit(0) due to failed spec (via --cover)
+
 v0.1.20 / Mar 08 2015
 =========================
  * [`e3a5225`][e3a5225] :bug: Fix `--e2e` protractor cli multiple param parsing
@@ -69,3 +73,5 @@ v0.1.6 / Mar 02 2015
 [f3db200]: https://github.com/59naga/jasminetea/commit/f3db2008c93f30cac4d365fa341350643e7c2679
 
 [1]: https://github.com/Constellation/ibrik
+
+[unknown]: https://github.com/59naga/jasminetea/commit/
