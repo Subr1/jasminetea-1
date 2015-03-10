@@ -166,7 +166,7 @@ class Collection extends require './utility'
 
     args= []
     args.push 'cat'
-    args.push './coverage/lcov.info'
+    args.push path.join process.cwd(),'coverage','lcov.info'
     args.push '|'
     args.push require.resolve 'coveralls/bin/coveralls.js'
     @log '$',args.join ' ' if cli.debug?
