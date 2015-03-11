@@ -5,9 +5,7 @@ i= 1
 describe 'Collection',->
   it "#{i++} constructor",->
     expect(collection.constructor.name).toBe 'Collection'
-  it "#{i++} runJasmine",->
-    # runner= collection.runJasmine [],{}
-    # conflict? runJasmine > runJasmine
+  xit "#{i++} runJasmine",()->
 
   xit "#{i++} runProtractor",->
   xit "#{i++} protractor",->

@@ -2,10 +2,13 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
+    "test2": "webdriver-manager update && webdriver-manager start",
+    "test3": "ibrik cover $(npm bin)/protractor -- lib/index.coffee && $(npm bin)/istanbul report html",
+
     "test": "node jasminetea test --verbose --cover --report --lint --debug",
     "posttest": "node jasminetea test --e2e --verbose --cover --report --lint --debug"
   },

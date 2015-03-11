@@ -1,6 +1,10 @@
-v0.1.21 / Mar 10 2015
+v0.1.22 / Mar 11 2015
 =========================
- * [`unknown`][unknown] :bug: reFix process.exit(0) due to failed spec (via --cover)
+ * [`e68e514`][e68e514] :bug: reFix process.exit(0) due to failed spec (via --cover)
+ * [`2edc63b`][2edc63b] :bug: Fix: Ignored jasmine options
+
+[e68e514]: https://github.com/59naga/jasminetea/commit/e68e514efd29d902ccd0d6655ae736af05f3031e
+[2edc63b]: https://github.com/59naga/jasminetea/commit/2edc63bb92eb50daf18bfbd94c7cf93469e73870
 
 v0.1.20 / Mar 08 2015
 =========================
