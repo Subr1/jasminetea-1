@@ -28,25 +28,25 @@ class Utility
 
   noop: ()->
     noop= new EventEmitter
-    process.nextTick -> noop.emit 'close'
+    process.nextTick -> noop.emit 'close',0
     noop
 
-  getSpecGlobs: (specDir,recursive=null)->
+  getSpecGlobs: (specDir,recursive=null,filename='*[sS]pec.coffee')->
     specDir= path.join specDir,'**' if recursive?
 
     globs= []
-    globs.push path.join specDir,'*[sS]pec.coffee'
+    globs.push path.join specDir,filename
     globs
 
-  getScriptGlobs: (libDir,specDir,recursive=null)->
+  getScriptGlobs: (libDir,specDir,recursive=null,filename='*.coffee')->
     cwd= '.' if specDir isnt '.'
     libDir= path.join(libDir,'**') if recursive?
     specDir= path.join(specDir,'**') if recursive?
 
     globs= []
-    globs.push path.join(cwd,'*.coffee') if cwd?
-    globs.push path.join libDir,'*.coffee'
-    globs.push path.join specDir,'*.coffee'
+    globs.push path.join(cwd,filename) if cwd?
+    globs.push path.join libDir,filename
+    globs.push path.join specDir,filename
     globs
 
 path= require 'path'

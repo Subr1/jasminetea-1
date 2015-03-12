@@ -1,9 +1,9 @@
 # ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> CLI Collection, Quick start [jasmine][d-1] for [CoffeeScript][d-5].
+> CLI Collection, Quick start [jasmine2][d-1] for [CoffeeScript][d-5].
 
 1. Without configuration file
-2. Can be running spec. by [jasmine-node][d-1]
+2. Can be running spec. by [jasmine2][d-1]
 3. Can be calculate code caverage. by [iblik][d-2]
 4. Can be checking code quality. by [coffeelint][d-3]
 4. Can be running spec for e2e. by [protractor][d-4]
@@ -136,9 +136,6 @@ forever start $(npm bin)/static $(pwd)/test && jasminetea test -e '==baseUrl htt
 # Finished in 0 seconds
 ```
 
-# TODO
-* Catastrophic project itself.
-
 License
 =========================
 MIT by 59naga
@@ -152,7 +149,7 @@ MIT by 59naga
 [coveralls-image]: https://coveralls.io/repos/59naga/jasminetea/badge.svg?branch=master
 [coveralls]: https://coveralls.io/r/59naga/jasminetea?branch=master
 
-[d-1]: https://github.com/mhevery/jasmine-node
+[d-1]: https://github.com/mhevery/jasmine
 [d-2]: https://github.com/Constellation/ibrik
 [d-2-1]: https://github.com/cainus/node-coveralls#istanbul
 [d-2-2]: http://docs.travis-ci.com/user/environment-variables/

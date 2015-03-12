@@ -2,15 +2,16 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
-    "test2": "webdriver-manager update && webdriver-manager start",
-    "test3": "ibrik cover $(npm bin)/protractor -- lib/index.coffee && $(npm bin)/istanbul report html",
+    "start": "node jasminetea test --cover --verbose --watch --timeout 30000",
 
-    "test": "node jasminetea test --verbose --cover --report --lint --debug",
-    "posttest": "node jasminetea test --e2e --verbose --cover --report --lint --debug"
+    "help": "node jasminetea",
+
+    "test": "node jasminetea test --verbose --cover --report --lint --debug --timeout 10000",
+    "posttest": "node jasminetea test --e2e --verbose --cover --report --lint --debug --timeout 10000"
   },
   "scriptsForTravis": {
     "npm_api_key": "echo -n \"username:password\" | base64",
@@ -35,9 +36,6 @@
     "protractor": "^1.8.0",
     "rimraf": "^2.2.8",
     "wanderer": "0.0.2"
-  },
-  "devDependencies": {
-    "node-static": "^0.7.6"
   },
   
   "repository": {

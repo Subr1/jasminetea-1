@@ -34,6 +34,7 @@ class Jasminetea extends require './collection'
       .option '-s --stacktrace','Output stack trace'
       .option '-t --timeout <msec>','Success time-limit <1000>msec',1000
 
+      .option '-f --file [specGlob]','Target [specGlob]'
       .option '-w --watch [globs]','Watch file changes. Refer [globs] (can use "," separator)'
 
       .option '-c --cover','Use ibrik, Code coverage calculation'
@@ -47,7 +48,7 @@ class Jasminetea extends require './collection'
     cli.help() if cli.args[0] is undefined
 
     specDir= cli.args[0]
-    specs= @getSpecGlobs specDir,cli.recursive
+    specs= @getSpecGlobs specDir,cli.recursive,cli.file
     scripts= @getScriptGlobs 'lib',specDir,cli.recursive
 
     cli.watch= scripts if cli.watch is yes
@@ -88,7 +89,7 @@ class Jasminetea extends require './collection'
 
             process.exit ~~result[process.env.JASMINETEA_ID]
 
-  run: (specs,options)->
+  run: (specs,options={})->
     files= require('wanderer').seekSync specs
 
     @log chalk.bold "E2E test mode" if options.e2e?
@@ -104,13 +105,13 @@ class Jasminetea extends require './collection'
     runner= @runProtractor specs,options if options.e2e?
     runner
 
-  watch: (cli)->
+  watch: (options={})->
     manager= new EventEmitter
 
-    target= (chalk.underline(glob) for glob in cli.watch).join(' or ')
+    target= (chalk.underline(glob) for glob in options.watch).join(' or ')
     @log 'Watching files by',target,'...'
 
-    watcher= require('chokidar').watch cli.watch,persistent:true,ignoreInitial:true
+    watcher= require('chokidar').watch options.watch,persistent:true,ignoreInitial:true
     watcher.on 'change',(path)=>
       return if manager.busy?
 
@@ -127,11 +128,11 @@ class Jasminetea extends require './collection'
       manager.busy= true
 
       test= @run
-      test= @cover if cli.cover is yes
-      test.call(this,cli).once 'close',=>
+      test= @cover if options.cover is yes
+      test.call(this,options).once 'close',=>
         lint= @noop
-        lint= @lint if cli.lint? and not ('-C' in process.argv)
-        lint.call(this,cli).once 'close',=>
+        lint= @lint if options.lint? and not ('-C' in process.argv)
+        lint.call(this,options).once 'close',=>
           manager.busy= null
 
           console.log ''
