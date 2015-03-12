@@ -1,5 +1,5 @@
 class Collection extends require './utility'
-  runJasmine: (specs,options)->
+  runJasmine: (specs,options={})->
     runner= new EventEmitter
 
     jasmine= new Jasmine
@@ -33,7 +33,7 @@ class Collection extends require './utility'
 
     runner
 
-  runProtractor: (specs,options)->
+  runProtractor: (specs,options={})->
     runner= new EventEmitter
 
     code= 0
@@ -55,7 +55,7 @@ class Collection extends require './utility'
 
     runner
 
-  protractor: (specs,options)->
+  protractor: (specs,options={})->
     args= []
     args.push 'node'
     args.push require.resolve 'protractor/bin/protractor'
@@ -75,7 +75,7 @@ class Collection extends require './utility'
     [script,args...]= args
     childProcess.spawn script,args,env:process.env
 
-  webdriverUpdate: (options)->
+  webdriverUpdate: (options={})->
     args= []
     args.push 'node'
     args.push require.resolve 'protractor/bin/webdriver-manager'
@@ -86,7 +86,7 @@ class Collection extends require './utility'
     [script,args...]= args
     childProcess.spawn script,args,stdio:'inherit'
 
-  webdriverStart: (options)->
+  webdriverStart: (options={})->
     manager= new EventEmitter
     if process.env.JASMINETEA_SELENIUM
       process.nextTick -> manager.emit 'start'
@@ -130,7 +130,7 @@ class Collection extends require './utility'
       @deleteRequireCache file.id for file in files.children
     delete require.cache[id]
 
-  cover: (options)->
+  cover: (options={})->
     rimraf= require 'rimraf'
     try
       # Fix conflict coffee-script/registeer 1.8.0
@@ -157,11 +157,16 @@ class Collection extends require './utility'
     [script,args...]= args
     childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
 
-  report: (options)->
+  report: (options={})->
     exists_token= fs.existsSync path.join process.cwd(),'.coveralls.yml'
     exists_token= process.env.COVERALLS_REPO_TOKEN? if not exists_token
     if not exists_token
       @log 'Skip post a coverage report. Cause not exists COVERALLS_REPO_TOKEN'
+      return @noop()
+
+    exists_coverage= fs.existsSync path.join process.cwd(),'coverage','lcov.info'
+    if not exists_coverage
+      @log 'Skip post a coverage report. Cause not exists ./coverage/lcov.info'
       return @noop()
 
     args= []
@@ -175,7 +180,7 @@ class Collection extends require './utility'
       throw error if error?
       @log 'Posted a coverage report.'
 
-  lint: (options)->
+  lint: (options={})->
     args= [require.resolve 'coffeelint/bin/coffeelint']
     args.push path.relative process.cwd(),file for file in wanderer.seekSync options.lint
     @log '$',args.join ' ' if options.debug?

@@ -1,3 +1,8 @@
+v0.1.23 / Mar 13 2015
+=========================
+ * [`unknown`][unknown] :coffee: Add `-f` `--file` option, Can change target spec glob.
+
+
 v0.1.22 / Mar 11 2015
 =========================
  * [`e68e514`][e68e514] :bug: reFix process.exit(0) due to failed spec (via --cover)
