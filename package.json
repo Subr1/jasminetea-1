@@ -2,8 +2,8 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.25",
-  "description": "CLI Collection, Quick start jasmine for CoffeeScript",
+  "version": "0.1.26",
+  "description": "Quick start jasmine2 for CoffeeScript",
 
   "scripts": {
     "help": "node jasminetea",
@@ -42,10 +42,11 @@
     "url": "https://github.com/59naga/jasminetea.git"
   },
   "keywords": [
-    "jasmine",
+    "coffee-script",
+    "jasmine2",
     "coverage",
     "lint",
-    "coffee-script",
+    "watch",
     "cli"
   ],
   "author": "59naga <i59naga@icloud.com> (http://berabou.me/)",

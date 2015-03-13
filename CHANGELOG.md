@@ -1,3 +1,8 @@
+v0.1.26 / Mar 14 2015
+=========================
+ * [`unknown`][unknown] :bug: Fix conflict of `--watch` and `--e2e`
+ * [`unknown`][unknown] :fire: Remove webdriverStart
+
 v0.1.25 / Mar 13 2015
 =========================
  * [`0a76d20`][0a76d20] :bug: Fix `--cover`'s `No coverage information was collected, exit without writing coverage information` by `--e2e`&`--cover`

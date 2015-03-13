@@ -33,12 +33,6 @@ describe 'Collection',->
       expect(code).toEqual 0
       done()
 
-  it "#{i++} webdriverStart is `webdriver-manager start`",(done)->
-    childProcess= collection.webdriverUpdate()
-    childProcess.on 'close',(code)->
-      expect(code).toEqual 0
-      done()
-      
   it "#{i++} deleteRequireCache is delete require.cache for watch",->
     id= require.resolve __filename
 
@@ -76,7 +70,6 @@ describe 'Collection',->
       'coverProtractor'
       
       'webdriverUpdate'
-      'webdriverStart'
 
       'deleteRequireCache'
 

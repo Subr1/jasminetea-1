@@ -110,7 +110,7 @@ class Collection extends require './utility'
       [script,args...]= args
       child= childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
       child.on 'exit',(code)->
-        runner.emit 'exit',code
+        runner.emit 'close',code
 
     runner
 
@@ -124,38 +124,6 @@ class Collection extends require './utility'
 
     [script,args...]= args
     childProcess.spawn script,args,stdio:'inherit'
-
-  webdriverStart: (options={})->
-    manager= new EventEmitter
-    if process.env.JASMINETEA_SELENIUM
-      process.nextTick -> manager.emit 'start'
-      return manager
-
-    args= []
-    args.push 'node'
-    args.push require.resolve 'protractor/bin/webdriver-manager'
-    args.push 'start'
-    @log '$',args.join ' ' if options.debug?
-
-    [script,args...]= args
-    selenium= childProcess.spawn script,args,env:process.env
-    selenium.stderr.on 'data',(buffer)->
-      process.stdout.write buffer.toString() if options.debug?
-      manager.emit 'data','stderr',buffer
-    selenium.stdout.on 'data',(buffer)->
-      process.stderr.write buffer.toString() if options.debug?
-      manager.emit 'data','stdout',buffer
-    manager.on 'data',(type,buffer)->
-      return if not buffer.toString().match /(Started SocketListener|Selenium Standalone has exited)/g
-      return if process.env.JASMINETEA_SELENIUM
-
-      process.env.JASMINETEA_SELENIUM= on
-      manager.emit 'start',selenium
-
-    selenium.once 'close',->
-      manager.emit 'close'
-
-    manager
 
   deleteRequireCache: (id)=>
     return if id.indexOf('node_modules') > -1
