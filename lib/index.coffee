@@ -18,17 +18,17 @@ class Jasminetea extends require './collection'
       .option '-r --recursive','Execute specs in recursive directory'
       .option '-v --verbose','Output spec names'
       .option '-s --stacktrace','Output stack trace'
-      .option '-t --timeout <msec>','Success time-limit <1000>msec',1000
+      .option '-t --timeout <msec>','Success time-limit (default 1000 msec)',1000
 
-      .option '-f --file [specGlob]','Target [specGlob]'
-      .option '-w --watch [globs]','Watch file changes. Refer [globs] (can use "," separator)'
+      .option '-f --file [specGlob]','Target [specGlob] (default "*[sS]pec.coffee")'
+      .option '-w --watch [globs]','Watch file changes. See [globs] (can use "," separator)'
 
       .option '-c --cover','Use ibrik, Code coverage calculation'
       .option '--report','Use coveralls, Reporting code coverage to coveralls.io'
-      .option '-l --lint [globs]','Use coffeelint, Code linting after run. Refer [globs] (can use "," separator)'
+      .option '-l --lint [globs]','Use coffeelint, Code linting after run. See [globs] (can use "," separator)'
       .option '-e --e2e [==param ...]','Use protractor, Change to the E2E test mode'
 
-      .option '-d --debug','Output raw commands and stdout $ for -c,-l,-e'
+      .option '-d --debug','Output raw commands and stdout $ for --cover,--lint,--e2e'
 
       .parse process.argv
     cli.help() if cli.args[0] is undefined

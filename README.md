@@ -26,30 +26,29 @@ Enable `jasminetea specDir` commands. then can immediately run.
 ```bash
 # Usage: jasminetea specDir [options...]
 #
-# 7_P
+#   7_P
 # 
-# Options:
+#   Options:
 # 
-#   -h, --help              output usage information
-#   -V, --version           output the version number
-# 
-#   -r --recursive          Execute specs in recursive directory
-#   -v --verbose            Output spec names
-#   -s --stacktrace         Output stack trace
-#   -t --timeout <msec>     Success time-limit <1000>msec
-# 
-#   -w --watch [globs]      Watch file changes. Refer [globs] (can use "," separator)
-# 
-#   -c --cover              Use ibrik, Code coverage calculation
-#   --report                Use coveralls, Reporting code coverage to coveralls.io
-#   -l --lint [globs]       Use coffeelint, Code linting. Refer [globs] (can use "," separator)
-#   -e --e2e [==param ...]  Use protractor, Change to the E2E test mode
-# 
-#   -d --debug              Output raw commands and stdout $ for -c,-l,-e
-# 
+#     -h, --help              output usage information
+#     -V, --version           output the version number
+#     -r --recursive          Execute specs in recursive directory
+#     -v --verbose            Output spec names
+#     -s --stacktrace         Output stack trace
+#     -t --timeout <msec>     Success time-limit (default 1000 msec)
+#
+#     -f --file [specGlob]    Target [specGlob] (default "*[sS]pec.coffee")
+#     -w --watch [globs]      Watch file changes. See [globs] (can use "," separator)
+#
+#     -c --cover              Use ibrik, Code coverage calculation
+#     --report                Use coveralls, Reporting code coverage to coveralls.io
+#     -l --lint [globs]       Use coffeelint, Code linting after run. See [globs] (can use "," separator)
+#     -e --e2e [==param ...]  Use protractor, Change to the E2E test mode
+#
+#     -d --debug              Output raw commands and stdout $ for --cover,--lint,--e2e
 ```
 
-`--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,*.coffee"`
+`--watch`,`--lint` Default see `"spec_dir/*.coffee,lib/**/*.coffee,*.coffee"`
 
 ## Example
 ```bash
