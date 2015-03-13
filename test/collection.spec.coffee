@@ -38,15 +38,6 @@ describe 'Collection',->
     childProcess.on 'close',(code)->
       expect(code).toEqual 0
       done()
-
-  it "#{i++} webdriverKill request to jasminetea.config.seleniumKillAddress",(done)->
-    manager= new (require('events').EventEmitter)
-    setTimeout (-> manager.emit 'close',0),500
-
-    childProcessFake= collection.webdriverKill manager,'http://exmaple.com'
-    childProcessFake.on 'close',(code)->
-      expect(code).toEqual 0
-      done()
       
   it "#{i++} deleteRequireCache is delete require.cache for watch",->
     id= require.resolve __filename
@@ -76,14 +67,19 @@ describe 'Collection',->
   it "... #{properties.length} properties is defined",->
     expect(properties).toEqual [
       'constructor'
+
       'runJasmine'
+      'coverJasmine'
+
       'runProtractor'
       'protractor'
+      'coverProtractor'
+      
       'webdriverUpdate'
       'webdriverStart'
-      'webdriverKill'
+
       'deleteRequireCache'
-      'cover'
+
       'report'
       'lint'
     ]

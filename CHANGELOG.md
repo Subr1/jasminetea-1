@@ -1,7 +1,14 @@
+v0.1.24 / Mar 13 2015
+=========================
+ * [`unknown`][unknown] :bug: Fix `--cover`'s `No coverage information was collected, exit without writing coverage information` via Case `--e2e`&`--cover`
+ * [`unknown`][unknown] :bug: Fix `--e2e`'s Duplicate webdriver launch
+ * [`unknown`][unknown] :fire: Remove collection.webdriverKill & config.seleniumKillAddress
+
 v0.1.23 / Mar 13 2015
 =========================
- * [`unknown`][unknown] :coffee: Add `-f` `--file` option, Can change target spec glob.
+ * [`3415806`][3415806] :coffee: Add `-f` `--file` option, Can change target spec glob.
 
+[3415806]: https://github.com/59naga/jasminetea/commit/3415806b39226adc6e8d8622ec2420f25c2863fc#diff-67d0ac7f02a12f93fe738f53eed7d485L34
 
 v0.1.22 / Mar 11 2015
 =========================

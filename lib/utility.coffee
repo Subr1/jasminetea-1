@@ -1,3 +1,8 @@
+path= require 'path'
+EventEmitter= require('events').EventEmitter
+
+chalk= require 'chalk'
+
 class Utility
   logColors: ['magenta','cyan','green','yellow']
   logBgColors: ['bgMagenta','bgCyan','bgGreen','bgYellow']
@@ -48,10 +53,5 @@ class Utility
     globs.push path.join libDir,filename
     globs.push path.join specDir,filename
     globs
-
-path= require 'path'
-EventEmitter= require('events').EventEmitter
-
-chalk= require 'chalk'
 
 module.exports= Utility

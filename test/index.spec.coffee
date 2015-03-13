@@ -29,8 +29,9 @@ describe 'Jasminetea',->
   it "... #{properties.length} properties is defined",->
     expect(properties).toEqual [
       'constructor'
-      'config'
       'cli'
       'run'
+      'cover'
       'watch'
+      'config'
     ]

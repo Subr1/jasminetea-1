@@ -1,30 +1,16 @@
+cli= require 'commander'
+wanderer= require 'wanderer'
+rimraf= require 'rimraf'
+chokidar= require 'chokidar'
+
+fs= require 'fs'
+path= require 'path'
+EventEmitter= require('events').EventEmitter
+
+chalk= require 'chalk'
+
 class Jasminetea extends require './collection'
-  config:# for protractor conf.js
-    seleniumKillAddress:
-      'http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer'
-
-    capabilities:
-      browserName: 'chrome'
-      # for Travis User (by Sauce Labs)
-      'tunnel-identifier':
-        process.env.TRAVIS_JOB_NUMBER
-
-    sauceUser:
-      process.env.SAUCE_USERNAME
-    sauceKey:
-      process.env.SAUCE_ACCESS_KEY
-
-    jasmineNodeOpts:
-      showColors: true
-      isVerbose:
-        process.env.JASMINETEA_VERBOSE
-      defaultTimeoutInterval:
-        process.env.JASMINETEA_TIMEOUT
-      includeStackTrace:
-        process.env.JASMINETEA_STACKTRACE
-
   cli:->
-    cli= require 'commander'
     cli
       .version require('../package').version
       .description chalk.magenta('7')+chalk.yellow('_')+chalk.green('P')
@@ -47,50 +33,47 @@ class Jasminetea extends require './collection'
       .parse process.argv
     cli.help() if cli.args[0] is undefined
 
-    specDir= cli.args[0]
-    specs= @getSpecGlobs specDir,cli.recursive,cli.file
-    scripts= @getScriptGlobs 'lib',specDir,cli.recursive
+    options= cli
 
-    cli.watch= scripts if cli.watch is yes
-    cli.watch= cli.watch.split(',') if typeof cli.watch is 'string'
+    specDir= options.args[0]
+    specs= @getSpecGlobs specDir,options.recursive,options.file
+    scripts= @getScriptGlobs 'lib',specDir,options.recursive
 
-    cli.lint= scripts if cli.lint is yes
-    cli.lint= cli.lint.split(',') if typeof cli.lint is 'string'
+    options.watch= scripts if options.watch is yes
+    options.watch= options.watch.split(',') if typeof options.watch is 'string'
 
-    cli.cover= no if '-C' in process.argv
+    options.lint= scripts if options.lint is yes
+    options.lint= options.lint.split(',') if typeof options.lint is 'string'
+
+    options.cover= no if '-C' in process.argv
 
     process.env.JASMINETEA_ID?= Date.now()
     process.env.JASMINETEA_MODE= 'SERVER'
-    process.env.JASMINETEA_MODE= 'CLIENT' if cli.e2e?
+    process.env.JASMINETEA_MODE= 'CLIENT' if options.e2e?
 
     resultFile= path.join __dirname,'..','jasminetea.json'
     fs.writeFileSync resultFile,'{}' if not ('-C' in process.argv)
 
-    test= @run
-    test= @cover if cli.cover is yes
-    test.call(this,specs,cli).once 'close',(code,seleniumManager=0)=>
+    @run(specs,options).once 'close',(code,seleniumManager=0)=>
       lint= @noop
-      lint= @lint if cli.lint? and not ('-C' in process.argv)
-      lint.call(this,cli).once 'close',=>
-        return @watch cli if cli.watch? and not ('-C' in process.argv)
+      lint= @lint if options.lint? and not ('-C' in process.argv)
+      lint.call(this,options).once 'close',=>
+        return @watch options if options.watch? and not ('-C' in process.argv)
 
-        kill= @noop
-        kill= @webdriverKill if seleniumManager isnt 0
-        kill(seleniumManager,@config.seleniumKillAddress).once 'close',=>
-          report= @noop
-          report= @report if cli.cover is yes and cli.report?
-          report.call(this,cli).once 'close',=>
-            @log 'Calculating...' if '-C' in process.argv
+        report= @noop
+        report= @report if options.cover is yes and options.report?
+        report.call(this,options).once 'close',=>
+          @log 'Calculating...' if '-C' in process.argv
 
-            result= {}
-            result= require resultFile if fs.existsSync resultFile
-            result[process.env.JASMINETEA_ID]= 1 if code is 1
-            fs.writeFileSync resultFile,JSON.stringify result
+          result= {}
+          result= require resultFile if fs.existsSync resultFile
+          result[process.env.JASMINETEA_ID]= 1 if code is 1
+          fs.writeFileSync resultFile,JSON.stringify result
 
-            process.exit ~~result[process.env.JASMINETEA_ID]
+          process.exit ~~result[process.env.JASMINETEA_ID]
 
   run: (specs,options={})->
-    files= require('wanderer').seekSync specs
+    files= wanderer.seekSync specs
 
     @log chalk.bold "E2E test mode" if options.e2e?
 
@@ -100,10 +83,30 @@ class Jasminetea extends require './collection'
       @log "Spec Notfound. by",(chalk.underline(path.resolve spec) for spec in specs).join(' or ')
       process.exit 1 if options.watch is undefined
 
+    # Protractor additional config (See jasminetea.config)
+    process.env.JASMINETEA_VERBOSE= options.verbose
+    process.env.JASMINETEA_TIMEOUT= options.timeout
+    process.env.JASMINETEA_STACKTRACE= options.stacktrace
+
     runner= null
-    runner= @runJasmine specs,options if options.e2e is undefined
-    runner= @runProtractor specs,options if options.e2e?
+    if options.cover is yes
+      runner= @cover specs,options
+    else
+      runner= @runJasmine specs,options if options.e2e is undefined
+      runner= @runProtractor specs,options if options.e2e?
     runner
+
+  cover: (specs,options={})->
+    try
+      # Fix conflict coffee-script/registeer 1.8.0
+      rimraf.sync path.join process.cwd(),'coverage'
+      rimraf.sync path.dirname require.resolve 'ibrik/node_modules/coffee-script/register'
+
+    catch noConflict
+      # Fixed
+
+    return @coverJasmine specs,options if options.e2e is undefined
+    return @coverProtractor specs,options if options.e2e?
 
   watch: (options={})->
     manager= new EventEmitter
@@ -111,7 +114,7 @@ class Jasminetea extends require './collection'
     target= (chalk.underline(glob) for glob in options.watch).join(' or ')
     @log 'Watching files by',target,'...'
 
-    watcher= require('chokidar').watch options.watch,persistent:true,ignoreInitial:true
+    watcher= chokidar.watch options.watch,persistent:true,ignoreInitial:true
     watcher.on 'change',(path)=>
       return if manager.busy?
 
@@ -140,10 +143,25 @@ class Jasminetea extends require './collection'
 
     manager
 
-fs= require 'fs'
-path= require 'path'
-EventEmitter= require('events').EventEmitter
+  config:# for protractor conf.js(Use collection/protractor,coverProtractor)
+    capabilities:
+      browserName: 'chrome'
+      # for Travis User (by Sauce Labs)
+      'tunnel-identifier':
+        process.env.TRAVIS_JOB_NUMBER
 
-chalk= require 'chalk'
+    sauceUser:
+      process.env.SAUCE_USERNAME
+    sauceKey:
+      process.env.SAUCE_ACCESS_KEY
+
+    jasmineNodeOpts:
+      showColors: true
+
+# Via Jasminetea.run for Protractor conf.js
+jasmineNodeOpts= Jasminetea::config.jasmineNodeOpts
+jasmineNodeOpts.isVerbose= true if process.env.JASMINETEA_VERBOSE isnt 'undefined' 
+jasmineNodeOpts.defaultTimeoutInterval= process.env.JASMINETEA_TIMEOUT
+jasmineNodeOpts.includeStackTrace= process.env.JASMINETEA_STACKTRACE
 
 module.exports= Jasminetea

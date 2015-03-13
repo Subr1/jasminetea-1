@@ -1,3 +1,12 @@
+Jasmine= require 'jasmine'
+Reporter= require 'jasmine-terminal-reporter'
+wanderer= require 'wanderer'
+
+fs= require 'fs'
+path= require 'path'
+childProcess= require 'child_process'
+EventEmitter= require('events').EventEmitter
+
 class Collection extends require './utility'
   runJasmine: (specs,options={})->
     runner= new EventEmitter
@@ -33,25 +42,34 @@ class Collection extends require './utility'
 
     runner
 
+  coverJasmine: (specs,options={})->
+    args= []
+    args.push 'node'
+    args.push require.resolve 'ibrik/bin/ibrik'
+    args.push 'cover'
+    args.push require.resolve '../jasminetea'
+    args.push '--'
+    args= args.concat process.argv[2...]
+    args.push '-C'
+    @log '$',args.join ' ' if options.debug?
+
+    [script,args...]= args
+    childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
+
   runProtractor: (specs,options={})->
     runner= new EventEmitter
 
-    code= 0
     @webdriverUpdate(options).once 'close',=>
-      manager= @webdriverStart options
-      manager.once 'start',=>
-        protractor= @protractor specs,options
-        protractor.stdout.on 'data',(buffer)->
-          code= 1 if buffer.toString().match /Process exited with error code 1\n$/g
-          process.stdout.write buffer.toString()
-        protractor.stderr.on 'data',(buffer)->
-          process.stderr.write buffer.toString()
-        protractor.on 'error',(stack)->
-          code= 1
-          console.error error?.stack?.toString() ? error?.message ? error
-          runner.emit 'close',code,manager
-        protractor.once 'close',->
-          runner.emit 'close',code,manager
+      protractor= @protractor specs,options
+      protractor.stdout.on 'data',(buffer)->
+        process.stdout.write buffer.toString()
+      protractor.stderr.on 'data',(buffer)->
+        process.stderr.write buffer.toString()
+      protractor.on 'error',(stack)->
+        console.error error?.stack?.toString() ? error?.message ? error
+        runner.emit 'close',1
+      protractor.once 'exit',(code)->
+        runner.emit 'close',code
 
     runner
 
@@ -68,12 +86,26 @@ class Collection extends require './utility'
     # @log 'Arguments has been ignored',(chalk.underline(arg) for arg in options.args[1...]).join ' '
     @log '$',args.join ' ' if options.debug?
 
-    process.env.JASMINETEA_VERBOSE= options.verbose
-    process.env.JASMINETEA_TIMEOUT= options.timeout
-    process.env.JASMINETEA_STACKTRACE= options.stacktrace
-
     [script,args...]= args
     childProcess.spawn script,args,env:process.env
+
+  coverProtractor: (specs,options={})->
+    args= []
+    args.push 'node'
+    args.push require.resolve 'ibrik/bin/ibrik'
+    args.push 'cover'
+    args.push require.resolve 'protractor/bin/protractor'
+    args.push '--'
+    args.push require.resolve '../jasminetea'# Use Jasminetea.config
+    args.push '--specs'
+    args.push wanderer.seekSync(specs).join ','
+    if typeof options.e2e is 'string'
+      args.push argv for argv in options.e2e.replace(new RegExp('==','g'),'--').split /\s/
+
+    @log '$',args.join ' ' if options.debug?
+
+    [script,args...]= args
+    childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
 
   webdriverUpdate: (options={})->
     args= []
@@ -118,10 +150,6 @@ class Collection extends require './utility'
 
     manager
 
-  webdriverKill: (seleniumManager,url)->
-    require('http').get url # todo exchange kill signal
-    seleniumManager
-
   deleteRequireCache: (id)=>
     return if id.indexOf('node_modules') > -1
 
@@ -129,33 +157,6 @@ class Collection extends require './utility'
     if files?
       @deleteRequireCache file.id for file in files.children
     delete require.cache[id]
-
-  cover: (options={})->
-    rimraf= require 'rimraf'
-    try
-      # Fix conflict coffee-script/registeer 1.8.0
-      rimraf.sync './coverage'
-      rimraf.sync path.dirname require.resolve 'ibrik/node_modules/coffee-script/register'
-
-    catch noConflict
-      # Fixed
-
-    args= []
-    args.push 'node'
-    args.push require.resolve 'ibrik/bin/ibrik'
-    args.push 'cover'
-    args.push require.resolve '../jasminetea'
-    args.push '--'
-    args= args.concat process.argv[2...]
-    args.push '-C'
-    args.push '&&'
-    args.push require.resolve 'istanbul/lib/cli.js'
-    args.push 'report'
-    args.push 'html'
-    @log '$',args.join ' ' if options.debug?
-
-    [script,args...]= args
-    childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
 
   report: (options={})->
     exists_token= fs.existsSync path.join process.cwd(),'.coveralls.yml'
@@ -188,14 +189,5 @@ class Collection extends require './utility'
     console.log ''
     @log 'Lint by',options.lint.join(' or '),'...'
     childProcess.spawn 'node',args,{stdio:'inherit',cwd:process.cwd()}
-
-EventEmitter= require('events').EventEmitter
-Jasmine= require 'jasmine'
-Reporter= require 'jasmine-terminal-reporter'
-
-fs= require 'fs'
-path= require 'path'
-childProcess= require 'child_process'
-wanderer= require 'wanderer'
 
 module.exports= Collection

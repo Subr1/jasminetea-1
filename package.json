@@ -2,7 +2,7 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
@@ -10,8 +10,8 @@
 
     "help": "node jasminetea",
 
-    "test": "node jasminetea test --verbose --cover --report --lint --debug --timeout 15000",
-    "posttest": "node jasminetea test --e2e --verbose --cover --report --lint --debug --timeout 15000"
+    "test": "node jasminetea test --cover --report --lint --verbose --debug --timeout 15000",
+    "posttest": "node jasminetea test --e2e --cover --debug --timeout 15000"
   },
   "scriptsForTravis": {
     "npm_api_key": "echo -n \"username:password\" | base64",
@@ -30,7 +30,6 @@
     "commander": "^2.6.0",
     "coveralls": "^2.11.2",
     "ibrik": "^2.0.0",
-    "istanbul": "^0.3.6",
     "jasmine": "^2.2.1",
     "jasmine-terminal-reporter": "^0.9.1",
     "protractor": "^1.8.0",
