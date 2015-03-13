@@ -10,8 +10,8 @@
 
     "start": "node jasminetea test --cover --verbose --watch --timeout 30000",
 
-    "test": "node jasminetea test --e2e --cover --debug --timeout 15000",
-    "posttest": "node jasminetea test --cover --report --lint --verbose --debug --timeout 15000"
+    "test": "node jasminetea test --e2e --cover --debug --timeout 20000",
+    "posttest": "node jasminetea test --cover --report --lint --verbose --debug --timeout 20000"
   },
   "scriptsForTravis": {
     "npm_api_key": "echo -n \"username:password\" | base64",
