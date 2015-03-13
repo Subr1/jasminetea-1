@@ -6,9 +6,9 @@
   "description": "CLI Collection, Quick start jasmine for CoffeeScript",
 
   "scripts": {
-    "start": "node jasminetea test --cover --verbose --watch --timeout 30000",
-
     "help": "node jasminetea",
+
+    "start": "node jasminetea test --cover --verbose --watch --timeout 30000",
 
     "test": "node jasminetea test --cover --report --lint --verbose --debug --timeout 15000",
     "posttest": "node jasminetea test --e2e --cover --debug --timeout 15000"

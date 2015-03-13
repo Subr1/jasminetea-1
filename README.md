@@ -53,87 +53,27 @@ Enable `jasminetea specDir` commands. then can immediately run.
 
 ## Example
 ```bash
-jasminetea hoge -r -w
-# 7_P Spec Notfound. by **/*[sS]pec.coffee
+jasminetea test --cover --report
+# 7_P Found 3 files by test/*[sS]pec.coffee ...
+# Running 27 specs.
+# ...........................
 # 
-# 
-# 0 specs, 0 failures
+# 27 specs, 0 failures, 4 pending specs
 # Finished in 0 seconds
-# 7_P Watching files by *.coffee or lib/**/*.coffee or hoge/**/*.coffee ...
-```
-
-### More Example
-
-#### Use `-c` [iblik][d-2]
-
-```bash
-jasminetea test -c
-
-# 7_P Found 1 files by test/*[sS]pec.coffee ...
-# Running 4 specs.
 # 
-# Server
-#   /Users/59naga/Downloads/jasminetea/test/fixtures
-#       Default current files: passed
-#       Use -rwcvtsl Fullstack.: passed
-# Client
-#   /Users/59naga/Downloads/jasminetea/test/fixtures
-#       Default current files: passed
-#       Use -rwcvtsl Fullstack.: passed
-# 
-# 4 specs, 0 failures
-# Finished in 0 seconds
+# 7_P Calculating...
 # =============================================================================
 # Writing coverage object [/Users/59naga/Downloads/jasminetea/coverage/coverage.json]
 # Writing coverage reports at [/Users/59naga/Downloads/jasminetea/coverage]
 # =============================================================================
 # 
 # =============================== Coverage summary ===============================
-# Statements   : 36.13% ( 112/310 )
-# Branches     : 24.64% ( 34/138 )
-# Functions    : 36.54% ( 19/52 )
-# Lines        : 40.63% ( 65/160 )
+# Statements   : 63.95% ( 314/491 )
+# Branches     : 35.65% ( 77/216 )
+# Functions    : 70.42% ( 50/71 )
+# Lines        : 65.31% ( 160/245 )
 # ================================================================================
-```
-
-Can use `--report`, Post a coverage report to [coveralls.io][d-2-1]
-Be required `.coveralls.yml` or [`process.env.COVERALLS_REPO_*`][d-2-2]
-
-#### Use `-l` [coffeelint][d-3]
-
-```bash
-jasminetea . -l
-# 7_P Spec Notfound. by *[sS]pec.coffee
-# 
-# 
-# 0 specs, 0 failures
-# Finished in 0 seconds
-# 
-# 7_P Lint by lib/*.coffee or *.coffee ...
-#   ✗ jasminetea.coffee
-#      ✗ #5: Line exceeds maximum allowed length. Length is 89, max is 80.
-#      ✗ #13: Line exceeds maximum allowed length. Length is 94, max is 80.
-#      ✗ #15: Line exceeds maximum allowed length. Length is 113, max is 80.
-#      ...
-# 
-# ✗ Lint! » 15 errors and 0 warnings in 1 file
-```
-
-#### Use `-e` [protractor][d-4]
-
-`npm install forever node-static` after:
-
-```bash
-forever start $(npm bin)/static $(pwd)/test && jasminetea test -e '==baseUrl http://127.0.0.1:8080/'
-# 7_P Found 1 files by test/*[sS]pec.coffee ...
-# Running 2 specs.
-# 
-#   /Users/59naga/Downloads/jasminetea/test/fixtures
-#       Default current files: passed
-#       Use -rwcvtsl Fullstack.: passed
-# 
-# 2 specs, 0 failures
-# Finished in 0 seconds
+# 7_P Skip post a coverage report. Cause not exists COVERALLS_REPO_TOKEN
 ```
 
 License
@@ -149,7 +89,7 @@ MIT by 59naga
 [coveralls-image]: https://coveralls.io/repos/59naga/jasminetea/badge.svg?branch=master
 [coveralls]: https://coveralls.io/r/59naga/jasminetea?branch=master
 
-[d-1]: https://github.com/mhevery/jasmine
+[d-1]: https://github.com/jasmine/jasmine
 [d-2]: https://github.com/Constellation/ibrik
 [d-2-1]: https://github.com/cainus/node-coveralls#istanbul
 [d-2-2]: http://docs.travis-ci.com/user/environment-variables/
