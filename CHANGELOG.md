@@ -1,8 +1,9 @@
-v0.1.24 / Mar 13 2015
+v0.1.25 / Mar 13 2015
 =========================
- * [`0a76d20`][0a76d20] :bug: Fix `--cover`'s `No coverage information was collected, exit without writing coverage information` via Case `--e2e`&`--cover`
+ * [`0a76d20`][0a76d20] :bug: Fix `--cover`'s `No coverage information was collected, exit without writing coverage information` by `--e2e`&`--cover`
  * [`0a76d20`][0a76d20] :bug: Fix `--e2e`'s Duplicate webdriver launch
  * [`0a76d20`][0a76d20] :fire: Remove collection.webdriverKill & config.seleniumKillAddress
+ * [`unknown`][unknown] :bug: Fix initial webdriverUpdate by `--e2e`&`--cover`
 
 [0a76d20]: https://github.com/59naga/jasminetea/commit/0a76d20e0c50e36d6e613576b68d53251f995fb0
 

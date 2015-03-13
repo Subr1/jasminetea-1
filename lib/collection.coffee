@@ -1,11 +1,11 @@
+path= require 'path'
+fs= require 'fs'
+childProcess= require 'child_process'
+EventEmitter= require('events').EventEmitter
+
 Jasmine= require 'jasmine'
 Reporter= require 'jasmine-terminal-reporter'
 wanderer= require 'wanderer'
-
-fs= require 'fs'
-path= require 'path'
-childProcess= require 'child_process'
-EventEmitter= require('events').EventEmitter
 
 class Collection extends require './utility'
   runJasmine: (specs,options={})->
@@ -90,22 +90,29 @@ class Collection extends require './utility'
     childProcess.spawn script,args,env:process.env
 
   coverProtractor: (specs,options={})->
-    args= []
-    args.push 'node'
-    args.push require.resolve 'ibrik/bin/ibrik'
-    args.push 'cover'
-    args.push require.resolve 'protractor/bin/protractor'
-    args.push '--'
-    args.push require.resolve '../jasminetea'# Use Jasminetea.config
-    args.push '--specs'
-    args.push wanderer.seekSync(specs).join ','
-    if typeof options.e2e is 'string'
-      args.push argv for argv in options.e2e.replace(new RegExp('==','g'),'--').split /\s/
+    runner= new EventEmitter
 
-    @log '$',args.join ' ' if options.debug?
+    @webdriverUpdate(options).once 'close',=>
+      args= []
+      args.push 'node'
+      args.push require.resolve 'ibrik/bin/ibrik'
+      args.push 'cover'
+      args.push require.resolve 'protractor/bin/protractor'
+      args.push '--'
+      args.push require.resolve '../jasminetea'# Use Jasminetea.config
+      args.push '--specs'
+      args.push wanderer.seekSync(specs).join ','
+      if typeof options.e2e is 'string'
+        args.push argv for argv in options.e2e.replace(new RegExp('==','g'),'--').split /\s/
 
-    [script,args...]= args
-    childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
+      @log '$',args.join ' ' if options.debug?
+
+      [script,args...]= args
+      child= childProcess.spawn script,args,{stdio:'inherit',cwd:process.cwd(),env:process.env}
+      child.on 'exit',(code)->
+        runner.emit 'exit',code
+
+    runner
 
   webdriverUpdate: (options={})->
     args= []

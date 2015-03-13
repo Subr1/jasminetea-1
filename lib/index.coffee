@@ -1,11 +1,11 @@
+path= require 'path'
+fs= require 'fs'
+EventEmitter= require('events').EventEmitter
+
 cli= require 'commander'
 wanderer= require 'wanderer'
 rimraf= require 'rimraf'
 chokidar= require 'chokidar'
-
-fs= require 'fs'
-path= require 'path'
-EventEmitter= require('events').EventEmitter
 
 chalk= require 'chalk'
 
