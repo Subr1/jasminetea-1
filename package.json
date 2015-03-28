@@ -2,7 +2,7 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "Quick start jasmine2 for CoffeeScript",
 
   "scripts": {
@@ -32,7 +32,7 @@
     "ibrik": "^2.0.0",
     "jasmine": "^2.2.1",
     "jasmine-terminal-reporter": "^0.9.1",
-    "protractor": "^1.8.0",
+    "protractor": "^2.0.0",
     "rimraf": "^2.2.8",
     "wanderer": "0.0.2"
   },

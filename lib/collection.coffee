@@ -59,9 +59,13 @@ class Collection extends require './utility'
   runProtractor: (specs,options={})->
     runner= new EventEmitter
 
+    exitCode= 0
     @webdriverUpdate(options).once 'close',=>
       protractor= @protractor specs,options
       protractor.stdout.on 'data',(buffer)->
+        # fix #1
+        exitCode= 1 if buffer.toString().match /Process exited with error code 1\n$/g
+        
         process.stdout.write buffer.toString()
       protractor.stderr.on 'data',(buffer)->
         process.stderr.write buffer.toString()
@@ -69,7 +73,8 @@ class Collection extends require './utility'
         console.error error?.stack?.toString() ? error?.message ? error
         runner.emit 'close',1
       protractor.once 'exit',(code)->
-        runner.emit 'close',code
+        exitCode= 1 if code isnt 0
+        runner.emit 'close',exitCode
 
     runner
 

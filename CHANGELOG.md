@@ -1,7 +1,13 @@
+v0.1.27 / Mar 29 2015
+=========================
+ * [`unknown`][unknown] :arrow_up: +protractor@2.0.0
+
 v0.1.26 / Mar 14 2015
 =========================
- * [`unknown`][unknown] :bug: Fix conflict of `--watch` and `--e2e`
- * [`unknown`][unknown] :fire: Remove webdriverStart
+ * [`13b207f`][13b207f] :bug: Fix conflict of `--watch` and `--e2e`
+ * [`13b207f`][13b207f] :fire: Remove webdriverStart
+
+[13b207f]: https://github.com/59naga/jasminetea/commit/13b207faa07a080e3632a2ff9e6f8a171f82071d
 
 v0.1.25 / Mar 13 2015
 =========================

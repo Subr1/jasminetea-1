@@ -54,7 +54,7 @@ class Jasminetea extends require './collection'
     resultFile= path.join __dirname,'..','jasminetea.json'
     fs.writeFileSync resultFile,'{}' if not ('-C' in process.argv)
 
-    @run(specs,options).once 'close',(code,seleniumManager=0)=>
+    @run(specs,options).once 'close',(code)=>
       lint= @noop
       lint= @lint if options.lint? and not ('-C' in process.argv)
       lint.call(this,options).once 'close',=>
