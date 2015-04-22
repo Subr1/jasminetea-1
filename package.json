@@ -5,6 +5,10 @@
   "version": "0.1.28",
   "description": "Quick start jasmine2 for CoffeeScript",
 
+  "os": [
+    "!win32",
+  ],
+
   "scripts": {
     "help": "node jasminetea",
 
