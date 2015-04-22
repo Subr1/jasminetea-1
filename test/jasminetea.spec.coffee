@@ -1,4 +1,4 @@
-jasminetea= new (require '../lib/')
+jasminetea= new (require '../lib/jasminetea')
 properties= Object.keys jasminetea.__proto__
 i= 1
 
@@ -23,7 +23,7 @@ describe 'Jasminetea',->
       done()
 
   it "#{i++} watch is chokidar wrapper",->
-    manager= jasminetea.watch watch:['test/fixtures/spec.coffee']
+    manager= jasminetea.watch ['test/fixtures/spec.coffee'],watch:['test/fixtures/spec.coffee']
     expect(manager.constructor).toEqual require('events').EventEmitter
 
   it "... #{properties.length} properties is defined",->

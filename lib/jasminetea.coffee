@@ -2,7 +2,7 @@ path= require 'path'
 fs= require 'fs'
 EventEmitter= require('events').EventEmitter
 
-cli= require 'commander'
+Command= (require 'commander').Command
 wanderer= require 'wanderer'
 rimraf= require 'rimraf'
 chokidar= require 'chokidar'
@@ -11,6 +11,7 @@ chalk= require 'chalk'
 
 class Jasminetea extends require './collection'
   cli:->
+    cli= new Command
     cli
       .version require('../package').version
       .description chalk.magenta('7')+chalk.yellow('_')+chalk.green('P')
@@ -58,7 +59,7 @@ class Jasminetea extends require './collection'
       lint= @noop
       lint= @lint if options.lint? and not ('-C' in process.argv)
       lint.call(this,options).once 'close',=>
-        return @watch options if options.watch? and not ('-C' in process.argv)
+        return @watch specs,options if options.watch? and not ('-C' in process.argv)
 
         report= @noop
         report= @report if options.cover is yes and options.report?
@@ -81,6 +82,7 @@ class Jasminetea extends require './collection'
     @log "Found #{files.length} files by",target,'...' if files.length
     if files.length is 0
       @log "Spec Notfound. by",(chalk.underline(path.resolve spec) for spec in specs).join(' or ')
+      console.log options
       process.exit 1 if options.watch is undefined
 
     # Protractor additional config (See jasminetea.config)
@@ -108,7 +110,7 @@ class Jasminetea extends require './collection'
     return @coverJasmine specs,options if options.e2e is undefined
     return @coverProtractor specs,options if options.e2e?
 
-  watch: (options={})->
+  watch: (specs,options={})->
     manager= new EventEmitter
 
     target= (chalk.underline(glob) for glob in options.watch).join(' or ')
@@ -132,7 +134,7 @@ class Jasminetea extends require './collection'
 
       test= @run
       test= @cover if options.cover is yes
-      test.call(this,options).once 'close',=>
+      test.call(this,specs,options).once 'close',=>
         lint= @noop
         lint= @lint if options.lint? and not ('-C' in process.argv)
         lint.call(this,options).once 'close',=>

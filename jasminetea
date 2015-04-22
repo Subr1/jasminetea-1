@@ -5,7 +5,7 @@ if(typeof require('module')._extensions['.coffee']==='undefined'){
   require('coffee-script/register');
 }
 
-var jasminetea= new (require('./lib'));
+var jasminetea= new (require('./lib/jasminetea'));
 
 if(module.parent===null){
   // Fix exception of CLI
