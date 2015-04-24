@@ -157,7 +157,11 @@ class Collection extends require './utility'
     args.push require.resolve 'coveralls/bin/coveralls.js'
     @log '$',args.join ' ' if options.debug?
 
-    childProcess.exec args.join(' '),{cwd:process.cwd(),env:process.env},(error)=>
+    options=
+      cwd: process.cwd()
+      env: process.env
+      maxBuffer: 1000*1024
+    childProcess.exec args.join(' '),options,(error)=>
       throw error if error?
       @log 'Posted a coverage report.'
 
