@@ -6,7 +6,7 @@
   "description": "Quick start jasmine2 for CoffeeScript",
 
   "os": [
-    "!win32",
+    "!win32"
   ],
 
   "scripts": {
