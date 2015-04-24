@@ -8,9 +8,19 @@ if(typeof require('module')._extensions['.coffee']==='undefined'){
 var jasminetea= new (require('./lib/jasminetea'));
 
 if(module.parent===null){
-  // Fix exception of CLI
+  // Fix exception of CLI / cover
   process.on('uncaughtException',function(error){
-    throw error;
+    console.error(error.stack);
+
+    var fs= require('fs');
+    var resultPath= require('path').join(__dirname,'jasminetea.json');
+    var result= {};
+    if(fs.existsSync(resultPath)){
+      result= require(resultPath);
+    }
+    result[process.env.JASMINETEA_ID]= 1;
+    fs.writeFileSync(resultPath,JSON.stringify(result));
+
     process.exit(1);
   });
 
