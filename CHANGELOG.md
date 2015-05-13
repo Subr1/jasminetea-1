@@ -2,10 +2,13 @@ v0.1.28 / May 14 2015
 =========================
  * [`unknown`][22] :bug: Fix [#4][22A]
  * [`unknown`][23] Change `--watch`,`--lint` Default `"spec_dir/*.coffee,lib/**/*.coffee,.*.coffee"` to `"spec_dir/*.coffee,src/**/*.coffee,.*.coffee"`
+ * [`unknown`][24] :bug: Fix [#2][24A]
 
-[22]: https://github.com/59naga/jasminetea/commit/
+[22]: https://github.com/59naga/jasminetea/commit/7030d81c79c2e1405193c7455a121f2f17a35467
 [22A]: https://github.com/59naga/jasminetea/issues/4
-[23]: https://github.com/59naga/jasminetea/commit/
+[23]: https://github.com/59naga/jasminetea/commit/649663a301a33f124f7c93b4cb79ce1d17da2d66
+[24]: https://github.com/59naga/jasminetea/commit/
+[24A]: https://github.com/59naga/jasminetea/issues/2
 
 v0.1.27 / Mar 29 2015
 =========================

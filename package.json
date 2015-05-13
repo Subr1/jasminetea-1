@@ -2,7 +2,7 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.30-rc.2",
+  "version": "0.1.30-rc.3",
   "description": "Quick start Jasmine2 for CoffeeScript",
 
   "scripts": {

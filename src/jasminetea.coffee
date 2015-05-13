@@ -76,13 +76,17 @@ class Jasminetea extends require './collection'
   run: (specs,options={})->
     files= wanderer.seekSync specs
 
-    @log chalk.bold "E2E test mode" if options.e2e?
-
     target= (chalk.underline(glob) for glob in specs).join(' or ')
-    @log "Found #{files.length} files by",target,'...' if files.length
+
+    if options.cover isnt yes
+      @log chalk.bold "E2E test mode" if options.e2e?
+      
+      if files.length
+        @log "Found #{files.length} files by",target,'...' 
+      else
+        @log "Spec Notfound. by",(chalk.underline(path.resolve spec) for spec in specs).join(' or ')
+
     if files.length is 0
-      @log "Spec Notfound. by",(chalk.underline(path.resolve spec) for spec in specs).join(' or ')
-      console.log options
       process.exit 1 if options.watch is undefined
 
     # Protractor additional config (See jasminetea.config)
