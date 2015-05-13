@@ -1,4 +1,4 @@
-jasminetea= new (require '../lib/jasminetea')
+jasminetea= new (require '../src/jasminetea')
 properties= Object.keys jasminetea.__proto__
 i= 1
 

@@ -1,4 +1,4 @@
-utility= new (require '../lib/utility')
+utility= new (require '../src/utility')
 properties= Object.keys utility.__proto__
 i= 1
 

@@ -46,14 +46,14 @@ class Utility
     globs.push path.join specDir,filename
     globs
 
-  getScriptGlobs: (libDir,specDir,recursive=null,filename='*.coffee')->
+  getScriptGlobs: (srcDir,specDir,recursive=null,filename='*.coffee')->
     cwd= '.' if specDir isnt '.'
-    libDir= path.join(libDir,'**') if recursive?
+    srcDir= path.join(srcDir,'**') if recursive?
     specDir= path.join(specDir,'**') if recursive?
 
     globs= []
     globs.push path.join(cwd,filename) if cwd?
-    globs.push path.join libDir,filename
+    globs.push path.join srcDir,filename
     globs.push path.join specDir,filename
     globs
 

@@ -2,16 +2,17 @@
   "name": "jasminetea",
   "bin" : "jasminetea",
   "main": "jasminetea",
-  "version": "0.1.30-rc.1",
-  "description": "Quick start jasmine2 for CoffeeScript",
+  "version": "0.1.30-rc.2",
+  "description": "Quick start Jasmine2 for CoffeeScript",
 
   "scripts": {
+    "postinstall": "coffee -o lib -c src",
     "help": "node jasminetea",
 
     "start": "node jasminetea test --cover --verbose --watch --timeout 30000",
 
-    "test": "node jasminetea test --e2e --cover --debug --timeout 20000",
-    "posttest": "node jasminetea test --cover --report --lint --verbose --debug --timeout 20000"
+    "test": "node jasminetea test --e2e --cover --timeout 20000",
+    "posttest": "node jasminetea test --cover --report --verbose --timeout 20000"
   },
   "scriptsForTravis": {
     "npm_api_key": "echo -n \"username:password\" | base64",

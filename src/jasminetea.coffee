@@ -38,7 +38,7 @@ class Jasminetea extends require './collection'
 
     specDir= options.args[0]
     specs= @getSpecGlobs specDir,options.recursive,options.file
-    scripts= @getScriptGlobs 'lib',specDir,options.recursive
+    scripts= @getScriptGlobs 'src',specDir,options.recursive
 
     options.watch= scripts if options.watch is yes
     options.watch= options.watch.split(',') if typeof options.watch is 'string'
@@ -162,7 +162,7 @@ class Jasminetea extends require './collection'
 
 # Via Jasminetea.run for Protractor conf.js
 jasmineNodeOpts= Jasminetea::config.jasmineNodeOpts
-jasmineNodeOpts.isVerbose= true if process.env.JASMINETEA_VERBOSE isnt 'undefined' 
+jasmineNodeOpts.isVerbose= true if process.env.JASMINETEA_VERBOSE isnt 'undefined'
 jasmineNodeOpts.defaultTimeoutInterval= process.env.JASMINETEA_TIMEOUT
 jasmineNodeOpts.includeStackTrace= process.env.JASMINETEA_STACKTRACE
 

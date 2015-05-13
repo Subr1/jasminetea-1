@@ -1,4 +1,4 @@
-collection= new (require '../lib/collection')
+collection= new (require '../src/collection')
 properties= Object.keys collection.__proto__
 i= 1
 

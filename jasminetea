@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-// Avoid conflicts with another version
-if(typeof require('module')._extensions['.coffee']==='undefined'){
-  require('coffee-script/register');
+var Jasminetea,jasminetea;
+if(require('module')._extensions['.coffee']==null){
+  Jasminetea= require('./lib/jasminetea');
 }
-
-var jasminetea= new (require('./lib/jasminetea'));
+else{
+  Jasminetea= require('./src/jasminetea');
+}
+jasminetea= new Jasminetea;
 
 if(module.parent===null){
   // Fix exception of CLI / cover
