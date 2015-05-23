@@ -1,24 +1,23 @@
-# quick boot options
+# Quick boot options
 sudo: false
 cache:
   directories:
     - node_modules
 
-# language options
+# Language options
 language: node_js
 node_js:
   - '0.10'
 
-# coveralls.io and sauceLabs options
+# COVERALLS_REPO_TOKEN
 env:
   global:
     - secure: HmsnQqfaOjZ6HJfursQUvqVRlUN2H1ICwDZXJH6rqSgZi2olA6NT5CCitUG1V+4ksMBIpgT/ELR38OQN82BfWzFIQxLph5BcNYtOcKv+TU49m94hkfB4PXXbM1PhfJlHvuCMqEMxaIxcHCAfUfaeaB+jPSAcMwkY6vkifuyVTrc=
-    - secure: NX2hryZZZr6jks3+4GSeNDWmyjYp+/+CJxauqUvJhrj0LxrCpr9t+G81ubqNVDw/nJxEZPY6cs5fsryFHLFeZapwbhzjWwpHDVaGZJgW29NGfTJ8oVkYIvnSbUrc3sCQM5XWRro8ECP6+mrd4LYUQ2mnKbTmf/mKg+vT6WkVhsM=
-    - secure: euuz/klng7lIEcVzVaXTaXxCEpXbPSqXMcXj59OXYWrgg8imy/nX/fG6a8EDbJ3Y9qnwfkHO0v80OuWVQ2PypNEvS+szNqKx/zDzg9UpU6tWwRUTMqfeSIbvUsl5ecj6TkwCpPKTnp+hVk7+wTZS5UhhPOuK1U4LvtJNuGCmAKI=
-addons:
-  sauce_connect: true
 
-# deploy options
+# Npm publish options
+before_deploy:
+  - npm install coffee-script --global
+  - export TRAVIS_BUILD_PASSED=true
 deploy:
   provider: npm
   email: i59naga@icloud.com

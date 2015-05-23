@@ -1,32 +1,5 @@
 #!/usr/bin/env node
-
-var Jasminetea,jasminetea;
 if(require('module')._extensions['.coffee']==null){
-  Jasminetea= require('./lib/jasminetea');
+  require('coffee-script/register');
 }
-else{
-  Jasminetea= require('./src/jasminetea');
-}
-jasminetea= new Jasminetea;
-
-if(module.parent===null){
-  // Fix exception of CLI / cover
-  process.on('uncaughtException',function(error){
-    console.error(error.stack);
-
-    var fs= require('fs');
-    var resultPath= require('path').join(__dirname,'jasminetea.json');
-    var result= {};
-    if(fs.existsSync(resultPath)){
-      result= require(resultPath);
-    }
-    result[process.env.JASMINETEA_ID]= 1;
-    fs.writeFileSync(resultPath,JSON.stringify(result));
-
-    process.exit(1);
-  });
-
-  jasminetea.cli(process.argv.slice(2));
-}
-
-module.exports= jasminetea;
+require('./src').parse(process.argv);

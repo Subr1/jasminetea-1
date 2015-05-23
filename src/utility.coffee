@@ -1,44 +1,11 @@
-path= require 'path'
-EventEmitter= require('events').EventEmitter
-
+# Dependencies
+Command= (require 'commander').Command
 chalk= require 'chalk'
 
-class Utility
-  logColors: ['magenta','cyan','green','yellow']
-  logBgColors: ['bgMagenta','bgCyan','bgGreen','bgYellow']
+path= require 'path'
 
-  constructor: ->
-    @i= 0
-
-  h1: (args...)->
-    console.log ''
-    console.log chalk.bold args...
-  
-  log: (args...)->
-    [...,changeColor]= args
-    args= args[...-1] if changeColor is yes
-
-    console.log '7_P',@getColor(changeColor) args...
-
-  getColor: (changeColor=no)->
-    @i= 0 if @logColors[@i] is undefined
-    color= chalk[@logColors[@i]]
-    @i++ if changeColor is yes
-
-    color
-
-  getBgColor: (changeColor=no)->
-    @i= 0 if @logBgColors[@i] is undefined
-    color= chalk[@logBgColors[@i]]
-    @i++ if changeColor is yes
-
-    color
-
-  noop: ()->
-    noop= new EventEmitter
-    process.nextTick -> noop.emit 'close',0
-    noop
-
+# Public
+class Utility extends Command
   getSpecGlobs: (specDir,recursive=null,filename='*[sS]pec.coffee')->
     specDir= path.join specDir,'**' if recursive?
 
@@ -56,5 +23,44 @@ class Utility
     globs.push path.join srcDir,filename
     globs.push path.join specDir,filename
     globs
+
+  parseGlobs: (globs,scripts)->
+    if typeof globs is 'string'
+      globs.split ',' 
+    else
+      scripts
+
+  deleteRequireCache: (id)=>
+    return if id.indexOf('node_modules') > -1
+
+    files= require.cache[id]
+    if files?
+      @deleteRequireCache file.id for file in files.children
+    delete require.cache[id]
+
+  logColors: ['magenta','cyan','green','yellow']
+  logBgColors: ['bgMagenta','bgCyan','bgGreen','bgYellow']
+  log: (args...)->
+    [...,changeColor]= args
+    args= args[...-1] if changeColor is yes
+
+    return if @silent
+
+    process.stdin.write @getColor(changeColor) '7_P '
+    process.stdin.write args.join(' ')+'\n'
+
+  getColor: (changeColor=no)->
+    @logI= 0 if @logColors[@logI] is undefined
+    color= chalk[@logColors[@logI]]
+    @logI++ if changeColor is yes
+
+    color
+
+  getBgColor: (changeColor=no)->
+    @logI= 0 if @logBgColors[@logI] is undefined
+    color= chalk[@logBgColors[@logI]]
+    @logI++ if changeColor is yes
+
+    color
 
 module.exports= Utility
