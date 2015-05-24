@@ -4,12 +4,6 @@ path= require 'path'
 
 # Environment
 logPath= path.resolve __dirname,'..','jasminetea.json'
-try
-  log= require logPath
-catch
-  log= {}
-finally
-  log= {} unless process.env.JASMINETEA
 
 # Private
 process.on 'uncaughtException',(error)->
@@ -19,6 +13,9 @@ process.on 'uncaughtException',(error)->
 
 # Public
 result= (code)->
+  try
+    log= JSON.parse fs.readFileSync logPath
+  log?= {}
   log[process.env.JASMINETEA]?= 0
   log[process.env.JASMINETEA]+= ~~code
   logData= JSON.stringify log
