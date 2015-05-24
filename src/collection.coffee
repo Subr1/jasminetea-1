@@ -49,7 +49,9 @@ class Collection extends Utility
             jasmine.execute()
           catch error
             failure= yes
-            console.error error?.stack?.toString() ? error?.message ? error
+            console.log error?.stack?.toString() ? error?.message ? error
+
+            jasmineDone()
 
       jasmine.addReporter
         specDone: (result)->
@@ -57,18 +59,21 @@ class Collection extends Utility
           passed++ if result.status is 'passed'
 
         jasmineDone: =>
-          failure= yes if passed is 0
+          jasmineDone()
 
-          console.log ''# End
+      jasmineDone= =>
+        failure= yes if passed is 0
 
-          cover= ('-c' in process.argv) or ('--cover' in process.argv)
-          if cover
-            if jasmine.specFiles.length
-              @log 'Calculating...'
-            else
-              @log 'Skip --cover.  Because not exists in',@whereabouts(@specs)
+        console.log ''# End
 
-          resolve ~~failure
+        cover= ('-c' in process.argv) or ('--cover' in process.argv)
+        if cover
+          if jasmine.specFiles.length
+            @log 'Calculating...'
+          else
+            @log 'Skip --cover.  Because not exists in',@whereabouts(@specs)
+
+        resolve ~~failure
 
   doLint: ->
     options=

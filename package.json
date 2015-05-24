@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.0-alpha.2",
+  "version": "0.2.0-alpha.3",
   "description": "Quick start Jasmine2 for CoffeeScript",
 
   "bin" : "jasminetea",
