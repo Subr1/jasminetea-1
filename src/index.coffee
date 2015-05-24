@@ -1,34 +1,12 @@
 # Dependencies 
 Collection= require './collection'
+result= require './result'
 
 Promise= require 'bluebird'
 globWatcher= require 'glob-watcher'
 chalk= require 'chalk'
 
-fs= require 'fs'
 path= require 'path'
-
-# Private
-process.on 'uncaughtException',(error)->
-  console.error error.stack
-
-  process.exit result 1
-
-logPath= path.resolve __dirname,'..','jasminetea.json'
-try
-  log= require logPath
-catch
-  log= {}
-finally
-  log= {} unless process.env.JASMINETEA
-
-result= (code)->
-  log[process.env.JASMINETEA]?= 0
-  log[process.env.JASMINETEA]+= ~~code
-  logData= JSON.stringify log
-  fs.writeFileSync logPath,logData
-
-  log[process.env.JASMINETEA]
 
 # Public
 class Jasminetea extends Collection
@@ -36,7 +14,12 @@ class Jasminetea extends Collection
     super
 
     @version require('../package').version
-    @usage 'specDir [options..]'
+    @usage 'specDir [options...]'
+
+    @option '-c --cover','Use ibrik, Code coverage calculation'
+    @option '--report','Use coveralls, Post code coverage to coveralls.io'
+    
+    @option '-l --lint [globs]','Use coffeelint, Code linting after run. See [globs] (can use "," separator)'
 
     @option '-w --watch [globs]','Watch file changes. See [globs] (can use "," separator)'
     @option '-f --file [specGlob]','Target [specGlob] (default "*[sS]pec.coffee")'
@@ -45,12 +28,7 @@ class Jasminetea extends Collection
     @option '-v --verbose','Output spec names'
     @option '-s --stacktrace','Output stack trace'
     @option '-t --timeout <msec>','Success time-limit (default 500 msec)',500
-
-    @option '-l --lint [globs]','Use coffeelint, Code linting after run. See [globs] (can use "," separator)'
-
-    @option '-c --cover','Use ibrik, Code coverage calculation'
-    @option '--report','Use coveralls, Post code coverage to coveralls.io'
-
+    
     @option '-d --debug','Output raw commands',yes
 
   parse: (argv)->
@@ -76,11 +54,12 @@ class Jasminetea extends Collection
     return if @noExecution
 
     @jasminetea()
-    if @watch?
+
+    if @watch
       watcher= globWatcher @watch
       watcher.on 'change',(event)=>
-        name= chalk.underline path.relative process.cwd(),event.path
-        @log 'File',name,event.type
+        name= path.relative process.cwd(),event.path
+        @log 'File',@whereabouts(name),event.type
 
         @jasminetea()
 
@@ -102,10 +81,12 @@ class Jasminetea extends Collection
 
     .then (code)=>
       exitCode= 1 if code
-
       @busy= no
 
-      process.exit result exitCode unless @watch
+      if @watch
+        @log 'Watching the',@whereabouts(@watch,' and '),'...'
+      else
+        process.exit result exitCode
 
 module.exports= new Jasminetea
 module.exports.Jasminetea= Jasminetea

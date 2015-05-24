@@ -39,9 +39,11 @@ class Collection extends Utility
           failure= yes if count is 0
 
           if count
-            @log "Found #{count} files by",chalk.underline(@specs),'...\n'
+            @log "Found #{count} files in",@whereabouts(@specs),'...\n'
           else
-            @log chalk.red "Spec Notfound. by",chalk.underline(@specs)
+            @log chalk.red "Spec not exists in",@whereabouts(@specs)
+
+          console.log ''# Begin...
 
           try
             jasmine.execute()
@@ -57,8 +59,14 @@ class Collection extends Utility
         jasmineDone: =>
           failure= yes if passed is 0
 
+          console.log ''# End
+
           cover= ('-c' in process.argv) or ('--cover' in process.argv)
-          @log 'Calculating...' if cover
+          if cover
+            if jasmine.specFiles.length
+              @log 'Calculating...'
+            else
+              @log 'Skip --cover.  Because not exists in',@whereabouts(@specs)
 
           resolve ~~failure
 
@@ -69,12 +77,18 @@ class Collection extends Utility
       stdio: 'inherit'
 
     new Promise (resolve)=>
+      files= wanderer.seekSync @lint
+      if files.length is 0
+        @log 'Skip --lint.   Because not exists in',@whereabouts(@lint)
+        return resolve null
+      
       argv= [require.resolve 'coffeelint/bin/coffeelint']
-      for file in wanderer.seekSync @lint
-        argv.push path.relative process.cwd(),file
+      argv.push path.relative process.cwd(),file for file in files
+
+      console.log ''# Begin...
 
       @log '$ node ',argv.join ' ' if @debug
-      @log 'Lint by',@lint.join(' or '),'...'
+      @log 'Lint by',@whereabouts(@lint),'...'
 
       spawn 'node',argv,options
       .on 'exit',(code)->
@@ -84,7 +98,7 @@ class Collection extends Utility
     options=
       cwd: process.cwd()
       env: process.env
-      stdio: 'inherit'
+      stdio: [0,1,'ignore'] # Inherit ansi color
 
     new Promise (resolve)=>
       argv= []
@@ -113,12 +127,12 @@ class Collection extends Utility
       existsToken= fs.existsSync path.join process.cwd(),'.coveralls.yml'
       existsToken= process.env.COVERALLS_REPO_TOKEN? if not existsToken
       if not existsToken
-        @log 'Skip post a coverage report. Cause not exists COVERALLS_REPO_TOKEN'
+        @log 'Skip --report. Because not exists the COVERALLS_REPO_TOKEN'
         return resolve null
 
       existsCoverage= fs.existsSync path.join process.cwd(),'coverage','lcov.info'
       if not existsCoverage
-        @log 'Skip post a coverage report. Cause not exists ./coverage/lcov.info'
+        @log 'Skip --report. Because not exists the ./coverage/lcov.info'
         return resolve null
 
       argv= []

@@ -45,8 +45,6 @@ class Utility extends Command
     [...,changeColor]= args
     args= args[...-1] if changeColor is yes
 
-    return if @silent
-
     suffix= ' ms'
     diff= Date.now()-@_log ? 0
     if diff>1000
@@ -63,10 +61,15 @@ class Utility extends Command
     time= chalk.gray(('     +'+diff+suffix).slice(-8))
 
     unless @silent
-      process.stdin.write icon+time+' '
-      process.stdin.write args.join(' ')+'\n'
+      process.stdout.write icon+time+' '
+      process.stdout.write args.join(' ')+'\n'
 
     @_log= Date.now()
+
+  whereabouts: (args,conjunctive=' or ')->
+    args= [args] if typeof args is 'string'
+    
+    (chalk.underline arg for arg in args).join(conjunctive)
 
   getColor: (changeColor=no)->
     @logI= 0 if @logColors[@logI] is undefined
