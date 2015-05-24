@@ -7,7 +7,7 @@ logPath= path.resolve __dirname,'..','jasminetea.json'
 
 # Private
 process.on 'uncaughtException',(error)->
-  console.error error.stack
+  console.log error.stack
 
   process.exit result 1
 
