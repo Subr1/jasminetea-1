@@ -3,27 +3,32 @@ Collection= require './collection'
 
 Promise= require 'bluebird'
 globWatcher= require 'glob-watcher'
+chalk= require 'chalk'
 
 fs= require 'fs'
 path= require 'path'
 
 # Private
-resultPath= path.join '..',__dirname,'jasminetea.json'
-
-process.env.JASMINETEA_ID?= Date.now()
 process.on 'uncaughtException',(error)->
   console.error error.stack
 
-  try
-    result= require resultPath
-  finally
-    result?= {}
-    result[process.env.JASMINETEA_ID]= 1
-    resultData= JSON.stringify result
+  process.exit result 1
 
-    fs.writeFileSync resultPath,resultData
+logPath= path.resolve __dirname,'..','jasminetea.json'
+try
+  log= require logPath
+catch
+  log= {}
+finally
+  log= {} unless process.env.JASMINETEA
 
-  process.exit 1
+result= (code)->
+  log[process.env.JASMINETEA]?= 0
+  log[process.env.JASMINETEA]+= ~~code
+  logData= JSON.stringify log
+  fs.writeFileSync logPath,logData
+
+  log[process.env.JASMINETEA]
 
 # Public
 class Jasminetea extends Collection
@@ -46,52 +51,61 @@ class Jasminetea extends Collection
     @option '-c --cover','Use ibrik, Code coverage calculation'
     @option '--report','Use coveralls, Post code coverage to coveralls.io'
 
-    @option '-d --debug','Output raw commands'
+    @option '-d --debug','Output raw commands',yes
 
-  parse: (argv,reporter=null,exec=true)->
+  parse: (argv)->
     super argv
 
-    reporter?= (string)-> process.stdout.write string
     return @help() if @args.length is 0
 
     @specDir= @args[0]
     @specs= @getSpecGlobs @specDir,@recursive,@file
     @scripts= @getScriptGlobs 'src',@specDir,@recursive
 
-    @cover= no if '--no-cover' in process.argv
     @watch= @parseGlobs @watch,@scripts if @watch?
     @lint= @parseGlobs @lint,@scripts if @lint?
 
-    return unless exec
+    if process.env.JASMINETEA
+      @watch= no
+      @lint= no
+      @cover= no
+      @report= no
+    else
+      process.env.JASMINETEA?= Date.now()
+
+    return if @noExecution
 
     @jasminetea()
-
     if @watch?
       watcher= globWatcher @watch
       watcher.on 'change',(event)=>
-        console.log arguments
+        name= chalk.underline path.relative process.cwd(),event.path
+        @log 'File',name,event.type
 
         @jasminetea()
 
   jasminetea: ->
     return if @busy
+
     @busy= yes
+    exitCode= 0
 
-    promises= []
-    if @cover
-      promises.push @doCover()
-      promises.push @doReport() if @report
-    else
-      promises.push @doRun()
-      promises.push @doLint() if @lint
+    promise= if @cover then @doCover() else @doRun()
+    promise
+    .then (code)=>
+      exitCode= 1 if code
+      @doReport() if @report
 
-    Promise.all promises
-    .then ->
+    .then (code)=>
+      exitCode= 1 if code
+      @doLint() if @lint
+
+    .then (code)=>
+      exitCode= 1 if code
+
       @busy= no
 
-      result= require resultPath
-
-      process.exit ~~result[process.env.JASMINETEA_ID]
+      process.exit result exitCode unless @watch
 
 module.exports= new Jasminetea
 module.exports.Jasminetea= Jasminetea

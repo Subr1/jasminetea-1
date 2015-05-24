@@ -7,6 +7,7 @@ globWatcher= require 'glob-watcher'
 Jasmine= require 'jasmine'
 Reporter= require 'jasmine-terminal-reporter'
 wanderer= require 'wanderer'
+chalk= require 'chalk'
 
 fs= require 'fs'
 path= require 'path'
@@ -15,7 +16,7 @@ path= require 'path'
 # Public
 class Collection extends Utility
   doRun: ->
-    failure= yes
+    failure= no
 
     jasmine= new Jasmine
     jasmine.addReporter new Reporter
@@ -31,27 +32,36 @@ class Collection extends Utility
 
           @deleteRequireCache require.resolve filename
           jasmine.addSpecFile filename
-        .once 'end',->
-          failure= no if jasmine.specFiles.length is 0
+        .once 'end',=>
+          count= jasmine.specFiles.length
+          failure= yes if count is 0
+
+          if count
+            @log "Found #{count} files by",chalk.underline(@specs),'...\n'
+          else
+            @log chalk.red "Spec Notfound. by",chalk.underline(@specs)
 
           try
             jasmine.execute()
           catch error
             console.error error?.stack?.toString() ? error?.message ? error
-            failure= no
+            failure= yes
 
       jasmine.addReporter
         specDone: (result)->
-          failure= no if result.status is 'failed'
+          failure= yes if result.status is 'failed'
 
-        jasmineDone: ->
+        jasmineDone: =>
+          cover= ('-c' in process.argv) or ('--cover' in process.argv)
+          @log 'Calculating...' if cover
+
           resolve ~~failure
 
   doLint: ->
     options=
       cwd: process.cwd()
       env: process.env
-      stdio: unless @debug then 'inherit' else undefined
+      stdio: 'inherit'
 
     new Promise (resolve)=>
       argv= [require.resolve 'coffeelint/bin/coffeelint']
@@ -81,7 +91,7 @@ class Collection extends Utility
       argv= argv.concat process.argv[2...]
       argv.push '--no-cover'
 
-      @log '$',argv.join ' ' if @debug?
+      @log '$',argv.join ' ' if @debug
 
       [script,argv...]= argv
       spawn script,argv,options

@@ -40,14 +40,33 @@ class Utility extends Command
 
   logColors: ['magenta','cyan','green','yellow']
   logBgColors: ['bgMagenta','bgCyan','bgGreen','bgYellow']
+  _log: Date.now()
   log: (args...)->
     [...,changeColor]= args
     args= args[...-1] if changeColor is yes
 
     return if @silent
 
-    process.stdin.write @getColor(changeColor) '7_P '
-    process.stdin.write args.join(' ')+'\n'
+    suffix= ' ms'
+    diff= Date.now()-@_log ? 0
+    if diff>1000
+      diff= ~~(diff/1000)
+      suffix= 'sec'
+      if diff>60
+        diff= ~~(diff/60)
+        suffix= 'min'
+        if diff>60
+          diff= ~~(diff/60)
+          suffix= ' hr'
+
+    icon= @getColor(changeColor) ' 7_P'
+    time= chalk.gray(('     +'+diff+suffix).slice(-8))
+
+    unless @silent
+      process.stdin.write icon+time+' '
+      process.stdin.write args.join(' ')+'\n'
+
+    @_log= Date.now()
 
   getColor: (changeColor=no)->
     @logI= 0 if @logColors[@logI] is undefined

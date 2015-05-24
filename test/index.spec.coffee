@@ -1,35 +1,33 @@
 CLI= (require '../src').Jasminetea
 
 # Fixture
-$jasminetea= (args,exec=on)->
-  stdout= ''
-  reporter= (string)->
-    stdout+= string
-
+$jasminetea= (args)->
   argv= ['node',__filename]
   for arg in args.match /".*?"|[^\s]+/g
     argv.push arg.replace /^"|"$/g,''
 
   cli= new CLI
-  cli.silent= on
-  cli.parse argv,reporter,exec
-  cli.debug= on
+  cli.silent= yes
+  cli.noExecution= yes
+  cli.parse argv
 
-  [cli,reporter]
+  cli
 
 # Specs
 describe 'CLI',->
+  beforeEach -> delete process.env.JASMINETEA
+
   describe '@parse',->
     it '$ jasminetea test -> test/*[sS]pec.coffee (watch to . src test)',->
-      [cli,reporter]=
-        $jasminetea 'test',off
+      cli=
+        $jasminetea 'test'
 
       expect(cli.specs).toEqual ['test/*[sS]pec.coffee']
       expect(cli.scripts).toEqual ['*.coffee','src/*.coffee','test/*.coffee']
 
-    it '$ jasminetea test -w wuck -rvscd -f fuck -t 59798 --report -l luck (all true)',->
-      [cli,reporter]=
-        $jasminetea 'test -w wuck -rvscd -f fuck -t 59798 --report -l luck',off
+    it '$ jasminetea test -w wuck -rvscd -f fuck -t 59798 --report -l luck',->
+      cli=
+        $jasminetea 'test -w wuck -rvscd -f fuck -t 59798 --report -l luck'
 
       expect(cli.specs).toEqual ['test/**/fuck']
       expect(cli.scripts).toEqual ['*.coffee','src/**/*.coffee','test/**/*.coffee']

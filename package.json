@@ -22,7 +22,7 @@
       "start": "$(opc package scripts.default) --watch --stacktrace",
 
     "Travis-CI commands": "",
-      "test": "exit 1#npm run cover",
+      "test": "npm run cover",
 
     "Npm update via Travis-CI": "",
       "prepublish": "#if [ $TRAVIS_BUILD_PASSED ]; then npm run compile; fi",
