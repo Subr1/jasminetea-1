@@ -1,12 +1,11 @@
 # ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> CLI Collection, Quick start [Jasmine2][d-1] for [CoffeeScript][d-4].
+> [Jasmine2][d-1] for [CoffeeScript][d-4].
 
 1. Without configuration file
 2. Can be running spec. by [Jasmine2][d-1]
 3. Can be calculate code caverage. by [iblik][d-2]
 4. Can be checking code quality. by [coffeelint][d-3]
-5. for [CoffeeScript][d-4]
 
 [d-1]: https://github.com/jasmine/jasmine
 [d-2]: https://github.com/Constellation/ibrik
