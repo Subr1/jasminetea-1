@@ -16,6 +16,7 @@ path= require 'path'
 # Public
 class Collection extends Utility
   doRun: ->
+    passed= 0
     failure= no
 
     jasmine= new Jasmine
@@ -31,6 +32,7 @@ class Collection extends Utility
           filename= path.resolve process.cwd(),file
 
           @deleteRequireCache require.resolve filename
+          
           jasmine.addSpecFile filename
         .once 'end',=>
           count= jasmine.specFiles.length
@@ -44,14 +46,17 @@ class Collection extends Utility
           try
             jasmine.execute()
           catch error
-            console.error error?.stack?.toString() ? error?.message ? error
             failure= yes
+            console.error error?.stack?.toString() ? error?.message ? error
 
       jasmine.addReporter
         specDone: (result)->
           failure= yes if result.status is 'failed'
+          passed++ if result.status is 'passed'
 
         jasmineDone: =>
+          failure= yes if passed is 0
+
           cover= ('-c' in process.argv) or ('--cover' in process.argv)
           @log 'Calculating...' if cover
 
