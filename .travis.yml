@@ -19,7 +19,6 @@ env:
 # Npm publish options
 before_deploy:
   - npm install coffee-script --global
-  - export TRAVIS_BUILD_PASSED=true
 deploy:
   provider: npm
   email: i59naga@icloud.com

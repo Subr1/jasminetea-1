@@ -25,7 +25,7 @@
       "test": "npm run cover",
 
     "(Disabled)Npm update via Travis-CI": "",
-      "xprepublish": "node -e 'if(process.env.TRAVIS)process.exit(1)' || npm run compile",
+      "prepublish": "nif TRAVIS && echo true || echo false",
       
       "compile": "coffee --bare --compile index.coffee",
       "postcompile": "coffee --output lib --bare --compile src"
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "ghooks": "^0.3.2",
+    "nif": "0.0.0-alpha.3",
     "object-parser-cli": "0.0.0-alpha.0"
   },
   "globalDependencies": {
