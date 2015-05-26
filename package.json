@@ -24,9 +24,8 @@
     "Travis-CI commands": "",
       "test": "npm run cover",
 
-    "Npm update via Travis-CI": "",
-      "prepublish": "node -e 'if(process.env.TRAVIS)process.exit(1)' || npm run noop",
-      "noop": "echo noop",
+    "(Disabled)Npm update via Travis-CI": "",
+      "xprepublish": "node -e 'if(process.env.TRAVIS)process.exit(1)' || npm run compile",
       
       "compile": "coffee --bare --compile index.coffee",
       "postcompile": "coffee --output lib --bare --compile src"
