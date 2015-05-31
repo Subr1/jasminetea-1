@@ -128,7 +128,7 @@ class Collection extends Utility
       env: process.env
       maxBuffer: 1000*1024
 
-    new Promise (resolve)=>
+    new Promise (resolve,reject)=>
       existsToken= fs.existsSync path.join process.cwd(),'.coveralls.yml'
       existsToken= process.env.COVERALLS_REPO_TOKEN? if not existsToken
       if not existsToken
@@ -149,9 +149,9 @@ class Collection extends Utility
       @log '$',argv.join ' ' if @debug
 
       exec argv.join(' '),options,(error)=>
-        throw error.message if error?
+        return reject error if error?
 
         @log 'Posted a coverage report.'
-        return resolve null
+        resolve null
 
 module.exports= Collection
