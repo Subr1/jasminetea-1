@@ -22,13 +22,7 @@
       "start": "$(opc package scripts.default) --watch --stacktrace",
 
     "Travis-CI commands": "",
-      "test": "npm run cover",
-
-    "(Disabled)Npm update via Travis-CI": "",
-      "prepublish": "node -e \"if(process.env.TRAVIS){}else{process.exit(1)}\" && echo true || echo false",
-      
-      "compile": "coffee --bare --compile index.coffee",
-      "postcompile": "coffee --output lib --bare --compile src"
+      "test": "npm run cover"
   },
 
   "dependencies": {
