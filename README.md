@@ -50,7 +50,7 @@ $ jasminetea test --cover --report --lint --watch
 # 
 #  7_P   +2 ms Skip --cover.  Because not exists in test/*[sS]pec.coffee
 #  7_P   +7sec Skip --report. Because not exists the COVERALLS_REPO_TOKEN
-#  7_P   +2 ms Skip --lint.   Because not exists in *.coffee or src/*.coffee or test/*.coffee
+#  7_P   +2 ms Skip --lint.   Because not exists in *.coffee and src/*.coffee and test/*.coffee
 #  7_P   +0 ms Watching the *.coffee and src/*.coffee and test/*.coffee ...
 ```
 

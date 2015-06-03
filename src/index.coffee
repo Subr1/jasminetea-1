@@ -3,7 +3,7 @@ Collection= require './collection'
 result= require './result'
 
 Promise= require 'bluebird'
-globWatcher= require 'glob-watcher'
+gaze= require 'gaze'
 chalk= require 'chalk'
 
 path= require 'path'
@@ -56,12 +56,14 @@ class Jasminetea extends Collection
     @jasminetea()
 
     if @watch
-      watcher= globWatcher @watch
-      watcher.on 'change',(event)=>
-        name= path.relative process.cwd(),event.path
-        @log 'File',@whereabouts(name),event.type
+      gaze @watch,(error,watcher)=>
+        console.error error if error?
 
-        @jasminetea()
+        watcher.on 'all',(event,filepath)=>
+          name= path.relative process.cwd(),filepath
+          @log 'File',@whereabouts(name),event
+
+          @jasminetea()
 
   jasminetea: ->
     return if @busy

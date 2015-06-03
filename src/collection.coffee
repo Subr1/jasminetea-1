@@ -2,7 +2,6 @@
 Utility= require './utility'
 
 Promise= require 'bluebird'
-globWatcher= require 'glob-watcher'
 
 Jasmine= require 'jasmine'
 Reporter= require 'jasmine-terminal-reporter'

@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.0-beta.2",
+  "version": "0.2.0-beta.3",
   "description": "Quick start Jasmine2 for CoffeeScript",
 
   "bin" : "jasminetea",
@@ -28,11 +28,11 @@
   "dependencies": {
     "bluebird": "^2.9.25",
     "chalk": "^1.0.0",
-    "glob-watcher": "^2.0.0",
     "coffee-script": "^1.9.2",
     "coffeelint": "^1.9.2",
     "commander": "^2.6.0",
     "coveralls": "^2.11.2",
+    "gaze": "^0.5.1",
     "ibrik": "^2.0.0",
     "jasmine": "^2.2.1",
     "jasmine-terminal-reporter": "^0.9.1",

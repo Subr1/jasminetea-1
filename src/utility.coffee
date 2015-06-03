@@ -66,7 +66,7 @@ class Utility extends Command
 
     @_log= Date.now()
 
-  whereabouts: (args,conjunctive=' or ')->
+  whereabouts: (args,conjunctive=' and ')->
     args= [args] if typeof args is 'string'
     
     (chalk.underline arg for arg in args).join(conjunctive)
