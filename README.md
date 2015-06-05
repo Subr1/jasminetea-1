@@ -1,58 +1,88 @@
-# ![jasminetea][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
+# ![][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> [Jasmine2][d-1] for [CoffeeScript][d-4].
+> is Extension testing framework of [Jasmine2][1] for [CoffeeScript][2] in [Node.js][3].
 
-1. Without configuration file
-2. Can be run the specs. by [Jasmine2][d-1]
-3. Can be calculate code caverage. by [iblik][d-2]
-4. Can be check code quality. by [coffeelint][d-3]
+## Test - Getting started
+```bash
+.
+├─ src
+│  └─ index.coffee
+└─ test
+   └─ api.spec.coffee
+```
 
-[d-1]: https://github.com/jasmine/jasmine
-[d-2]: https://github.com/Constellation/ibrik
-[d-3]: http://coffeelint.org/
-[d-4]: http://coffeescript.org/
+./src/index.coffee
 
-## Installation
+```coffee
+class MyModule
+  encode: (str)->
+    'data:text/plain;base64,'+(new Buffer str).toString 'base64'
+
+  decode: (datauri)->
+    (new Buffer datauri.slice(datauri.indexOf(',')+1),'base64').toString()
+
+module.exports= new MyModule
+module.exports.MyModule= MyModule
+```
+
+./test/index.coffee
+
+```coffee
+MyModule= (require '../src').MyModule
+myModule= require '../src'
+
+fixture= 'foo'
+
+describe 'API',->
+  datauri= null
+
+  it 'instanceof MyModule',->
+    expect(myModule instanceof MyModule).toBe true
+
+  it 'encode',->
+    datauri= myModule.encode fixture
+    expect(datauri).toBe 'data:text/plain;base64,'+(new Buffer fixture).toString 'base64'
+  
+  it 'decode',->
+    str= myModule.decode datauri 
+    expect(str).toBe fixture
+```
+
+### 1, 2, 3, Jasminetea!
 ```bash
 $ npm install jasminetea --global
 $ jasminetea -V
-# 0.2.0
+# 0.2.0-beta.3
 
 $ jasminetea
 #
-#   Usage: jasminetea specDir [options...]
-#
-#   Options:
-#
-#     -h, --help            output usage information
-#     -V, --version         output the version number
-#     -c --cover            Use ibrik, Code coverage calculation
-#     --report              Use coveralls, Post code coverage to coveralls.io
-#     -l --lint [globs]     Use coffeelint, Code linting after run. See [globs] (can use "," separator)
-#     -w --watch [globs]    Watch file changes. See [globs] (can use "," separator)
-#     -f --file [specGlob]  Target [specGlob] (default "*[sS]pec.coffee")
-#     -r --recursive        Execute specs in recursive directory
-#     -v --verbose          Output spec names
-#     -s --stacktrace       Output stack trace
-#     -t --timeout <msec>   Success time-limit (default 500 msec)
-#     -d --debug            Output raw commands
+#  7_P +361 ms Found 1 files in test/*[sS]pec.coffee ...
+# 
+# 
+# Running 3 specs.
+# 
+# API
+#     instanceof MyModule: passed
+#     encode: passed
+#     decode: passed
+# 
+# 3 specs, 0 failures
+# Finished in 0 seconds
 ```
 
-# Quick start
-```bash
-$ jasminetea test --cover --report --lint --watch
-#  7_P +133 ms Spec not exists in test/*[sS]pec.coffee
-# 
-# 
-# 
-# 0 specs, 0 failures
-# Finished in 0 seconds
-# 
-#  7_P   +2 ms Skip --cover.  Because not exists in test/*[sS]pec.coffee
-#  7_P   +7sec Skip --report. Because not exists the COVERALLS_REPO_TOKEN
-#  7_P   +2 ms Skip --lint.   Because not exists in *.coffee and src/*.coffee and test/*.coffee
-#  7_P   +0 ms Watching the *.coffee and src/*.coffee and test/*.coffee ...
-```
+<!--
+
+## Lint
+
+## Code coverage caluculation
+
+## Watch
+
+## Friendly TravisCI
+
+## Report to coveralls.io
+
+-->
 
 License
 =========================
@@ -67,3 +97,8 @@ License
 [travis]: https://travis-ci.org/59naga/jasminetea
 [coveralls-image]: https://coveralls.io/repos/59naga/jasminetea/badge.svg?branch=master
 [coveralls]: https://coveralls.io/r/59naga/jasminetea?branch=master
+
+
+[1]: http://jasmine.github.io/2.3/introduction.html
+[2]: http://coffeescript.org/
+[3]: https://nodejs.org/
