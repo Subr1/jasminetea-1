@@ -1,6 +1,6 @@
 # ![][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> is Extension testing framework of [Jasmine2][1] for [CoffeeScript][2] in [Node.js][3].
+> is Unfancy [Jasmine2](http://jasmine.github.io/2.3/introduction.html) in Node.js
 
 ## Test - Getting started
 ```bash
@@ -97,8 +97,3 @@ License
 [travis]: https://travis-ci.org/59naga/jasminetea
 [coveralls-image]: https://coveralls.io/repos/59naga/jasminetea/badge.svg?branch=master
 [coveralls]: https://coveralls.io/r/59naga/jasminetea?branch=master
-
-
-[1]: http://jasmine.github.io/2.3/introduction.html
-[2]: http://coffeescript.org/
-[3]: https://nodejs.org/
