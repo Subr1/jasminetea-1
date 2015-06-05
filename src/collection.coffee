@@ -21,7 +21,7 @@ class Collection extends Utility
     jasmine= new Jasmine
     jasmine.addReporter new Reporter
       showColors: true
-      isVerbose: @verbose
+      isVerbose: not @silent
       includeStackTrace: @stacktrace
     jasmine.jasmine.DEFAULT_TIMEOUT_INTERVAL= @timeout
 

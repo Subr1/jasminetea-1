@@ -14,7 +14,7 @@ class Jasminetea extends Collection
     super
 
     @version require('../package').version
-    @usage 'specDir [options...]'
+    @usage '[specDir] [options...]'
 
     @option '-c --cover','Use ibrik, Code coverage calculation'
     @option '--report','Use coveralls, Post code coverage to coveralls.io'
@@ -25,7 +25,7 @@ class Jasminetea extends Collection
     @option '-f --file [specGlob]','Target [specGlob] (default "*[sS]pec.coffee")'
     @option '-r --recursive','Execute specs in recursive directory'
 
-    @option '-v --verbose','Output spec names'
+    @option '-S --silent','Use dots reporter',false
     @option '-s --stacktrace','Output stack trace'
     @option '-t --timeout <msec>','Success time-limit (default 500 msec)',500
     
@@ -34,9 +34,8 @@ class Jasminetea extends Collection
   parse: (argv)->
     super argv
 
-    return @help() if @args.length is 0
-
     @specDir= @args[0]
+    @specDir?= 'test'
     @specs= @getSpecGlobs @specDir,@recursive,@file
     @scripts= @getScriptGlobs 'src',@specDir,@recursive
 
@@ -51,7 +50,7 @@ class Jasminetea extends Collection
     else
       process.env.JASMINETEA?= Date.now()
 
-    return if @noExecution
+    return if @test
 
     @jasminetea()
 

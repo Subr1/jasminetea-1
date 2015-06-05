@@ -1,6 +1,7 @@
 # Dependencies
 Command= (require 'commander').Command
 chalk= require 'chalk'
+ms= require 'ms'
 
 path= require 'path'
 
@@ -36,53 +37,26 @@ class Utility extends Command
     files= require.cache[id]
     if files?
       @deleteRequireCache file.id for file in files.children
+    
     delete require.cache[id]
 
-  logColors: ['magenta','cyan','green','yellow']
-  logBgColors: ['bgMagenta','bgCyan','bgGreen','bgYellow']
-  _log: Date.now()
+  icon: chalk.magenta ' 7_P'
+  prev: Date.now()
   log: (args...)->
-    [...,changeColor]= args
-    args= args[...-1] if changeColor is yes
+    diff= Date.now()-@prev
+    time= chalk.gray ('     +'+ms(diff)).slice -7
+    @prev= Date.now()
 
-    suffix= ' ms'
-    diff= Date.now()-@_log ? 0
-    if diff>1000
-      diff= ~~(diff/1000)
-      suffix= 'sec'
-      if diff>60
-        diff= ~~(diff/60)
-        suffix= 'min'
-        if diff>60
-          diff= ~~(diff/60)
-          suffix= ' hr'
+    @output @icon+time+' '+(args.join ' ')
 
-    icon= @getColor(changeColor) ' 7_P'
-    time= chalk.gray(('     +'+diff+suffix).slice(-8))
+  output: (text)->
+    return text if @test
 
-    unless @silent
-      process.stdout.write icon+time+' '
-      process.stdout.write args.join(' ')+'\n'
-
-    @_log= Date.now()
+    console.log text
 
   whereabouts: (args,conjunctive=' and ')->
     args= [args] if typeof args is 'string'
     
     (chalk.underline arg for arg in args).join(conjunctive)
-
-  getColor: (changeColor=no)->
-    @logI= 0 if @logColors[@logI] is undefined
-    color= chalk[@logColors[@logI]]
-    @logI++ if changeColor is yes
-
-    color
-
-  getBgColor: (changeColor=no)->
-    @logI= 0 if @logBgColors[@logI] is undefined
-    color= chalk[@logBgColors[@logI]]
-    @logI++ if changeColor is yes
-
-    color
 
 module.exports= Utility
