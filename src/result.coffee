@@ -19,15 +19,18 @@ class Result
     log?= {}
 
   # Get the exitCode if --cover. via @logPath
-  code: (exitCode)->
+  set: (exitCode)->
     log= @get()
     log[process.env.JASMINETEA]?= 0
-    log[process.env.JASMINETEA]+= ~~exitCode
+    log[process.env.JASMINETEA]= 1 if exitCode isnt 0
     logData= JSON.stringify log
 
     fs.writeFileSync @logPath,logData
 
     log[process.env.JASMINETEA]
+
+  clear: ->
+    fs.writeFileSync @logPath,'{}'
 
   latest: ->
     latest= null

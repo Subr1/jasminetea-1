@@ -15,53 +15,18 @@ path= require 'path'
 # Public
 class Collection extends Utility
   # Pass specs to Jasmine via CLI.jasminetea
-  doRun: (specs,{silent,stacktrace,timeout}={})->
-    passed= 0
-    failure= no
-
+  doRun: (specs,{timeout,silent,stacktrace}={})->
     jasmine= new Jasmine
-    jasmine.addReporter new Reporter
-      showColors: true
-      isVerbose: not silent
-      includeStackTrace: stacktrace
     jasmine.jasmine.DEFAULT_TIMEOUT_INTERVAL= timeout
 
-    new Promise (resolve)=>
-      jasmine.addReporter
-        specDone: (result)->
-          failure= yes if result.status is 'failed'
-          passed++ if result.status is 'passed'
+    unless @test
+      jasmine.addReporter new Reporter
+        showColors: true
+        isVerbose: not silent
+        includeStackTrace: stacktrace
 
-        jasmineDone: ->
-          resolve()
-
-      count= 0
-      wanderer.seek specs
-        .on 'data',(file)=>
-          count++
-          filename= path.resolve process.cwd(),file
-
-          @deleteRequireCache require.resolve filename
-          
-          jasmine.addSpecFile filename
-        .once 'end',=>
-          if count is 0
-            @log chalk.red 'Spec not exists in',@whereabouts(specs)
-
-            return resolve()
-
-          @log "Found #{count} files in",@whereabouts(specs),'...\n'
-          try
-            jasmine.execute()
-          catch error
-            failure= yes
-            console.log error?.stack?.toString() ? error?.message ? error
-
-            resolve()
-
-    .then ->
-      failure= yes if passed is 0
-
+    @doRunJasmine specs,jasmine
+    .then (failure)->
       cover= ('-c' in process.argv) or ('--cover' in process.argv)
       if cover
         if jasmine.specFiles.length
@@ -71,6 +36,44 @@ class Collection extends Utility
 
       failure
 
+  doRunJasmine: (specs,jasmine)->
+    failure= no
+    passed= 0
+
+    new Promise (resolve)=>
+      wanderer.seek specs
+        .on 'data',(file)=>
+          filename= path.resolve process.cwd(),file
+
+          @deleteRequireCache require.resolve filename
+          
+          jasmine.addSpecFile filename
+        .once 'end',=>
+          count= jasmine.specFiles.length
+          if count is 0
+            @log chalk.red 'Spec not exists in',@whereabouts(specs)
+
+            return resolve yes
+
+          @log "Found #{count} files in",@whereabouts(specs),'...\n'
+          try
+            jasmine.execute()
+
+          catch error
+            console.log error?.stack?.toString() ? error?.message
+
+            resolve yes
+
+      jasmine.addReporter
+        specDone: (result)->
+          failure= yes if result.status is 'failed'
+          passed++ if result.status is 'passed'
+
+        jasmineDone: ->
+          failure= yes if passed is 0
+
+          resolve failure
+
   # Pass all .coffee to coffeelint
   doLint: (files)->
     options=
@@ -78,11 +81,13 @@ class Collection extends Utility
       env: process.env
       stdio: 'inherit'
 
+    options.stdio= 'ignore' if @test
+
     new Promise (resolve)=>
       files= wanderer.seekSync files
       if files.length is 0
         @log 'Skip --lint.   Because not exists in',@whereabouts(files)
-        return resolve null
+        return resolve yes
       
       argv= [require.resolve 'coffeelint/bin/coffeelint']
       argv.push path.relative process.cwd(),file for file in files
@@ -96,14 +101,16 @@ class Collection extends Utility
 
       spawn 'node',argv,options
       .on 'exit',(code)->
-        resolve code
+        resolve code isnt 0
 
   # Re-execute jasminetea at ibrik
-  doCover: ->
+  doCover: (originalArgv)->
     options=
       cwd: process.cwd()
       env: process.env
       stdio: [0,1,'ignore'] # Inherit ansi color
+
+    options.stdio= 'ignore' if @test
 
     new Promise (resolve)=>
       argv= []
@@ -112,13 +119,13 @@ class Collection extends Utility
       argv.push 'cover'
       argv.push require.resolve '../jasminetea'
       argv.push '--'
-      argv= argv.concat process.argv[2...]
+      argv= argv.concat originalArgv[2...]
       @logDebug '$',argv.join ' '
 
       [script,argv...]= argv
       spawn script,argv,options
       .on 'exit',(code)->
-        resolve code
+        resolve code isnt 0
 
   # Send lcov.info to coveralls.io
   doReport: ->
@@ -132,12 +139,12 @@ class Collection extends Utility
       existsToken= process.env.COVERALLS_REPO_TOKEN? if not existsToken
       if not existsToken
         @log 'Skip --report. Because not exists the COVERALLS_REPO_TOKEN'
-        return resolve null
+        return resolve no
 
       existsCoverage= fs.existsSync path.join process.cwd(),'coverage','lcov.info'
       if not existsCoverage
         @log 'Skip --report. Because not exists the ./coverage/lcov.info'
-        return resolve null
+        return resolve no
 
       argv= []
       argv.push 'cat'
@@ -150,7 +157,7 @@ class Collection extends Utility
         return reject error if error?
 
         @log 'Posted a coverage report.'
-        resolve null
+        resolve no
 
 module.exports= new Collection
 module.exports.Collection= Collection

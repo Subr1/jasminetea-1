@@ -86,24 +86,24 @@ class Jasminetea extends Collection
       timeout: @timeout
 
     exitCode= 0
-    promise= if @cover then @doCover() else @doRun @specs,options
+    promise= if @cover then @doCover process.argv else @doRun @specs,options
     promise
-    .then (code)=>
-      exitCode= 1 if code
+    .then (failure)=>
+      exitCode= 1 if failure
       @doReport() if @report
 
-    .then (code)=>
-      exitCode= 1 if code
+    .then (failure)=>
+      exitCode= 1 if failure
       @doLint @lint if @lint
 
-    .then (code)=>
-      exitCode= 1 if code
+    .then (failure)=>
+      exitCode= 1 if failure
       @busy= no
 
-      if @watch
-        @log 'Watch in',@whereabouts(@watch,' and '),'...'
-      else
-        process.exit result.code exitCode
+      @log 'Watch in',@whereabouts(@watch,' and '),'...' if @watch
+      process.exit result.set exitCode unless @test
+
+      exitCode
 
 module.exports= new Jasminetea
 module.exports.Jasminetea= Jasminetea
