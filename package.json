@@ -11,7 +11,7 @@
 
   "scripts": {
     "start": "mocha test/**/*.spec.coffee --require coffee-script/register --watch --watch-extensions coffee",
-    "test": "ibrik cover _mocha -- test/**/*.spec.coffee",
+    "test": "ibrik cover _mocha -- test/**/*.spec.coffee --bail",
     "lint": "coffeelint **/*.coffee -f .coffeelintrc"
   },
   "config": {
@@ -28,7 +28,7 @@
     "commander": "^2.6.0",
     "coveralls": "^2.11.2",
     "gaze": "^0.5.1",
-    "ibrik": "^2.0.0",
+    "ibrik": "59naga/ibrik",
     "jasmine": "^2.2.1",
     "jasmine-terminal-reporter": "^0.9.1",
     "ms": "^0.7.1",
