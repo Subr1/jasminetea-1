@@ -26,7 +26,7 @@ class Collection extends Utility
         includeStackTrace: stacktrace
 
     @doRunJasmine specs,jasmine
-    .then (failure)->
+    .then (failure)=>
       cover= ('-c' in process.argv) or ('--cover' in process.argv)
       if cover
         if jasmine.specFiles.length
