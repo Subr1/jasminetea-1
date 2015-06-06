@@ -10,6 +10,8 @@ node_js:
   - '0.10'
 
 # COVERALLS_REPO_TOKEN
+after_success:
+  - cat ./coverage/lcov.info | coveralls
 env:
   global:
     - secure: HmsnQqfaOjZ6HJfursQUvqVRlUN2H1ICwDZXJH6rqSgZi2olA6NT5CCitUG1V+4ksMBIpgT/ELR38OQN82BfWzFIQxLph5BcNYtOcKv+TU49m94hkfB4PXXbM1PhfJlHvuCMqEMxaIxcHCAfUfaeaB+jPSAcMwkY6vkifuyVTrc=
