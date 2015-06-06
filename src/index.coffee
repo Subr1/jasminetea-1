@@ -59,13 +59,16 @@ class Jasminetea extends Collection
       @lint= no
       @watch= no
     else
+      result.clear()
       process.env.JASMINETEA?= Date.now()
 
     return if @test
 
     @jasminetea()
+    .then =>
+      process.exit result.set exitCode unless @watch or @test
 
-    if @watch
+      @log 'Watch in',@whereabouts(@watch,' and '),'...'
       gaze @watch,(error,watcher)=>
         console.error error if error?
 
@@ -74,6 +77,8 @@ class Jasminetea extends Collection
           @log 'File',@whereabouts(name),event
 
           @jasminetea()
+          .then =>
+            @log 'Watch in',@whereabouts(@watch,' and '),'...'
 
   # Process life cycle
   jasminetea: ->
@@ -99,9 +104,6 @@ class Jasminetea extends Collection
     .then (failure)=>
       exitCode= 1 if failure
       @busy= no
-
-      @log 'Watch in',@whereabouts(@watch,' and '),'...' if @watch
-      process.exit result.set exitCode unless @test
 
       exitCode
 
