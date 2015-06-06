@@ -12,7 +12,7 @@
   "scripts": {
     "start": "mocha test/**/*.spec.coffee --require coffee-script/register --watch --watch-extensions coffee",
     "test": "ibrik cover _mocha -- test/**/*.spec.coffee --bail --timeout 5000",
-    "lint": "coffeelint **/*.coffee -f .coffeelintrc"
+    "posttest": "coffeelint **/*.coffee -f .coffeelintrc"
   },
   "config": {
     "ghooks": {

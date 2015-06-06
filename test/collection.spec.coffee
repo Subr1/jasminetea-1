@@ -66,7 +66,6 @@ describe 'Collection',->
       collection.doReport()
       .then (exitCode)->
         equal exitCode, 0
-
         done()
 
     it 'Post',(done)->
@@ -79,9 +78,10 @@ describe 'Collection',->
       '''
 
       collection.doReport()
-      .catch (error)->
-        failedMessage= error.message.match(/Bad response.+/)?[0]
+      .then (error)->
+        failedMessage= error.message?.match(/Bad response.+/)?[0]
+        
+        equal error instanceof Error, true
         equal failedMessage,
           'Bad response: 422 {"message":"Couldn\'t find a repository matching this job.","error":true}'
-
         done()

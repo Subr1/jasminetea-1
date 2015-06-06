@@ -134,15 +134,15 @@ class Collection extends Utility
       env: process.env
       maxBuffer: 1000*1024
 
-    new Promise (resolve,reject)=>
+    new Promise (resolve)=>
       existsToken= fs.existsSync path.join process.cwd(),'.coveralls.yml'
-      existsToken= process.env.COVERALLS_REPO_TOKEN? if not existsToken
-      if not existsToken
+      existsToken= process.env.COVERALLS_REPO_TOKEN? unless existsToken
+      unless existsToken
         @log 'Skip --report. Because not exists the COVERALLS_REPO_TOKEN'
         return resolve no
 
       existsCoverage= fs.existsSync path.join process.cwd(),'coverage','lcov.info'
-      if not existsCoverage
+      unless existsCoverage
         @log 'Skip --report. Because not exists the ./coverage/lcov.info'
         return resolve no
 
@@ -154,7 +154,7 @@ class Collection extends Utility
       @logDebug '$',argv.join ' '
 
       exec argv.join(' '),options,(error)=>
-        return reject error if error?
+        return resolve error if error?
 
         @log 'Posted a coverage report.'
         resolve no
