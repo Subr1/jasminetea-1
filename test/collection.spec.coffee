@@ -11,12 +11,8 @@ fs= require 'fs'
 
 # Specs
 describe 'Collection',->
-  beforeEach ->
-    try
-      fs.unlinkSync process.cwd()+'/jasminetea.json'
-    catch
-      
-
+  beforeEach -> delete process.env.JASMINETEA
+  
   describe 'doRun',->
     it 'Pass due to 1 spec or more',(done)->
       specs= ['test/fixtures/pass.coffee']
@@ -56,9 +52,9 @@ describe 'Collection',->
 
     collection.doCover argv
     .then ->
-      childExitCode= result.latest()
+      exitCode= result.latest()
 
-      equal childExitCode, 1
+      equal exitCode, 1
       done()
 
   describe 'doReport',->

@@ -2,10 +2,9 @@
 equal= (require 'power-assert').equal
 
 fs= require 'fs'
-path= require 'path'
 
 Result= (require '../src/result').Result
-result= new Result __dirname+path.sep+'result.json'
+result= new Result __dirname+'/result.json'
 
 # Specs
 describe 'Result',->

@@ -53,19 +53,19 @@ class Jasminetea extends Collection
     @lint= @parseGlobs @lint,@scripts if @lint?
 
     cover= process.env.JASMINETEA
-    if cover
+    unless cover
+      result.clear()
+      process.env.JASMINETEA?= Date.now()
+    else
       @cover= no
       @report= no
       @lint= no
       @watch= no
-    else
-      result.clear()
-      process.env.JASMINETEA?= Date.now()
 
     return if @test
 
     @jasminetea()
-    .then =>
+    .then (exitCode)=>
       process.exit result.set exitCode unless @watch or @test
 
       @log 'Watch in',@whereabouts(@watch,' and '),'...'

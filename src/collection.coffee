@@ -154,9 +154,10 @@ class Collection extends Utility
       @logDebug '$',argv.join ' '
 
       exec argv.join(' '),options,(error)=>
-        console.error error if error
-
-        @log 'Posted a coverage report.' unless error
+        if error
+          @log error.message
+        else
+          @log 'Posted a coverage report.'
 
         resolve no
 
