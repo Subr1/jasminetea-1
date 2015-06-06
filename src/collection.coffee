@@ -75,7 +75,7 @@ class Collection extends Utility
           resolve failure
 
   # Pass all .coffee to coffeelint
-  doLint: (files)->
+  doLint: (globs)->
     options=
       cwd: process.cwd()
       env: process.env
@@ -84,9 +84,9 @@ class Collection extends Utility
     options.stdio= 'ignore' if @test
 
     new Promise (resolve)=>
-      files= wanderer.seekSync files
+      files= wanderer.seekSync globs
       if files.length is 0
-        @log 'Skip --lint.   Because not exists in',@whereabouts(files)
+        @log 'Skip --lint.   Because not exists in',@whereabouts(globs)
         return resolve yes
       
       argv= [require.resolve 'coffeelint/bin/coffeelint']
@@ -97,7 +97,7 @@ class Collection extends Utility
       @logDebug '$',argv.join ' '
 
       @log '$ node ',argv.join ' ' if @debug
-      @log 'Lint in',@whereabouts(files),'...'
+      @log 'Lint in',@whereabouts(globs),'...'
 
       spawn 'node',argv,options
       .on 'exit',(code)->

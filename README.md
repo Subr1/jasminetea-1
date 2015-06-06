@@ -70,19 +70,43 @@ $ jasminetea
 # Finished in 0 seconds
 ```
 
-<!--
+# More commands
 
-## Lint
+## `--lint`, `-l`
 
-## Code coverage caluculation
+Check the code quality in `*.coffee` and `src/*.coffee` and `test/*.coffee` by [CoffeeLint](https://github.com/clutchski/coffeelint).
+Use `.coffeelintrc` as config if exists current working directory.
 
-## Watch
+If change the subject then Type the glob separated by commas After the `--lint`.
 
-## Friendly TravisCI
+```bash
+$ jasminetea --lint 
+```
 
-## Report to coveralls.io
+## `--cover`, `-c`
 
--->
+> `--report`
+
+## `-w`, `--watch`
+
+# Options
+
+## `--help`, `-h`
+
+## `--version`, `-V`
+
+## `--file`, `-f`
+
+## `--recursive`, `-r`
+
+## `--silent`, `-S`
+
+## `--stacktrace`, `-s`
+
+## `--timeout`, `-t`
+
+## `--debug`, `-d`
+
 
 License
 =========================
