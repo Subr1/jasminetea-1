@@ -80,7 +80,7 @@ describe 'Collection',->
 
       collection.doReport()
       .catch (error)->
-        failedMessage= error.message.match(/Bad response.+/)[0]
+        failedMessage= error.message.match(/Bad response.+/)?[0]
         equal failedMessage,
           'Bad response: 422 {"message":"Couldn\'t find a repository matching this job.","error":true}'
 
