@@ -10,7 +10,8 @@ result= new Result __dirname+path.sep+'result.json'
 # Specs
 describe 'Result',->
   after ->
-    fs.unlinkSync result.logPath
+    try
+      fs.unlinkSync result.logPath
 
   it 'get',->
     length= Object.keys(result.get()).length
