@@ -14,6 +14,8 @@ describe 'Collection',->
   beforeEach ->
     try
       fs.unlinkSync process.cwd()+'/jasminetea.json'
+    catch
+      
 
   describe 'doRun',->
     it 'Pass due to 1 spec or more',(done)->
@@ -69,7 +71,7 @@ describe 'Collection',->
 
     it 'Post',(done)->
       process.env.COVERALLS_REPO_TOKEN= 'fake'
-      fs.writeFileSync 'coverage/lcov.info','''
+      fs.writeFileSync process.cwd()+'/coverage/lcov.info','''
       TN:
       SF:/Users/59naga/Downloads/jasminetea/src/index.coffee
       FN:2,(anonymous_1)
