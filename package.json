@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.0-beta.6",
+  "version": "0.2.0-beta.7",
   "description": "Unfancy Jasmine2 in Node.js",
 
   "bin" : "jasminetea",
