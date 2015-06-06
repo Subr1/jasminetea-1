@@ -69,19 +69,9 @@ describe 'Collection',->
         done()
 
     it 'Post',(done)->
-      process.env.COVERALLS_REPO_TOKEN= 'fake'
-      fs.writeFileSync process.cwd()+'/coverage/lcov.info','''
-      TN:
-      SF:/Users/59naga/Downloads/jasminetea/src/index.coffee
-      FN:2,(anonymous_1)
-      end_of_record
-      '''
+      process.env.COVERALLS_REPO_TOKEN= 'Fake'
 
       collection.doReport()
-      .then (error)->
-        failedMessage= error.message?.match(/Bad response.+/)?[0]
-        
-        equal error instanceof Error, true
-        equal failedMessage,
-          'Bad response: 422 {"message":"Couldn\'t find a repository matching this job.","error":true}'
+      .then (exitCode)->
+        equal exitCode, 0
         done()

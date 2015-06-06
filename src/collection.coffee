@@ -154,9 +154,10 @@ class Collection extends Utility
       @logDebug '$',argv.join ' '
 
       exec argv.join(' '),options,(error)=>
-        return resolve error if error?
+        console.error error if error
 
-        @log 'Posted a coverage report.'
+        @log 'Posted a coverage report.' unless error
+
         resolve no
 
 module.exports= new Collection
