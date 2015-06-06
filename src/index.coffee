@@ -1,5 +1,5 @@
-# Dependencies 
-Collection= require './collection'
+# Dependencies
+Collection= (require './collection').Collection
 result= require './result'
 
 Promise= require 'bluebird'
@@ -10,43 +10,54 @@ path= require 'path'
 
 # Public
 class Jasminetea extends Collection
+  # Setup commander.js
   constructor: ->
     super
 
     @version require('../package').version
     @usage '[specDir] [options...]'
 
-    @option '-c --cover','Use ibrik, Code coverage calculation'
-    @option '--report','Use coveralls, Post code coverage to coveralls.io'
-    
-    @option '-l --lint [globs]','Use coffeelint, Code linting after run. See [globs] (can use "," separator)'
+    @option '-c --cover',
+      'Use ibrik, Code coverage calculation'
+    @option '--report',
+      'Send lcov.info to coveralls.io via --cover'
+    @option '-l --lint [globs]',
+      'Use .coffeelintrc, Code linting after run. Find in [globs] (can use "," separator)'
 
-    @option '-w --watch [globs]','Watch file changes. See [globs] (can use "," separator)'
-    @option '-f --file [specGlob]','Target [specGlob] (default "*[sS]pec.coffee")'
-    @option '-r --recursive','Execute specs in recursive directory'
+    @option '-w --watch [globs]',
+      'Watch file changes. See [globs] (can use "," separator)'
+    @option '-f --file [specGlob]',
+      'Target [specGlob] (default "*[sS]pec.coffee")','*[sS]pec.coffee'
+    @option '-r --recursive',
+      'Search to recursive directory'
 
-    @option '-S --silent','Use dots reporter',false
-    @option '-s --stacktrace','Output stack trace'
-    @option '-t --timeout <msec>','Success time-limit (default 500 msec)',500
+    @option '-S --silent',
+      'Use dots reporter',false
+    @option '-s --stacktrace',
+      'Output stack trace'
+    @option '-t --timeout <msec>',
+      'Success time-limit (default 500 msec)',500
     
-    @option '-d --debug','Output raw commands',yes
+    @option '-d --debug',
+      'Output raw commands',yes
 
   parse: (argv)->
     super argv
 
     @specDir= @args[0]
     @specDir?= 'test'
-    @specs= @getSpecGlobs @specDir,@recursive,@file
+    @specs= @getSpecGlobs @specDir,@file,@recursive
     @scripts= @getScriptGlobs 'src',@specDir,@recursive
 
     @watch= @parseGlobs @watch,@scripts if @watch?
     @lint= @parseGlobs @lint,@scripts if @lint?
 
-    if process.env.JASMINETEA
-      @watch= no
-      @lint= no
+    cover= process.env.JASMINETEA
+    if cover
       @cover= no
       @report= no
+      @lint= no
+      @watch= no
     else
       process.env.JASMINETEA?= Date.now()
 
@@ -64,13 +75,18 @@ class Jasminetea extends Collection
 
           @jasminetea()
 
+  # Process life cycle
   jasminetea: ->
     return if @busy
-
     @busy= yes
-    exitCode= 0
 
-    promise= if @cover then @doCover() else @doRun()
+    options=
+      silent: @silent
+      stacktrace: @stacktrace
+      timeout: @timeout
+
+    exitCode= 0
+    promise= if @cover then @doCover() else @doRun @specs,options
     promise
     .then (code)=>
       exitCode= 1 if code
@@ -78,16 +94,16 @@ class Jasminetea extends Collection
 
     .then (code)=>
       exitCode= 1 if code
-      @doLint() if @lint
+      @doLint @lint if @lint
 
     .then (code)=>
       exitCode= 1 if code
       @busy= no
 
       if @watch
-        @log 'Watching the',@whereabouts(@watch,' and '),'...'
+        @log 'Watch in',@whereabouts(@watch,' and '),'...'
       else
-        process.exit result exitCode
+        process.exit result.code exitCode
 
 module.exports= new Jasminetea
 module.exports.Jasminetea= Jasminetea

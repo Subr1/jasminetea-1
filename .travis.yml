@@ -8,8 +8,6 @@ cache:
 language: node_js
 node_js:
   - '0.10'
-before_script:
-  - npm install jasminetea@0.1.30-rc.3 --global
 
 # COVERALLS_REPO_TOKEN
 env:
@@ -17,8 +15,6 @@ env:
     - secure: HmsnQqfaOjZ6HJfursQUvqVRlUN2H1ICwDZXJH6rqSgZi2olA6NT5CCitUG1V+4ksMBIpgT/ELR38OQN82BfWzFIQxLph5BcNYtOcKv+TU49m94hkfB4PXXbM1PhfJlHvuCMqEMxaIxcHCAfUfaeaB+jPSAcMwkY6vkifuyVTrc=
 
 # Npm publish options
-before_deploy:
-  - npm install coffee-script --global
 deploy:
   provider: npm
   email: i59naga@icloud.com

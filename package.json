@@ -1,7 +1,7 @@
 {
   "name": "jasminetea",
   "version": "0.2.0-beta.3",
-  "description": "Quick start Jasmine2 for CoffeeScript",
+  "description": "Unfancy Jasmine2 in Node.js",
 
   "bin" : "jasminetea",
   "files": [
@@ -9,27 +9,22 @@
     "src"
   ],
 
+  "scripts": {
+    "start": "mocha test/**/*.spec.coffee --require coffee-script/register --watch --watch-extensions coffee",
+    "test": "ibrik cover _mocha -- test/**/*.spec.coffee",
+    "lint": "coffeelint **/*.coffee -f .coffeelintrc"
+  },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run cover"
+      "pre-commit": "npm run test"
     }
-  },
-  "scripts": {
-    "default": "jasminetea test --verbose --timeout 1000",
-    "cover": "$(opc package scripts.default) --cover --report",
-
-    "Developer commands": "",
-      "start": "$(opc package scripts.default) --watch --stacktrace",
-
-    "Travis-CI commands": "",
-      "test": "npm run cover"
   },
 
   "dependencies": {
     "bluebird": "^2.9.25",
     "chalk": "^1.0.0",
     "coffee-script": "^1.9.2",
-    "coffeelint": "^1.9.2",
+    "coffeelint": "^1.10.1",
     "commander": "^2.6.0",
     "coveralls": "^2.11.2",
     "gaze": "^0.5.1",
@@ -41,10 +36,9 @@
   },
   "devDependencies": {
     "ghooks": "^0.3.2",
-    "object-parser-cli": "0.0.0-alpha.0"
-  },
-  "globalDependencies": {
-    "jasminetea": "0.1.30-rc.3"
+    "mocha": "^2.2.5",
+    "object-parser-cli": "0.0.0-alpha.0",
+    "power-assert": "^0.11.0"
   },
   
   "keywords": [

@@ -1,8 +1,8 @@
-# ![][.svg] jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
+# ![][.svg] Jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
 > is Unfancy [Jasmine2](http://jasmine.github.io/2.3/introduction.html) in Node.js
 
-## Test - Getting started
+## Getting started
 ```bash
 .
 ├─ src

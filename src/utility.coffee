@@ -7,38 +7,42 @@ path= require 'path'
 
 # Public
 class Utility extends Command
-  getSpecGlobs: (specDir,recursive=null,filename='*[sS]pec.coffee')->
-    specDir= path.join specDir,'**' if recursive?
-
-    globs= []
-    globs.push path.join specDir,filename
-    globs
-
-  getScriptGlobs: (srcDir,specDir,recursive=null,filename='*.coffee')->
-    cwd= '.' if specDir isnt '.'
-    srcDir= path.join(srcDir,'**') if recursive?
-    specDir= path.join(specDir,'**') if recursive?
-
-    globs= []
-    globs.push path.join(cwd,filename) if cwd?
-    globs.push path.join srcDir,filename
-    globs.push path.join specDir,filename
-    globs
-
-  parseGlobs: (globs,scripts)->
-    if typeof globs is 'string'
-      globs.split ',' 
-    else
-      scripts
-
   deleteRequireCache: (id)=>
-    return if id.indexOf('node_modules') > -1
+    return if id.indexOf('node_modules') isnt -1
 
     files= require.cache[id]
     if files?
       @deleteRequireCache file.id for file in files.children
     
     delete require.cache[id]
+  
+  # string parsers
+
+  getSpecGlobs: (specDir,specFile,recursive=null)->
+    specDir= path.join specDir,'**' if recursive?
+
+    globs= []
+    globs.push path.join specDir,specFile
+    globs
+
+  getScriptGlobs: (srcDir,specDir,recursive=null)->
+    cwd= '.' if specDir isnt '.'
+    srcDir= path.join srcDir,'**' if recursive?
+    specDir= path.join specDir,'**' if recursive?
+
+    globs= []
+    globs.push path.join cwd,'*.coffee' if cwd?
+    globs.push path.join srcDir,'*.coffee'
+    globs.push path.join specDir,'*.coffee'
+    globs
+
+  parseGlobs: (globs,defaults)->
+    if typeof globs is 'string'
+      globs.split ','
+    else
+      defaults
+
+  # Formats
 
   icon: chalk.magenta ' 7_P'
   prev: Date.now()
@@ -48,6 +52,9 @@ class Utility extends Command
     @prev= Date.now()
 
     @output @icon+time+' '+(args.join ' ')
+
+  logDebug: (text)->
+    @output text if @debug
 
   output: (text)->
     return text if @test
@@ -59,4 +66,5 @@ class Utility extends Command
     
     (chalk.underline arg for arg in args).join(conjunctive)
 
-module.exports= Utility
+module.exports= new Utility
+module.exports.Utility= Utility
