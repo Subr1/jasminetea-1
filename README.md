@@ -1,16 +1,27 @@
 # ![][.svg] Jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
 ```
-   ___                     _            _             
-  |_  |                   (_)          | |            
-    | | __ _ ___ _ __ ___  _ _ __   ___| |_ ___  __ _ 
-    | |/ _` / __| '_ ` _ \| | '_ \ / _ \ __/ _ \/ _` |
-/\__/ / (_| \__ \ | | | | | | | | |  __/ ||  __/ (_| |
-\____/ \__,_|___/_| |_| |_|_|_| |_|\___|\__\___|\__,_|
-
+            {
+         }   }   {
+        {   {  }  }
+         }   }{  {
+        {  }{  }  }          
+       { }{ }{  { }          
+     .- { { }  { }} -.       
+    (  { } { } { } }  )      
+    |`-..________ ..-'|      
+    |                 |      
+    |                 ;--.   
+    |        ___      (__  \         _            _             
+    |       |_  |      | )  )       (_)          | |            
+    |         | | __ _ ___ _ __ ___  _ _ __   ___| |_ ___  __ _ 
+    |         | |/ _` / __| '_ ` _ \| | '_ \ / _ \ __/ _ \/ _` |
+    |     /\__/ / (_| \__ \ | | | | | | | | |  __/ ||  __/ (_| |
+    |     \____/ \__,_|___/_| |_| |_|_|_| |_|\___|\__\___|\__,_|
+     `-.._________..    
 ```
 
-> is Unfancy [Jasmine2](http://jasmine.github.io/2.3/introduction.html) in Node.js
+> is [Jasmine2](http://jasmine.github.io/2.3/introduction.html) using [CoffeeScript](http://coffeescript.org/) in Node.js
 
 ## Getting started
 ```bash
@@ -169,6 +180,27 @@ $ jasminetea --watch foo/bar/baz/**/*.spec.coffee
 
 # Other options
 See `$ jasminetea --help`
+
+```bash
+#
+#  Usage: jasminetea [specDir] [options...]
+#
+#  Options:
+#
+#    -h, --help            output usage information
+#    -V, --version         output the version number
+#    -c --cover            Use ibrik, Code coverage calculation
+#    --report              Send lcov.info to coveralls.io via --cover
+#    -l --lint [globs]     Use .coffeelintrc, Code linting after run. Find in [globs] (can use "," separator)
+#    -w --watch [globs]    Watch file changes. See [globs] (can use "," separator)
+#    -f --file [specGlob]  Target [specGlob] (default "*[sS]pec.coffee")
+#    -r --recursive        Search to recursive directory
+#    -S --silent           Use dots reporter
+#    -s --stacktrace       Output stack trace
+#    -t --timeout <msec>   Success time-limit (default 500 msec)
+#    -d --debug            Output raw commands
+#
+```
 
 License
 =========================
