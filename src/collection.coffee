@@ -60,7 +60,7 @@ class Collection extends Utility
             jasmine.execute()
 
           catch error
-            console.log error?.stack?.toString() ? error?.message
+            console.error error?.stack or error?.message
 
             resolve yes
 

@@ -4,10 +4,11 @@ path= require 'path'
 
 # Private
 process.on 'uncaughtException',(error)->
-  console.log error?.stack or error
+  console.error error?.stack or error?.message
 
-  result= new Result
-  process.exit result.code 1
+  code= module.exports.code?(1)
+  code?= 1
+  process.exit code
 
 # Public
 class Result
