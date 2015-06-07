@@ -79,10 +79,12 @@ class Jasminetea extends Collection
           @jasminetea()
           .then =>
             @log 'Watch in',@whereabouts(@watch,' and '),'...'
+          .catch ->
+            # busy
 
   # Process life cycle
   jasminetea: ->
-    return if @busy
+    return Promise.reject null if @busy
     @busy= yes
 
     options=
