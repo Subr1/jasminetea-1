@@ -94,7 +94,7 @@ $ jasminetea
 ## `--lint`, `-l`
 
 Check the code quality in `*.coffee` and `src/*.coffee` and `test/*.coffee` After the test. by [CoffeeLint](https://github.com/clutchski/coffeelint).
-Use `.coffeelintrc` as config if exists current working directory.
+Use `.coffeelintrc` as config if exists current working directory<!-- or home directory(e.g.`~/.coffeelintrc`)-->.
 If change the subject then Type the glob separated by commas After the `--lint`.
 
 Example:

@@ -94,6 +94,12 @@ class Collection extends Utility
       if fs.existsSync path.join process.cwd(),'.coffeelintrc'
         argv.push '-f'
         argv.push '.coffeelintrc'
+      else
+        home= process.env.HOME or process.env.HOMEPATH or process.env.USERPROFILE
+        homeRc= path.join home,'.coffeelintrc'
+        if fs.existsSync homeRc
+          argv.push '-f'
+          argv.push homeRc
       @logDebug '$ '+argv.join ' '
 
       @log '$ node ',argv.join ' ' if @debug
