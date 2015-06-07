@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.1-alpha.0",
+  "version": "0.2.1-alpha.1",
   "description": "Unfancy Jasmine2 in Node.js",
 
   "bin" : "jasminetea",
@@ -29,7 +29,7 @@
     "coveralls": "^2.11.2",
     "gaze": "^0.5.1",
     "ibrik": "59naga/ibrik",
-    "jasmine": "^2.2.1",
+    "jasmine": "^2.3.1",
     "jasmine-terminal-reporter": "^0.9.1",
     "ms": "^0.7.1",
     "wanderer": "^0.0.3-alpha.0"
