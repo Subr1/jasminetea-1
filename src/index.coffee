@@ -74,7 +74,7 @@ class Jasminetea extends Collection
 
         watcher.on 'all',(event,filepath)=>
           name= path.relative process.cwd(),filepath
-          @log 'File',@whereabouts(name),event
+          @log 'File',@whereabouts(name),'was',event
 
           @jasminetea()
           .then =>
