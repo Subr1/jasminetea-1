@@ -72,8 +72,6 @@ describe 'API',->
 ### 1, 2, 3, Jasminetea!
 ```bash
 $ npm install jasminetea --global
-$ jasminetea -V
-# 0.2.0-beta.3
 
 $ jasminetea
 #
