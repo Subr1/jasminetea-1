@@ -94,7 +94,7 @@ class Collection extends Utility
       if fs.existsSync path.join process.cwd(),'.coffeelintrc'
         argv.push '-f'
         argv.push '.coffeelintrc'
-      @logDebug '$',argv.join ' '
+      @logDebug '$ '+argv.join ' '
 
       @log '$ node ',argv.join ' ' if @debug
       @log 'Lint in',@whereabouts(globs),'...'
@@ -120,7 +120,7 @@ class Collection extends Utility
       argv.push require.resolve '../jasminetea'
       argv.push '--'
       argv= argv.concat originalArgv[2...]
-      @logDebug '$',argv.join ' '
+      @logDebug '$ '+argv.join ' '
 
       [script,argv...]= argv
       spawn script,argv,options
@@ -151,7 +151,7 @@ class Collection extends Utility
       argv.push path.join process.cwd(),'coverage','lcov.info'
       argv.push '|'
       argv.push require.resolve 'coveralls/bin/coveralls.js'
-      @logDebug '$',argv.join ' '
+      @logDebug '$ '+argv.join ' '
 
       exec argv.join(' '),options,(error)=>
         if error
