@@ -1,27 +1,27 @@
 # ![][.svg] Jasminetea [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
 ```
-            {
-         }   }   {
-        {   {  }  }
-         }   }{  {
-        {  }{  }  }          
-       { }{ }{  { }          
-     .- { { }  { }} -.       
-    (  { } { } { } }  )      
-    |`-..________ ..-'|      
-    |                 |      
-    |                 ;--.   
-    |        ___      (__  \         _            _             
-    |       |_  |      | )  )       (_)          | |            
-    |         | | __ _ ___ _ __ ___  _ _ __   ___| |_ ___  __ _ 
-    |         | |/ _` / __| '_ ` _ \| | '_ \ / _ \ __/ _ \/ _` |
-    |     /\__/ / (_| \__ \ | | | | | | | | |  __/ ||  __/ (_| |
-    |     \____/ \__,_|___/_| |_| |_|_|_| |_|\___|\__\___|\__,_|
-     `-.._________..    
+          {
+       }   }   {
+      {   {  }  }
+       }   }{  {
+      {  }{  }  }          
+     { }{ }{  { }          
+   .- { { }  { }} -.       
+  (  { } { } { } }  )      
+  |`-..________ ..-'|      
+  |                 |      
+  |                 ;--.   
+  |          ___    (__  \           _            _             
+  |         |_  |    | )  )         (_)          | |            
+  |           | | __ _ ___ _ __ ___  _ _ __   ___| |_ ___  __ _ 
+  |           | |/ _` / __| '_ ` _ \| | '_ \ / _ \ __/ _ \/ _` |
+  |       /\__/ / (_| \__ \ | | | | | | | | |  __/ ||  __/ (_| |
+  |       \____/ \__,_|___/_| |_| |_|_|_| |_|\___|\__\___|\__,_|
+   `-.._________..    
 ```
 
-> is [Jasmine2](http://jasmine.github.io/2.3/introduction.html) using [CoffeeScript](http://coffeescript.org/) in Node.js
+> is [Jasmine2](http://jasmine.github.io/2.3/introduction.html) using [CoffeeScript](https://github.com/jashkenas/coffeescript#readme) in Node.js
 
 ## Getting started
 ```bash
