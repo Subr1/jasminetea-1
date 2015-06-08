@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.1-alpha.1",
+  "version": "0.2.1-alpha.2",
   "description": "Unfancy Jasmine2 in Node.js",
 
   "bin" : "jasminetea",
@@ -12,7 +12,7 @@
   "scripts": {
     "start": "mocha test/**/*.spec.coffee --require coffee-script/register --watch --watch-extensions coffee",
     "test": "ibrik cover _mocha -- test/**/*.spec.coffee --timeout 5000",
-    "posttest": "coffeelint **/*.coffee -f .coffeelintrc"
+    "posttest": "coffeelint **/*.coffee -f ~/.coffeelintrc"
   },
   "config": {
     "ghooks": {
