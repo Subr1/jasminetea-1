@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.1-alpha.2",
+  "version": "0.2.1",
   "description": "Unfancy Jasmine2 in Node.js",
 
   "bin" : "jasminetea",
@@ -16,16 +16,16 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run test"
+      "pre-commit": "npm test"
     }
   },
 
   "dependencies": {
-    "bluebird": "^2.9.25",
+    "bluebird": "^2.9.30",
     "chalk": "^1.0.0",
-    "coffee-script": "^1.9.2",
+    "coffee-script": "^1.9.3",
     "coffeelint": "^1.10.1",
-    "commander": "^2.6.0",
+    "commander": "^2.8.1",
     "coveralls": "^2.11.2",
     "gaze": "^0.5.1",
     "ibrik": "59naga/ibrik",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "ghooks": "^0.3.2",
     "mocha": "^2.2.5",
-    "object-parser-cli": "0.0.0-alpha.0",
+    "object-parser-cli": "0.0.1-alpha.1",
     "power-assert": "^0.11.0"
   },
   
