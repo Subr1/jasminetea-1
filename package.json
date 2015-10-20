@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.2.1",
+  "version": "0.3.0-alpha",
   "description": "Unfancy Jasmine2 in Node.js",
 
   "bin" : "jasminetea",
@@ -10,7 +10,6 @@
   ],
 
   "scripts": {
-    "start": "mocha test/**/*.spec.coffee --require coffee-script/register --watch --watch-extensions coffee",
     "test": "ibrik cover _mocha -- test/**/*.spec.coffee --timeout 5000",
     "lint": "coffeelint **/*.coffee -f ~/.coffeelintrc"
   },
@@ -23,26 +22,27 @@
   "dependencies": {
     "bluebird": "^2.9.30",
     "chalk": "^1.0.0",
-    "coffee-script": "^1.9.3",
+    "coffee-react": "^4.0.0",
     "coffeelint": "^1.10.1",
     "commander": "^2.8.1",
     "coveralls": "^2.11.2",
     "gaze": "^0.5.1",
     "ibrik": "59naga/ibrik",
     "jasmine": "^2.3.1",
-    "jasmine-terminal-reporter": "^0.9.1",
+    "jasmine-terminal-reporter": "^1.0.0",
     "ms": "^0.7.1",
     "wanderer": "^0.0.3-alpha.0"
   },
   "devDependencies": {
     "ghooks": "^0.3.2",
     "mocha": "^2.2.5",
-    "object-parser-cli": "0.0.1-alpha.1",
-    "power-assert": "^0.11.0"
+    "object-parser-cli": "0.0.1",
+    "power-assert": "^1.1.0"
   },
   
   "keywords": [
     "coffee-script",
+    "coffee-react",
     "jasmine2",
     "coverage",
     "lint",
