@@ -2,6 +2,10 @@
   "name": "jasminetea",
   "version": "0.3.0-alpha",
   "description": "Unfancy Jasmine2 in Node.js",
+  
+  "engines" : {
+    "npm" : "^3.3.8"
+  },
 
   "bin" : "jasminetea",
   "files": [
