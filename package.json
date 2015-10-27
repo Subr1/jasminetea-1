@@ -1,6 +1,6 @@
 {
   "name": "jasminetea",
-  "version": "0.3.0-alpha",
+  "version": "0.3.0-alpha.1",
   "description": "Unfancy Jasmine2 in Node.js",
   
   "engines" : {
@@ -24,10 +24,10 @@
   },
 
   "dependencies": {
-    "bluebird": "^2.9.30",
+    "bluebird": "^3.0.0",
     "chalk": "^1.0.0",
     "coffee-react": "^4.0.0",
-    "coffeelint": "^1.10.1",
+    "coffeelint": "1.13.1",
     "commander": "^2.8.1",
     "coveralls": "^2.11.2",
     "gaze": "^0.5.1",
